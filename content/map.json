@@ -1,0 +1,1242 @@
+{
+  "id": "rusty-ladle",
+  "name": "The Rusty Ladle",
+  "width": 72,
+  "height": 48,
+  "zones": [
+    {
+      "id": "dining",
+      "name": "Dining Room",
+      "x": 1,
+      "y": 1,
+      "w": 47,
+      "h": 19,
+      "color": "#8f653c"
+    },
+    {
+      "id": "foyer",
+      "name": "Foyer & Bar",
+      "x": 48,
+      "y": 1,
+      "w": 23,
+      "h": 19,
+      "color": "#725041"
+    },
+    {
+      "id": "kitchen",
+      "name": "Main Kitchen",
+      "x": 1,
+      "y": 20,
+      "w": 39,
+      "h": 19,
+      "color": "#b58055"
+    },
+    {
+      "id": "pantry",
+      "name": "Pantry & Cold Room",
+      "x": 40,
+      "y": 20,
+      "w": 31,
+      "h": 19,
+      "color": "#517f79"
+    },
+    {
+      "id": "burrow",
+      "name": "The Burrow",
+      "x": 26,
+      "y": 41,
+      "w": 20,
+      "h": 6,
+      "color": "#75503b"
+    }
+  ],
+  "solids": [
+    {
+      "x": 7.4,
+      "y": 4.8,
+      "w": 3.2,
+      "h": 2.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 7.4,
+      "y": 12.8,
+      "w": 3.2,
+      "h": 2.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 18.4,
+      "y": 4.8,
+      "w": 3.2,
+      "h": 2.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 18.4,
+      "y": 12.8,
+      "w": 3.2,
+      "h": 2.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 29.4,
+      "y": 4.8,
+      "w": 3.2,
+      "h": 2.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 29.4,
+      "y": 12.8,
+      "w": 3.2,
+      "h": 2.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 39.4,
+      "y": 4.8,
+      "w": 3.2,
+      "h": 2.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 39.4,
+      "y": 12.8,
+      "w": 3.2,
+      "h": 2.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 2.35,
+      "y": 3.35,
+      "w": 1.3,
+      "h": 1.3,
+      "mouseOnly": true
+    },
+    {
+      "x": 44.35,
+      "y": 3.35,
+      "w": 1.3,
+      "h": 1.3,
+      "mouseOnly": true
+    },
+    {
+      "x": 54.5,
+      "y": 4,
+      "w": 13,
+      "h": 2
+    },
+    {
+      "x": 55.6,
+      "y": 7.6,
+      "w": 0.8,
+      "h": 0.8,
+      "mouseOnly": true
+    },
+    {
+      "x": 58.1,
+      "y": 7.6,
+      "w": 0.8,
+      "h": 0.8,
+      "mouseOnly": true
+    },
+    {
+      "x": 60.6,
+      "y": 7.6,
+      "w": 0.8,
+      "h": 0.8,
+      "mouseOnly": true
+    },
+    {
+      "x": 63.1,
+      "y": 7.6,
+      "w": 0.8,
+      "h": 0.8,
+      "mouseOnly": true
+    },
+    {
+      "x": 65.6,
+      "y": 7.6,
+      "w": 0.8,
+      "h": 0.8,
+      "mouseOnly": true
+    },
+    {
+      "x": 63.5,
+      "y": 14,
+      "w": 3,
+      "h": 2
+    },
+    {
+      "x": 68.4,
+      "y": 4.4,
+      "w": 1.2,
+      "h": 1.2,
+      "mouseOnly": true
+    },
+    {
+      "x": 4,
+      "y": 34,
+      "w": 6,
+      "h": 2
+    },
+    {
+      "x": 16,
+      "y": 34,
+      "w": 6,
+      "h": 2
+    },
+    {
+      "x": 28,
+      "y": 34,
+      "w": 6,
+      "h": 2
+    },
+    {
+      "x": 9.5,
+      "y": 24,
+      "w": 5,
+      "h": 2
+    },
+    {
+      "x": 20.5,
+      "y": 24,
+      "w": 5,
+      "h": 2
+    },
+    {
+      "x": 2,
+      "y": 24.5,
+      "w": 2,
+      "h": 5
+    },
+    {
+      "x": 34.5,
+      "y": 34,
+      "w": 3,
+      "h": 2
+    },
+    {
+      "x": 9.5,
+      "y": 18.5,
+      "w": 7,
+      "h": 1,
+      "mouseOnly": true
+    },
+    {
+      "x": 19.5,
+      "y": 18.5,
+      "w": 7,
+      "h": 1,
+      "mouseOnly": true
+    },
+    {
+      "x": 27.5,
+      "y": 18.5,
+      "w": 7,
+      "h": 1,
+      "mouseOnly": true
+    },
+    {
+      "x": 42.5,
+      "y": 23.3,
+      "w": 5,
+      "h": 1.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 50.5,
+      "y": 23.3,
+      "w": 5,
+      "h": 1.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 62.5,
+      "y": 23.3,
+      "w": 5,
+      "h": 1.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 62.5,
+      "y": 33.3,
+      "w": 5,
+      "h": 1.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 43.5,
+      "y": 34.3,
+      "w": 5,
+      "h": 1.4,
+      "mouseOnly": true
+    },
+    {
+      "x": 50.25,
+      "y": 34.25,
+      "w": 1.5,
+      "h": 1.5,
+      "mouseOnly": true
+    },
+    {
+      "x": 58.25,
+      "y": 34.25,
+      "w": 1.5,
+      "h": 1.5,
+      "mouseOnly": true
+    },
+    {
+      "x": 47,
+      "y": 1,
+      "w": 1,
+      "h": 5
+    },
+    {
+      "x": 47,
+      "y": 15,
+      "w": 1,
+      "h": 4
+    },
+    {
+      "x": 1,
+      "y": 19,
+      "w": 8,
+      "h": 1
+    },
+    {
+      "x": 35,
+      "y": 19,
+      "w": 8,
+      "h": 1
+    },
+    {
+      "x": 52,
+      "y": 19,
+      "w": 11,
+      "h": 1
+    },
+    {
+      "x": 40,
+      "y": 21,
+      "w": 1,
+      "h": 4
+    },
+    {
+      "x": 40,
+      "y": 32,
+      "w": 1,
+      "h": 7
+    }
+  ],
+  "holes": [
+    {
+      "id": "H1",
+      "x": 3,
+      "y": 9,
+      "room": "dining",
+      "junction": "T4"
+    },
+    {
+      "id": "H2",
+      "x": 24,
+      "y": 3,
+      "room": "dining",
+      "junction": "T4"
+    },
+    {
+      "id": "H3",
+      "x": 44,
+      "y": 17,
+      "room": "dining",
+      "junction": "T4"
+    },
+    {
+      "id": "H4",
+      "x": 69,
+      "y": 10,
+      "room": "foyer",
+      "junction": "T5"
+    },
+    {
+      "id": "H5",
+      "x": 5,
+      "y": 28,
+      "room": "kitchen",
+      "junction": "T1"
+    },
+    {
+      "id": "H6",
+      "x": 27,
+      "y": 37.5,
+      "room": "kitchen",
+      "junction": "T1"
+    },
+    {
+      "id": "H7",
+      "x": 5,
+      "y": 37,
+      "room": "kitchen",
+      "junction": "T3"
+    },
+    {
+      "id": "H8",
+      "x": 43,
+      "y": 26,
+      "room": "pantry",
+      "junction": "T2"
+    },
+    {
+      "id": "H9",
+      "x": 47,
+      "y": 37,
+      "room": "pantry",
+      "junction": "T2"
+    },
+    {
+      "id": "H10",
+      "x": 69,
+      "y": 29,
+      "room": "pantry",
+      "junction": "T2"
+    },
+    {
+      "id": "H11",
+      "x": 51,
+      "y": 12,
+      "room": "foyer",
+      "junction": "T4"
+    }
+  ],
+  "hides": [
+    {
+      "id": "hide-table-1",
+      "x": 9,
+      "y": 6,
+      "capacity": 2
+    },
+    {
+      "id": "hide-table-2",
+      "x": 9,
+      "y": 14,
+      "capacity": 2
+    },
+    {
+      "id": "hide-table-3",
+      "x": 20,
+      "y": 6,
+      "capacity": 2
+    },
+    {
+      "id": "hide-table-4",
+      "x": 20,
+      "y": 14,
+      "capacity": 2
+    },
+    {
+      "id": "hide-table-5",
+      "x": 31,
+      "y": 6,
+      "capacity": 2
+    },
+    {
+      "id": "hide-table-6",
+      "x": 31,
+      "y": 14,
+      "capacity": 2
+    },
+    {
+      "id": "hide-table-7",
+      "x": 41,
+      "y": 6,
+      "capacity": 2
+    },
+    {
+      "id": "hide-table-8",
+      "x": 41,
+      "y": 14,
+      "capacity": 2
+    },
+    {
+      "id": "hide-extra-0",
+      "x": 3,
+      "y": 12,
+      "capacity": 1
+    },
+    {
+      "id": "hide-extra-1",
+      "x": 45,
+      "y": 8,
+      "capacity": 1
+    },
+    {
+      "id": "hide-extra-2",
+      "x": 3,
+      "y": 4,
+      "capacity": 1
+    },
+    {
+      "id": "hide-extra-3",
+      "x": 45,
+      "y": 4,
+      "capacity": 1
+    },
+    {
+      "id": "hide-extra-4",
+      "x": 51,
+      "y": 35,
+      "capacity": 1
+    },
+    {
+      "id": "hide-extra-5",
+      "x": 59,
+      "y": 35,
+      "capacity": 1
+    }
+  ],
+  "objects": [
+    {
+      "id": "table-1",
+      "kind": "table",
+      "x": 9,
+      "y": 6
+    },
+    {
+      "id": "table-2",
+      "kind": "table",
+      "x": 9,
+      "y": 14
+    },
+    {
+      "id": "table-3",
+      "kind": "table",
+      "x": 20,
+      "y": 6
+    },
+    {
+      "id": "table-4",
+      "kind": "table",
+      "x": 20,
+      "y": 14
+    },
+    {
+      "id": "table-5",
+      "kind": "table",
+      "x": 31,
+      "y": 6
+    },
+    {
+      "id": "table-6",
+      "kind": "table",
+      "x": 31,
+      "y": 14
+    },
+    {
+      "id": "table-7",
+      "kind": "table",
+      "x": 41,
+      "y": 6
+    },
+    {
+      "id": "table-8",
+      "kind": "table",
+      "x": 41,
+      "y": 14
+    },
+    {
+      "id": "plant-1",
+      "kind": "plant",
+      "x": 3,
+      "y": 4
+    },
+    {
+      "id": "plant-2",
+      "kind": "plant",
+      "x": 45,
+      "y": 4
+    },
+    {
+      "id": "bar",
+      "kind": "bar",
+      "x": 61,
+      "y": 5
+    },
+    {
+      "id": "stool-0",
+      "kind": "stool",
+      "x": 56,
+      "y": 8
+    },
+    {
+      "id": "stool-1",
+      "kind": "stool",
+      "x": 58.5,
+      "y": 8
+    },
+    {
+      "id": "stool-2",
+      "kind": "stool",
+      "x": 61,
+      "y": 8
+    },
+    {
+      "id": "stool-3",
+      "kind": "stool",
+      "x": 63.5,
+      "y": 8
+    },
+    {
+      "id": "stool-4",
+      "kind": "stool",
+      "x": 66,
+      "y": 8
+    },
+    {
+      "id": "host",
+      "kind": "host",
+      "x": 65,
+      "y": 15
+    },
+    {
+      "id": "coat",
+      "kind": "coat",
+      "x": 69,
+      "y": 5
+    },
+    {
+      "id": "stove-0",
+      "kind": "stove",
+      "x": 7,
+      "y": 35
+    },
+    {
+      "id": "soup-0",
+      "kind": "soup",
+      "x": 6,
+      "y": 33.2
+    },
+    {
+      "id": "soup-1",
+      "kind": "soup",
+      "x": 8,
+      "y": 33.2
+    },
+    {
+      "id": "stove-1",
+      "kind": "stove",
+      "x": 19,
+      "y": 35
+    },
+    {
+      "id": "soup-2",
+      "kind": "soup",
+      "x": 18,
+      "y": 33.2
+    },
+    {
+      "id": "soup-3",
+      "kind": "soup",
+      "x": 20,
+      "y": 33.2
+    },
+    {
+      "id": "stove-2",
+      "kind": "stove",
+      "x": 31,
+      "y": 35
+    },
+    {
+      "id": "soup-4",
+      "kind": "soup",
+      "x": 30,
+      "y": 33.2
+    },
+    {
+      "id": "soup-5",
+      "kind": "soup",
+      "x": 32,
+      "y": 33.2
+    },
+    {
+      "id": "prep-1",
+      "kind": "prep",
+      "x": 12,
+      "y": 25
+    },
+    {
+      "id": "prep-2",
+      "kind": "prep",
+      "x": 23,
+      "y": 25
+    },
+    {
+      "id": "sink",
+      "kind": "sink",
+      "x": 3,
+      "y": 27
+    },
+    {
+      "id": "dish-pit",
+      "kind": "sink",
+      "x": 36,
+      "y": 35
+    },
+    {
+      "id": "pass-0",
+      "kind": "pass",
+      "x": 14,
+      "y": 20.5
+    },
+    {
+      "id": "pass-1",
+      "kind": "pass",
+      "x": 23,
+      "y": 20.5
+    },
+    {
+      "id": "pass-2",
+      "kind": "pass",
+      "x": 31,
+      "y": 20.5
+    },
+    {
+      "id": "pass-counter-0",
+      "kind": "counter",
+      "x": 13,
+      "y": 19
+    },
+    {
+      "id": "pass-counter-1",
+      "kind": "counter",
+      "x": 23,
+      "y": 19
+    },
+    {
+      "id": "pass-counter-2",
+      "kind": "counter",
+      "x": 31,
+      "y": 19
+    },
+    {
+      "id": "shelf-1",
+      "kind": "shelf",
+      "x": 45,
+      "y": 24
+    },
+    {
+      "id": "shelf-2",
+      "kind": "shelf",
+      "x": 53,
+      "y": 24
+    },
+    {
+      "id": "shelf-3",
+      "kind": "shelf",
+      "x": 65,
+      "y": 24
+    },
+    {
+      "id": "shelf-4",
+      "kind": "shelf",
+      "x": 65,
+      "y": 34
+    },
+    {
+      "id": "shelf-5",
+      "kind": "shelf",
+      "x": 46,
+      "y": 35
+    },
+    {
+      "id": "pan-0",
+      "kind": "pan",
+      "x": 6,
+      "y": 37.5
+    },
+    {
+      "id": "pan-1",
+      "kind": "pan",
+      "x": 10,
+      "y": 37.5
+    },
+    {
+      "id": "pan-2",
+      "kind": "pan",
+      "x": 14,
+      "y": 37.5
+    },
+    {
+      "id": "pan-3",
+      "kind": "pan",
+      "x": 18,
+      "y": 37.5
+    },
+    {
+      "id": "pan-4",
+      "kind": "pan",
+      "x": 22,
+      "y": 37.5
+    },
+    {
+      "id": "pan-5",
+      "kind": "pan",
+      "x": 26,
+      "y": 37.5
+    },
+    {
+      "id": "pan-6",
+      "kind": "pan",
+      "x": 30,
+      "y": 37.5
+    },
+    {
+      "id": "pan-7",
+      "kind": "pan",
+      "x": 34,
+      "y": 37.5
+    },
+    {
+      "id": "flour-1",
+      "kind": "flour",
+      "x": 44,
+      "y": 27
+    },
+    {
+      "id": "flour-2",
+      "kind": "flour",
+      "x": 51,
+      "y": 27
+    },
+    {
+      "id": "flour-3",
+      "kind": "flour",
+      "x": 61,
+      "y": 27
+    },
+    {
+      "id": "flour-4",
+      "kind": "flour",
+      "x": 68,
+      "y": 37
+    },
+    {
+      "id": "barrel-1",
+      "kind": "barrel",
+      "x": 51,
+      "y": 35
+    },
+    {
+      "id": "barrel-2",
+      "kind": "barrel",
+      "x": 59,
+      "y": 35
+    },
+    {
+      "id": "nest",
+      "kind": "nest",
+      "x": 29,
+      "y": 44
+    },
+    {
+      "id": "cauldron",
+      "kind": "cauldron",
+      "x": 41,
+      "y": 44
+    },
+    {
+      "id": "stash",
+      "kind": "stash",
+      "x": 35,
+      "y": 44
+    },
+    {
+      "id": "wall-59",
+      "kind": "wall",
+      "x": 47,
+      "y": 1,
+      "w": 1,
+      "h": 5
+    },
+    {
+      "id": "wall-60",
+      "kind": "wall",
+      "x": 47,
+      "y": 15,
+      "w": 1,
+      "h": 4
+    },
+    {
+      "id": "wall-61",
+      "kind": "wall",
+      "x": 1,
+      "y": 19,
+      "w": 8,
+      "h": 1
+    },
+    {
+      "id": "wall-62",
+      "kind": "wall",
+      "x": 35,
+      "y": 19,
+      "w": 8,
+      "h": 1
+    },
+    {
+      "id": "wall-63",
+      "kind": "wall",
+      "x": 52,
+      "y": 19,
+      "w": 11,
+      "h": 1
+    },
+    {
+      "id": "wall-64",
+      "kind": "wall",
+      "x": 40,
+      "y": 21,
+      "w": 1,
+      "h": 4
+    },
+    {
+      "id": "wall-65",
+      "kind": "wall",
+      "x": 40,
+      "y": 32,
+      "w": 1,
+      "h": 7
+    }
+  ],
+  "cages": [
+    {
+      "id": "K1",
+      "x": 10,
+      "y": 31
+    },
+    {
+      "id": "K2",
+      "x": 32,
+      "y": 27
+    },
+    {
+      "id": "P1",
+      "x": 57,
+      "y": 29
+    }
+  ],
+  "spawns": {
+    "mouse": {
+      "x": 35,
+      "y": 44
+    },
+    "chef": {
+      "x": 35,
+      "y": 24
+    }
+  },
+  "stash": {
+    "x": 35,
+    "y": 44
+  },
+  "pickups": [
+    {
+      "id": "pickup-1",
+      "food": "cheese",
+      "x": 7,
+      "y": 27
+    },
+    {
+      "id": "pickup-2",
+      "food": "tomato",
+      "x": 9,
+      "y": 27
+    },
+    {
+      "id": "pickup-3",
+      "food": "chili",
+      "x": 13,
+      "y": 27
+    },
+    {
+      "id": "pickup-4",
+      "food": "mushroom",
+      "x": 24,
+      "y": 28
+    },
+    {
+      "id": "pickup-5",
+      "food": "garlic",
+      "x": 27,
+      "y": 28
+    },
+    {
+      "id": "pickup-6",
+      "food": "vegetable",
+      "x": 30,
+      "y": 29
+    },
+    {
+      "id": "pickup-7",
+      "food": "cheese",
+      "x": 44,
+      "y": 26
+    },
+    {
+      "id": "pickup-8",
+      "food": "tomato",
+      "x": 48,
+      "y": 26
+    },
+    {
+      "id": "pickup-9",
+      "food": "honey",
+      "x": 53,
+      "y": 26
+    },
+    {
+      "id": "pickup-10",
+      "food": "chili",
+      "x": 57,
+      "y": 26
+    },
+    {
+      "id": "pickup-11",
+      "food": "mushroom",
+      "x": 65,
+      "y": 29
+    },
+    {
+      "id": "pickup-12",
+      "food": "garlic",
+      "x": 62,
+      "y": 31
+    },
+    {
+      "id": "pickup-13",
+      "food": "cheese",
+      "x": 45,
+      "y": 33
+    },
+    {
+      "id": "pickup-14",
+      "food": "wheel",
+      "x": 46,
+      "y": 37
+    },
+    {
+      "id": "pickup-15",
+      "food": "crate",
+      "x": 55,
+      "y": 33
+    },
+    {
+      "id": "pickup-16",
+      "food": "vegetable",
+      "x": 58,
+      "y": 32
+    },
+    {
+      "id": "pickup-17",
+      "food": "cheese",
+      "x": 22,
+      "y": 5
+    },
+    {
+      "id": "pickup-18",
+      "food": "tomato",
+      "x": 34,
+      "y": 16
+    },
+    {
+      "id": "pickup-19",
+      "food": "honey",
+      "x": 58,
+      "y": 11
+    },
+    {
+      "id": "pickup-20",
+      "food": "vegetable",
+      "x": 6,
+      "y": 32
+    }
+  ],
+  "tunnelNodes": [
+    {
+      "id": "B",
+      "x": 35,
+      "y": 44
+    },
+    {
+      "id": "T1",
+      "x": 28,
+      "y": 40
+    },
+    {
+      "id": "T2",
+      "x": 56,
+      "y": 40
+    },
+    {
+      "id": "T3",
+      "x": 7,
+      "y": 40
+    },
+    {
+      "id": "T4",
+      "x": 14,
+      "y": 10
+    },
+    {
+      "id": "T5",
+      "x": 60,
+      "y": 12
+    },
+    {
+      "id": "H1",
+      "x": 3,
+      "y": 9
+    },
+    {
+      "id": "H2",
+      "x": 24,
+      "y": 3
+    },
+    {
+      "id": "H3",
+      "x": 44,
+      "y": 17
+    },
+    {
+      "id": "H4",
+      "x": 69,
+      "y": 10
+    },
+    {
+      "id": "H5",
+      "x": 5,
+      "y": 28
+    },
+    {
+      "id": "H6",
+      "x": 27,
+      "y": 37.5
+    },
+    {
+      "id": "H7",
+      "x": 5,
+      "y": 37
+    },
+    {
+      "id": "H8",
+      "x": 43,
+      "y": 26
+    },
+    {
+      "id": "H9",
+      "x": 47,
+      "y": 37
+    },
+    {
+      "id": "H10",
+      "x": 69,
+      "y": 29
+    },
+    {
+      "id": "H11",
+      "x": 51,
+      "y": 12
+    }
+  ],
+  "tunnelEdges": [
+    {
+      "from": "B",
+      "to": "T1",
+      "length": 8
+    },
+    {
+      "from": "B",
+      "to": "T3",
+      "length": 14
+    },
+    {
+      "from": "T1",
+      "to": "T2",
+      "length": 10
+    },
+    {
+      "from": "T1",
+      "to": "T3",
+      "length": 12
+    },
+    {
+      "from": "T3",
+      "to": "T4",
+      "length": 16
+    },
+    {
+      "from": "T4",
+      "to": "T5",
+      "length": 14
+    },
+    {
+      "from": "T5",
+      "to": "T2",
+      "length": 18
+    },
+    {
+      "from": "T4",
+      "to": "H1",
+      "length": 8
+    },
+    {
+      "from": "T4",
+      "to": "H2",
+      "length": 10
+    },
+    {
+      "from": "T4",
+      "to": "H3",
+      "length": 12
+    },
+    {
+      "from": "T5",
+      "to": "H4",
+      "length": 8
+    },
+    {
+      "from": "T1",
+      "to": "H5",
+      "length": 14
+    },
+    {
+      "from": "T1",
+      "to": "H6",
+      "length": 18
+    },
+    {
+      "from": "T3",
+      "to": "H7",
+      "length": 10
+    },
+    {
+      "from": "T2",
+      "to": "H8",
+      "length": 12
+    },
+    {
+      "from": "T2",
+      "to": "H9",
+      "length": 16
+    },
+    {
+      "from": "T2",
+      "to": "H10",
+      "length": 20
+    },
+    {
+      "from": "T4",
+      "to": "H11",
+      "length": 9
+    }
+  ]
+}

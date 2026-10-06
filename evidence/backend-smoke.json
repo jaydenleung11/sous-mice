@@ -1,0 +1,26 @@
+{
+  "endpoint": "wss://sous-mice-rooms.sous-mice.workers.dev/parties/main/QHAF",
+  "durationSeconds": 90,
+  "joinedMilliseconds": 193,
+  "snapshots": [
+    1351,
+    1351
+  ],
+  "commonTicks": 1351,
+  "timerAndMeterMismatches": 0,
+  "privateFieldLeaks": 0,
+  "unrevealedTunnelLeaks": 0,
+  "bytes": [
+    553520,
+    555879
+  ],
+  "lastTime": [
+    90.06666666666412,
+    90.06666666666412
+  ],
+  "errors": [],
+  "connectionOpen": [
+    true,
+    true
+  ]
+}

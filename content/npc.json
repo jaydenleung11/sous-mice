@@ -1,0 +1,291 @@
+{
+  "guest": {
+    "states": [
+      {
+        "id": "arriving",
+        "transitions": [
+          {
+            "to": "seated",
+            "trigger": "reach-table",
+            "seconds": 8
+          }
+        ]
+      },
+      {
+        "id": "seated",
+        "transitions": [
+          {
+            "to": "ordering",
+            "trigger": "sit",
+            "seconds": 2
+          }
+        ]
+      },
+      {
+        "id": "ordering",
+        "transitions": [
+          {
+            "to": "waiting",
+            "trigger": "ticket-issued",
+            "seconds": 2
+          }
+        ]
+      },
+      {
+        "id": "waiting",
+        "transitions": [
+          {
+            "to": "eating",
+            "trigger": "dish-delivered",
+            "seconds": 90
+          }
+        ]
+      },
+      {
+        "id": "eating",
+        "transitions": [
+          {
+            "to": "paying",
+            "trigger": "meal-finished",
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "id": "paying",
+        "transitions": [
+          {
+            "to": "leaving",
+            "trigger": "paid",
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "id": "leaving",
+        "transitions": [
+          {
+            "to": "arriving",
+            "trigger": "new-guest",
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "id": "suspicious",
+        "transitions": [
+          {
+            "to": "calming",
+            "trigger": "no-sight",
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "id": "startled",
+        "transitions": [
+          {
+            "to": "calming",
+            "trigger": "freeze-ended",
+            "seconds": 1
+          }
+        ]
+      },
+      {
+        "id": "panicked",
+        "transitions": [
+          {
+            "to": "calming",
+            "trigger": "no-sight",
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "id": "fleeing",
+        "transitions": [
+          {
+            "to": "leaving",
+            "trigger": "reach-door",
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "id": "calming",
+        "transitions": [
+          {
+            "to": "waiting",
+            "trigger": "recover",
+            "seconds": 4
+          }
+        ]
+      }
+    ],
+    "interrupts": [
+      {
+        "from": "*",
+        "to": "suspicious",
+        "trigger": "sight-meter-positive"
+      },
+      {
+        "from": "*",
+        "to": "startled",
+        "trigger": "sight-meter-100-first"
+      },
+      {
+        "from": "startled",
+        "to": "panicked",
+        "trigger": "second-scare-within-15s"
+      },
+      {
+        "from": "panicked",
+        "to": "fleeing",
+        "trigger": "third-scare"
+      }
+    ]
+  },
+  "waiter": {
+    "states": [
+      {
+        "id": "idle",
+        "transitions": [
+          {
+            "to": "collect",
+            "trigger": "dish-sent",
+            "seconds": 2
+          }
+        ]
+      },
+      {
+        "id": "collect",
+        "transitions": [
+          {
+            "to": "carry",
+            "trigger": "tray-ready",
+            "seconds": 2
+          }
+        ]
+      },
+      {
+        "id": "carry",
+        "transitions": [
+          {
+            "to": "idle",
+            "trigger": "delivered",
+            "seconds": 9
+          }
+        ]
+      },
+      {
+        "id": "flee",
+        "transitions": [
+          {
+            "to": "idle",
+            "trigger": "recover",
+            "seconds": 6
+          }
+        ]
+      }
+    ],
+    "interrupts": [
+      {
+        "from": "carry",
+        "to": "flee",
+        "trigger": "see-mouse-drop-tray"
+      }
+    ]
+  },
+  "cook": {
+    "states": [
+      {
+        "id": "idle",
+        "transitions": [
+          {
+            "to": "prep",
+            "trigger": "ticket",
+            "seconds": 2
+          }
+        ]
+      },
+      {
+        "id": "prep",
+        "transitions": [
+          {
+            "to": "cook",
+            "trigger": "prep-finished",
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "id": "cook",
+        "transitions": [
+          {
+            "to": "idle",
+            "trigger": "dish-ready",
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "id": "shout",
+        "transitions": [
+          {
+            "to": "idle",
+            "trigger": "alert-ended",
+            "seconds": 2
+          }
+        ]
+      },
+      {
+        "id": "swat",
+        "transitions": [
+          {
+            "to": "idle",
+            "trigger": "ladle-swing-ended",
+            "seconds": 1
+          }
+        ]
+      }
+    ],
+    "interrupts": [
+      {
+        "from": "*",
+        "to": "shout",
+        "trigger": "see-mouse"
+      },
+      {
+        "from": "shout",
+        "to": "swat",
+        "trigger": "mouse-within-1.5"
+      }
+    ]
+  },
+  "barks": [
+    "A whisker!",
+    "My napkin moved!",
+    "Brigade, over here!",
+    "Mind the soup!",
+    "Not on my table!",
+    "Tiny trouble incoming!",
+    "Someone guard the cheese!",
+    "A tail by the curtains!",
+    "Service, please!",
+    "I ordered dinner, not a chase!"
+  ],
+  "animations": [
+    "idle-breathe",
+    "idle-look",
+    "idle-napkin",
+    "eat-spoon",
+    "eat-chew",
+    "startle-point",
+    "panic-chair",
+    "flee-run",
+    "fan-mouth",
+    "sleepy-slump",
+    "garlic-gag",
+    "sticky-chair"
+  ]
+}

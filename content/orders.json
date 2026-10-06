@@ -1,0 +1,96 @@
+{
+  "initialRating": 70,
+  "ticketTimeout": 90,
+  "stages": [
+    {
+      "id": "ticket",
+      "duration": 0,
+      "timeout": 90,
+      "next": "prep",
+      "failure": {
+        "next": "cancelled",
+        "rating": -5
+      }
+    },
+    {
+      "id": "prep",
+      "duration": 12,
+      "timeout": 90,
+      "next": "cook",
+      "failure": {
+        "next": "cancelled",
+        "rating": -5
+      }
+    },
+    {
+      "id": "cook",
+      "duration": 15,
+      "timeout": 90,
+      "next": "ready",
+      "failure": {
+        "next": "cancelled",
+        "rating": -5
+      }
+    },
+    {
+      "id": "ready",
+      "duration": 20,
+      "timeout": 20,
+      "next": "garnish",
+      "failure": {
+        "next": "cold",
+        "rating": -3
+      }
+    },
+    {
+      "id": "garnish",
+      "duration": 2,
+      "timeout": 90,
+      "next": "delivery",
+      "failure": {
+        "next": "ready",
+        "rating": 0
+      }
+    },
+    {
+      "id": "delivery",
+      "duration": 9,
+      "timeout": 20,
+      "next": "eating",
+      "failure": {
+        "next": "cancelled",
+        "rating": -3
+      }
+    },
+    {
+      "id": "eating",
+      "duration": 12,
+      "timeout": 30,
+      "next": "paid",
+      "failure": {
+        "next": "cancelled",
+        "rating": -5
+      }
+    },
+    {
+      "id": "paid",
+      "duration": 3,
+      "timeout": 3,
+      "next": "complete",
+      "failure": {
+        "next": "complete",
+        "rating": 0
+      }
+    }
+  ],
+  "outcomes": [
+    "cold",
+    "cancelled",
+    "complete"
+  ],
+  "arrivalIntervals": {
+    "opening": 25,
+    "rush": 14,
+    "lastCall": 18
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "sous-mice-rooms",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "durable_objects": {"bindings": [{"name": "KITCHENS", "class_name": "Kitchen"}]},
+  "migrations": [{"tag": "v1", "new_sqlite_classes": ["Kitchen"]}]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "sous-mice",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"tsx watch server/index.ts\" \"vite --host 0.0.0.0\"",
+    "build": "npm run validate && tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root .",
+    "validate": "tsx scripts/validate.ts",
+    "start": "tsx server/index.ts",
+    "simulate": "tsx scripts/simulate.ts",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource/fredoka": "^5.2.7",
+    "@fontsource/nunito": "^5.2.7",
+    "pixi.js": "^8.13.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261006.1",
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^22.18.6",
+    "@types/ws": "^8.18.1",
+    "concurrently": "^9.2.1",
+    "partykit": "latest",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.2",
+    "vercel": "latest",
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4",
+    "wrangler": "^4.147.0"
+  }
+}

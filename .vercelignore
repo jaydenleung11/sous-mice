@@ -1,0 +1,9 @@
+node_modules
+.git
+.vercel
+.wrangler
+.env*
+work
+test-results
+playwright-report
+store/screenshots

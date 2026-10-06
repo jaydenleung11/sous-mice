@@ -1,0 +1,10 @@
+import {createServer} from 'node:http';
+import {WebSocketServer} from 'ws';
+import {Rooms} from './rooms';
+import {FixedClock} from './clock';
+const rooms=new Rooms();
+const server=createServer((req,res)=>{res.setHeader('Content-Type','application/json');res.writeHead(req.url==='/health'?200:404);res.end(JSON.stringify(req.url==='/health'?{ok:true,rooms:rooms.rooms.size,version:'0.1.0'}:{error:'Not found'}));});
+const wss=new WebSocketServer({server,maxPayload:2048});
+wss.on('connection',(ws)=>{const peer={id:crypto.randomUUID(),send:(data:string)=>{if(ws.readyState!==ws.OPEN)return;if(ws.bufferedAmount>=128000){ws.close(1013,'Connection congested; reconnect');return;}ws.send(data);},close:()=>ws.close()};let n=0,window=Date.now();ws.on('message',data=>{if(Date.now()-window>=1000){n=0;window=Date.now();}if(++n>45){ws.close(1008,'Too many messages');return;}try{rooms.receive(peer,data.toString());}catch(error){console.error('Room message failed',error);rooms.error(peer,'The kitchen hit a snag. Please reconnect.');}});ws.on('close',()=>rooms.disconnect(peer.id));ws.on('error',()=>ws.close());});
+const clock=new FixedClock(()=>rooms.tick());setInterval(()=>clock.advance(),10);
+const port=Number(process.env.PORT??3001);server.listen(port,'0.0.0.0',()=>console.log(`Sous Mice room server listening on ${port}`));

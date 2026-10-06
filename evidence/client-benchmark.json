@@ -1,0 +1,19 @@
+{
+  "url": "https://sous-mice.vercel.app",
+  "viewport": "1440x900",
+  "scenario": "Idle mouse tutorial, headless Chromium, 10 seconds",
+  "metrics": {
+    "seconds": 10.0068,
+    "frames": 174,
+    "averageFps": 17.388176040292603,
+    "frameIntervalP95Ms": 66.70000000000073,
+    "maxFrameIntervalMs": 83.29999999999927,
+    "jsHeapBytes": 33100000,
+    "resourceTransferBytes": 2393649
+  },
+  "limitations": [
+    "This measures animation callback intervals, not isolated renderer CPU time.",
+    "Shared desktop load and headless graphics affect results.",
+    "Not a physical phone/tablet benchmark or full match performance certificate."
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "url": "https://sous-mice.vercel.app",
+  "stats": {
+    "startTime": "2026-10-06T02:37:01.138Z",
+    "duration": 202196.028,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": [
+    {
+      "title": "complete mouse training using visible controls",
+      "passed": true,
+      "results": {
+        "status": "passed",
+        "duration": 19614
+      }
+    },
+    {
+      "title": "complete chef training using visible controls",
+      "passed": true,
+      "results": {
+        "status": "passed",
+        "duration": 15293
+      }
+    },
+    {
+      "title": "two private browser contexts join, play90seconds and restore after refresh",
+      "passed": true,
+      "results": {
+        "status": "passed",
+        "duration": 151245
+      }
+    },
+    {
+      "title": "responsive title and training 844x390",
+      "passed": true,
+      "results": {
+        "status": "passed",
+        "duration": 4068
+      }
+    },
+    {
+      "title": "responsive title and training 932x430",
+      "passed": true,
+      "results": {
+        "status": "passed",
+        "duration": 3056
+      }
+    },
+    {
+      "title": "responsive title and training 1024x768",
+      "passed": true,
+      "results": {
+        "status": "passed",
+        "duration": 3444
+      }
+    },
+    {
+      "title": "responsive title and training 1440x900",
+      "passed": true,
+      "results": {
+        "status": "passed",
+        "duration": 3703
+      }
+    }
+  ]
+}

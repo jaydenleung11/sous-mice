@@ -1,0 +1,4 @@
+# Title artwork provenance
+Tool: built-in OpenAI image generation. Saved as client/public/art/hero.png. Original game-world illustration, not based on a supplied image.
+
+Prompt: Original storybook-style3D cartoon illustration for a cozy browser game. Wide16:9 composition. A warmly lit copper and teal restaurant kitchen at night, tiled floor, steaming pots and hanging copper pans. On the right side, two small expressive brown mice carry a large wedge of yellow cheese, one wearing a red scarf and one with a tiny satchel. A friendly round chef in cream clothes and a red apron looks surprised behind them. Charming tactile fur and cloth, golden candlelight, plum-colored shadows, beautiful polished illustration. Left half has dark uncluttered kitchen wall and soft atmospheric light, with ample space for a separately added title. No text, no logos, no watermark. All characters original.

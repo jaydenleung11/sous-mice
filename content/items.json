@@ -1,0 +1,251 @@
+{
+  "foods": [
+    {
+      "id": "cheese",
+      "name": "Cheese wedge",
+      "provision": 3,
+      "buff": "dash",
+      "duration": 10,
+      "counter": "Colanders still catch fast mice; Sugar Rush keeps pace."
+    },
+    {
+      "id": "tomato",
+      "name": "Tomato",
+      "provision": 3,
+      "buff": "splat",
+      "uses": 3,
+      "counter": "Keep six tiles away; blindness fades after 2.5 seconds."
+    },
+    {
+      "id": "chili",
+      "name": "Chili pepper",
+      "provision": 3,
+      "buff": "fire",
+      "uses": 3,
+      "tamper": "fire-mouth",
+      "penalty": 6,
+      "counter": "Back away from the short 2.2-tile cone."
+    },
+    {
+      "id": "mushroom",
+      "name": "Mushroom",
+      "provision": 3,
+      "buff": "camouflage",
+      "duration": 12,
+      "tamper": "sleepy",
+      "penalty": 3,
+      "counter": "Actions break camouflage and Rat Radar reveals it."
+    },
+    {
+      "id": "garlic",
+      "name": "Garlic clove",
+      "provision": 3,
+      "buff": "stink",
+      "duration": 8,
+      "tamper": "garlic-breath",
+      "penalty": 4,
+      "counter": "Leave the 2.5-tile cloud; it slows but does not damage."
+    },
+    {
+      "id": "honey",
+      "name": "Honey drop",
+      "provision": 3,
+      "buff": "grip",
+      "duration": 10,
+      "tamper": "sticky",
+      "penalty": 3,
+      "counter": "Colander tosses reach climbing mice."
+    },
+    {
+      "id": "wheel",
+      "name": "Cheese wheel",
+      "provision": 14,
+      "heavy": true,
+      "carriers": 2
+    },
+    {
+      "id": "crate",
+      "name": "Tomato crate",
+      "provision": 10,
+      "heavy": true,
+      "carriers": 2
+    },
+    {
+      "id": "vegetable",
+      "name": "Vegetable",
+      "provision": 3,
+      "buff": "vegetable",
+      "uses": 1,
+      "counter": "A sprinting chef kicks vegetable traps away."
+    }
+  ],
+  "tamperEffects": [
+    {
+      "id": "fire-mouth",
+      "reaction": "run-for-water",
+      "animation": "fan-mouth",
+      "penalty": 6
+    },
+    {
+      "id": "sleepy",
+      "reaction": "doze",
+      "animation": "sleepy-slump",
+      "penalty": 3
+    },
+    {
+      "id": "garlic-breath",
+      "reaction": "gag",
+      "animation": "garlic-gag",
+      "penalty": 4
+    },
+    {
+      "id": "sticky",
+      "reaction": "stuck",
+      "animation": "sticky-chair",
+      "penalty": 3
+    }
+  ],
+  "hazards": [
+    {
+      "id": "soup",
+      "damage": 35,
+      "cooldown": 30
+    },
+    {
+      "id": "pan",
+      "damage": 25,
+      "cooldown": 25
+    },
+    {
+      "id": "flour",
+      "damage": 10,
+      "cooldown": 35
+    },
+    {
+      "id": "vegetable",
+      "damage": 15,
+      "cooldown": 0
+    },
+    {
+      "id": "splat",
+      "damage": 10,
+      "cooldown": 0
+    },
+    {
+      "id": "fire",
+      "damage": 18,
+      "cooldown": 1.5
+    }
+  ],
+  "relations": [
+    {
+      "from": "cheese",
+      "type": "DELIVERS_FOR",
+      "to": "stash",
+      "value": 3
+    },
+    {
+      "from": "cheese",
+      "type": "GIVES_BUFF",
+      "to": "dash"
+    },
+    {
+      "from": "tomato",
+      "type": "DELIVERS_FOR",
+      "to": "stash",
+      "value": 3
+    },
+    {
+      "from": "tomato",
+      "type": "GIVES_BUFF",
+      "to": "splat"
+    },
+    {
+      "from": "chili",
+      "type": "DELIVERS_FOR",
+      "to": "stash",
+      "value": 3
+    },
+    {
+      "from": "chili",
+      "type": "GIVES_BUFF",
+      "to": "fire"
+    },
+    {
+      "from": "chili",
+      "type": "TAMPERS_AS",
+      "to": "fire-mouth"
+    },
+    {
+      "from": "mushroom",
+      "type": "DELIVERS_FOR",
+      "to": "stash",
+      "value": 3
+    },
+    {
+      "from": "mushroom",
+      "type": "GIVES_BUFF",
+      "to": "camouflage"
+    },
+    {
+      "from": "mushroom",
+      "type": "TAMPERS_AS",
+      "to": "sleepy"
+    },
+    {
+      "from": "garlic",
+      "type": "DELIVERS_FOR",
+      "to": "stash",
+      "value": 3
+    },
+    {
+      "from": "garlic",
+      "type": "GIVES_BUFF",
+      "to": "stink"
+    },
+    {
+      "from": "garlic",
+      "type": "TAMPERS_AS",
+      "to": "garlic-breath"
+    },
+    {
+      "from": "honey",
+      "type": "DELIVERS_FOR",
+      "to": "stash",
+      "value": 3
+    },
+    {
+      "from": "honey",
+      "type": "GIVES_BUFF",
+      "to": "grip"
+    },
+    {
+      "from": "honey",
+      "type": "TAMPERS_AS",
+      "to": "sticky"
+    },
+    {
+      "from": "wheel",
+      "type": "DELIVERS_FOR",
+      "to": "stash",
+      "value": 14
+    },
+    {
+      "from": "crate",
+      "type": "DELIVERS_FOR",
+      "to": "stash",
+      "value": 10
+    },
+    {
+      "from": "vegetable",
+      "type": "DELIVERS_FOR",
+      "to": "stash",
+      "value": 3
+    },
+    {
+      "from": "vegetable",
+      "type": "GIVES_BUFF",
+      "to": "vegetable"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# Constraints
+Original art/audio/text only. Server owns state. Never leak hidden mice or enemy private stats. Never replace online multiplayer with a local demo. Preserve capture/rescue, guest reactions, reconnect, tutorial and live deployment. No spending or new credentials without user action. 30 Hz sim, 15 Hz snapshots; aim <3 KB/snapshot, <6 ms server tick, <15 MB download. Use spec Sections 2, 5, 16 as acceptance constraints; unmet requirements must be reported, never silently checked off.

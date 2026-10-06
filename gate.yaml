@@ -1,0 +1,6 @@
+autonomy_level: L3
+human_gates:
+  - credentials_or_payment_or_signing
+  - modifications_outside_project
+verify_with_separate_context: true
+final_report_required: true

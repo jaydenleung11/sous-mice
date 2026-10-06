@@ -1,0 +1,222 @@
+{
+  "target": "ws://127.0.0.1:3002/ws",
+  "model": "Ordered WebSocket frame delay with ±15ms jitter; probabilistic loss produces one-RTT retransmission stall. Approximates TCP; not real kernel packet loss.",
+  "results": [
+    {
+      "rttMs": 40,
+      "packetLossModel": 0,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1394,
+      "retransmissionStalls": 0,
+      "snapshots": [
+        226,
+        226
+      ],
+      "commonTicks": 226,
+      "desyncTicks": 0,
+      "correctionSamples": 450,
+      "p95CorrectionTiles": 0.17021013010002406,
+      "maxCorrectionTiles": 0.31641234167016563,
+      "correctionsWithinHalfTile": 1,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": true
+    },
+    {
+      "rttMs": 40,
+      "packetLossModel": 0.02,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1386,
+      "retransmissionStalls": 17,
+      "snapshots": [
+        225,
+        226
+      ],
+      "commonTicks": 225,
+      "desyncTicks": 0,
+      "correctionSamples": 449,
+      "p95CorrectionTiles": 0.17072349682204901,
+      "maxCorrectionTiles": 0.3733551498041301,
+      "correctionsWithinHalfTile": 1,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": true
+    },
+    {
+      "rttMs": 40,
+      "packetLossModel": 0.05,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1394,
+      "retransmissionStalls": 85,
+      "snapshots": [
+        226,
+        226
+      ],
+      "commonTicks": 226,
+      "desyncTicks": 0,
+      "correctionSamples": 450,
+      "p95CorrectionTiles": 0.1931967684864233,
+      "maxCorrectionTiles": 0.3642704577610658,
+      "correctionsWithinHalfTile": 1,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": true
+    },
+    {
+      "rttMs": 120,
+      "packetLossModel": 0,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1384,
+      "retransmissionStalls": 0,
+      "snapshots": [
+        226,
+        226
+      ],
+      "commonTicks": 226,
+      "desyncTicks": 0,
+      "correctionSamples": 450,
+      "p95CorrectionTiles": 0.17562481130230623,
+      "maxCorrectionTiles": 0.7351164013511706,
+      "correctionsWithinHalfTile": 0.9911111111111112,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": true
+    },
+    {
+      "rttMs": 120,
+      "packetLossModel": 0.02,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1382,
+      "retransmissionStalls": 25,
+      "snapshots": [
+        226,
+        226
+      ],
+      "commonTicks": 226,
+      "desyncTicks": 0,
+      "correctionSamples": 450,
+      "p95CorrectionTiles": 0.30010522394574934,
+      "maxCorrectionTiles": 0.6016097722981968,
+      "correctionsWithinHalfTile": 0.9977777777777778,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": true
+    },
+    {
+      "rttMs": 120,
+      "packetLossModel": 0.05,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1396,
+      "retransmissionStalls": 74,
+      "snapshots": [
+        226,
+        224
+      ],
+      "commonTicks": 224,
+      "desyncTicks": 0,
+      "correctionSamples": 448,
+      "p95CorrectionTiles": 0.37125989234809254,
+      "maxCorrectionTiles": 0.7987642656470513,
+      "correctionsWithinHalfTile": 0.984375,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": true
+    },
+    {
+      "rttMs": 200,
+      "packetLossModel": 0,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1398,
+      "retransmissionStalls": 0,
+      "snapshots": [
+        226,
+        226
+      ],
+      "commonTicks": 226,
+      "desyncTicks": 0,
+      "correctionSamples": 450,
+      "p95CorrectionTiles": 0.15158194789970025,
+      "maxCorrectionTiles": 0.23532234445032785,
+      "correctionsWithinHalfTile": 1,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": true
+    },
+    {
+      "rttMs": 200,
+      "packetLossModel": 0.02,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1398,
+      "retransmissionStalls": 25,
+      "snapshots": [
+        228,
+        228
+      ],
+      "commonTicks": 228,
+      "desyncTicks": 0,
+      "correctionSamples": 450,
+      "p95CorrectionTiles": 0.3586853150025746,
+      "maxCorrectionTiles": 1.1512459827124601,
+      "correctionsWithinHalfTile": 0.9644444444444444,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": true
+    },
+    {
+      "rttMs": 200,
+      "packetLossModel": 0.05,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1392,
+      "retransmissionStalls": 61,
+      "snapshots": [
+        226,
+        226
+      ],
+      "commonTicks": 226,
+      "desyncTicks": 0,
+      "correctionSamples": 450,
+      "p95CorrectionTiles": 0.5000658713761653,
+      "maxCorrectionTiles": 1.1028788743256754,
+      "correctionsWithinHalfTile": 0.9488888888888889,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": false
+    }
+  ]
+}

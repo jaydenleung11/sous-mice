@@ -1,0 +1,45 @@
+{
+  "url": "https://sous-mice.vercel.app",
+  "code": "DR6K",
+  "commonTicks": 1362,
+  "reconnectSameIdentity": true,
+  "errors": [],
+  "tapTargets": [
+    {
+      "label": "Use",
+      "width": 65,
+      "height": 76
+    },
+    {
+      "label": "Grab",
+      "width": 65,
+      "height": 76
+    },
+    {
+      "label": "Toss",
+      "width": 56,
+      "height": 64
+    },
+    {
+      "label": "Inspect",
+      "width": 56,
+      "height": 64
+    },
+    {
+      "label": "Trap",
+      "width": 56,
+      "height": 64
+    },
+    {
+      "label": "Ability",
+      "width": 56,
+      "height": 64
+    },
+    {
+      "label": "Ping",
+      "width": 56,
+      "height": 64
+    }
+  ],
+  "lastTime": 92.066666666664
+}
