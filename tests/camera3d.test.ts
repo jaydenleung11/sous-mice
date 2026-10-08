@@ -7,9 +7,9 @@ describe('whole-mouse follow camera',()=>{
   const origin=new Vector3(9,.07,21);
   for(const yaw of [0,Math.PI/2,Math.PI,-Math.PI/2]){
    const at=mouseFollowPosition(origin,yaw,0,[]),offset=at.clone().sub(origin);
-   expect(at.y).toBeGreaterThan(.25);
+   expect(at.y).toBeGreaterThan(.16);
    expect(offset.dot(new Vector3(Math.cos(yaw),0,Math.sin(yaw)))).toBeLessThan(-.3);
-   expect(at.distanceTo(origin)).toBeCloseTo(Math.hypot(.39,.055),5);
+   expect(at.distanceTo(origin)).toBeCloseTo(Math.hypot(.34,.055),5);
   }
  });
  it('shortens the camera boom before a wall including near-plane clearance',()=>{

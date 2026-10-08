@@ -1,0 +1,138 @@
+{
+  "url": "http://127.0.0.1:5173",
+  "first": {
+    "staffVisible": 6,
+    "cookingStaff": 3,
+    "staff": [
+      {
+        "id": "staff-0",
+        "variant": 0,
+        "x": 6.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-1",
+        "variant": 1,
+        "x": 13.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-2",
+        "variant": 2,
+        "x": 20.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-3",
+        "variant": 3,
+        "x": 18.2,
+        "y": 16.2,
+        "z": 0,
+        "angle": -1.5707963267948966,
+        "speed": 0,
+        "task": "carry"
+      },
+      {
+        "id": "staff-4",
+        "variant": 4,
+        "x": 4.5,
+        "y": 20.026666666666667,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0.8,
+        "task": "carry"
+      },
+      {
+        "id": "staff-5",
+        "variant": 5,
+        "x": 11.773333333333335,
+        "y": 22.4,
+        "z": 0,
+        "angle": 3.141592653589793,
+        "speed": 0.8,
+        "task": "carry"
+      }
+    ],
+    "simmeringPots": 6
+  },
+  "after": {
+    "staffVisible": 6,
+    "cookingStaff": 3,
+    "staff": [
+      {
+        "id": "staff-0",
+        "variant": 0,
+        "x": 6.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-1",
+        "variant": 1,
+        "x": 13.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-2",
+        "variant": 2,
+        "x": 20.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-3",
+        "variant": 3,
+        "x": 18.2,
+        "y": 16.2,
+        "z": 0,
+        "angle": -1.5707963267948966,
+        "speed": 0,
+        "task": "carry"
+      },
+      {
+        "id": "staff-4",
+        "variant": 4,
+        "x": 4.5,
+        "y": 20.479999999999997,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0.8,
+        "task": "carry"
+      },
+      {
+        "id": "staff-5",
+        "variant": 5,
+        "x": 11.319999999999999,
+        "y": 22.4,
+        "z": 0,
+        "angle": 3.141592653589793,
+        "speed": 0.8,
+        "task": "carry"
+      }
+    ],
+    "simmeringPots": 6
+  },
+  "errors": []
+}

@@ -1,0 +1,56 @@
+{
+  "url": "http://127.0.0.1:5173",
+  "code": "8Q4N",
+  "commonTicks": 1359,
+  "transitSnapshots": 84,
+  "reconnectSameIdentity": true,
+  "errors": [],
+  "tapTargets": [
+    {
+      "label": "Use",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Grab",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Toss",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Inspect",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Trap",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Ability",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Peek",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Listen",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Ping",
+      "width": 52,
+      "height": 52
+    }
+  ],
+  "lastTime": 91.13333333333073
+}

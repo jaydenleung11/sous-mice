@@ -38,4 +38,6 @@ Observed results as of October 5, 2026. These are not a blanket acceptance certi
 Full human eight-minute matches at 2, 4 and 8 players, real-device testing, a complete accessibility audit and signed native builds remain outstanding. See RELEASE.md for deferred features.
 
 ## V3 preview
+
+October 8 busy-kitchen update: 94 unit checks, validators/types/build, and twelve successful 3D browser checks. Six service cooks move on collision-clear routes; the actual game checks cooking and visible/remapped touch keyboard badges. Stationary Intel Chrome measured High 59.81fps, Medium 59.72fps and Low 59.85fps; strict High ≥60 remains unpassed. See KITCHEN-ART.md and evidence/kitchen. Background cooks are decorative actors synchronized to match time, not extra capture opponents.
 See RELEASE-V3.md and evidence/v3 for the current automated, public-browser, network and performance results. The preview is live at https://sous-mice.vercel.app/?r=3d. The 90-second public two-context transit/privacy/reconnect test passed. Phone-size browser emulation does not certify physical-phone performance; the full v2/v3 acceptance bar remains incomplete.
