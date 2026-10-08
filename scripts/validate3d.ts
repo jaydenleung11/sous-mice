@@ -1,4 +1,4 @@
-import {writeFileSync} from 'node:fs';
+import {writeFileSync,mkdirSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 import {MAP3D,COLLIDERS3D,TRAVERSALS3D,SCALE3D,NAV3D,walkable3D,segmentWalkable3D,traversalPosition3D,zoneAt3D,type Navigation3D} from '../shared/content3d';
 import type {Team,Vec} from '../shared/protocol';
@@ -35,4 +35,4 @@ export function validate3D(nav:Record<Team,Navigation3D>=NAV3D){
  const ratio=SCALE3D.chefModelHeight/SCALE3D.mouseEye,tables=COLLIDERS3D.filter(c=>c.id.startsWith('table-')&&c.id.endsWith('-top')),doors=COLLIDERS3D.filter(c=>c.id.startsWith('door-lintel-'));check('AT-17',ratio>=22&&ratio<=28&&tables.length===8&&tables.every(c=>c.z+c.h>=.7&&c.z+c.h<=.8)&&doors.length>0&&doors.every(c=>c.z>=1.9),`Chef/mouse-eye ratio ${ratio.toFixed(2)}; ${tables.length} actual tabletops at.75m; ${doors.length} door lintels clear2m.`);
  return checks;
 }
-if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){const nav=process.argv.includes('--generate')?{mouse:generateNavigation3D('mouse'),chef:generateNavigation3D('chef')}:NAV3D;if(process.argv.includes('--generate'))writeFileSync('content/nav3d.json',JSON.stringify(nav));const checks=validate3D(nav);for(const c of checks)console.log(`${c.pass?'PASS':'FAIL'} ${c.id} ${c.detail}`);writeFileSync('work/scale3d-report.md',checks.map(c=>`- ${c.pass?'PASS':'FAIL'} ${c.id}: ${c.detail}`).join('\n'));if(checks.some(c=>!c.pass))process.exitCode=1;}
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){const nav=process.argv.includes('--generate')?{mouse:generateNavigation3D('mouse'),chef:generateNavigation3D('chef')}:NAV3D;if(process.argv.includes('--generate'))writeFileSync('content/nav3d.json',JSON.stringify(nav));const checks=validate3D(nav);for(const c of checks)console.log(`${c.pass?'PASS':'FAIL'} ${c.id} ${c.detail}`);mkdirSync('work',{recursive:true});writeFileSync('work/scale3d-report.md',checks.map(c=>`- ${c.pass?'PASS':'FAIL'} ${c.id}: ${c.detail}`).join('\n'));if(checks.some(c=>!c.pass))process.exitCode=1;}
