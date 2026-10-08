@@ -1,16 +1,16 @@
 import {BUTTON} from '../shared/constants';
 import type {InputFrame,Team,Vec} from '../shared/protocol';
 import {settings} from './settings';
-import {settings3d} from './settings3d';
+import {settings3d,toggleMouseCamera} from './settings3d';
 
-export const keys3d:Record<string,string>={forward:'KeyW',back:'KeyS',left:'KeyA',right:'KeyD',use:'KeyE',eat:'KeyF',attack:'KeyQ',jump:'Space',dodge:'KeyX',ability:'KeyR',trap:'KeyT',colander:'KeyV',inspect:'KeyI',sense:'KeyC',peek:'KeyB',ear:'KeyN',ping:'Tab',map:'KeyM',sprint:'ShiftLeft',sneak:'ControlLeft'};
+export const keys3d:Record<string,string>={forward:'KeyW',back:'KeyS',left:'KeyA',right:'KeyD',use:'KeyE',eat:'KeyF',attack:'KeyQ',jump:'Space',dodge:'KeyX',ability:'KeyR',trap:'KeyT',colander:'KeyV',inspect:'KeyI',sense:'KeyC',peek:'KeyB',ear:'KeyN',ping:'Tab',map:'KeyM',view:'KeyP',sprint:'ShiftLeft',sneak:'ControlLeft'};
 export function key3d(action:string){return settings.keys['3d-'+action]||keys3d[action];}
 const bits:Record<string,number>={use:BUTTON.USE,eat:BUTTON.EAT,jump:BUTTON.JUMP,dodge:BUTTON.DODGE,ability:BUTTON.ABILITY,trap:BUTTON.TRAP,colander:BUTTON.COLANDER,inspect:BUTTON.INSPECT,sense:BUTTON.SENSE,peek:BUTTON.PEEK,ear:BUTTON.EAR,ping:BUTTON.PING};
 export class Controls3D{
  enabled=false;team:Team='mouse';seq=0;keys=new Set<string>();stick={x:0,y:0};yaw=0;pitch=0;aiming=false;mapOpen=false;
  private buttons=0;private pulses=0;private toggled=0;private disposers:(()=>void)[]=[];private lastYaw=0;private lastPitch=0;private orientation?:{alpha:number;beta:number};
  constructor(){
-  window.addEventListener('keydown',e=>{if(!this.enabled||e.target instanceof HTMLInputElement||e.target instanceof HTMLSelectElement||e.repeat)return;if(Object.keys(keys3d).some(k=>key3d(k)===e.code)||['Space','Tab','AltLeft','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();this.keys.add(e.code);if(e.code===key3d('attack'))this.aiming=true;if(e.code===key3d('map'))this.mapOpen=!this.mapOpen;if(e.code===key3d('sense')&&settings3d.toggleSense)this.toggled^=BUTTON.SENSE;if(e.code===key3d('use')&&settings3d.toggleUse)this.toggled^=BUTTON.USE;});
+  window.addEventListener('keydown',e=>{if(!this.enabled||e.target instanceof HTMLInputElement||e.target instanceof HTMLSelectElement||e.repeat)return;if(Object.keys(keys3d).some(k=>key3d(k)===e.code)||['Space','Tab','AltLeft','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();this.keys.add(e.code);if(e.code===key3d('attack'))this.aiming=true;if(e.code===key3d('map'))this.mapOpen=!this.mapOpen;if(e.code===key3d('view')&&this.team==='mouse')toggleMouseCamera();if(e.code===key3d('sense')&&settings3d.toggleSense)this.toggled^=BUTTON.SENSE;if(e.code===key3d('use')&&settings3d.toggleUse)this.toggled^=BUTTON.USE;});
   window.addEventListener('keyup',e=>{this.keys.delete(e.code);if(e.code===key3d('attack')&&this.aiming){this.pulses|=BUTTON.ATTACK;this.aiming=false;}});
   window.addEventListener('blur',()=>this.clear());document.addEventListener('visibilitychange',()=>this.clear());
   window.addEventListener('deviceorientation',e=>{if(!this.enabled||!settings3d.gyro||e.alpha===null||e.beta===null){this.orientation=undefined;return;}if(this.orientation){const dx=((e.alpha-this.orientation.alpha+540)%360)-180,dy=e.beta-this.orientation.beta;if(Math.abs(dx)<20&&Math.abs(dy)<20)this.look(-dx*2,-dy*2);}this.orientation={alpha:e.alpha,beta:e.beta};});

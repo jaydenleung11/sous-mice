@@ -1,6 +1,6 @@
 # Build state
 
-The first-person 3D preview is published and merged into main through PR #1. Classic remains the default until the full acceptance checklist passes.
+The 3D preview was published and merged into main through PR #1. The October 8 cartoon art update makes whole-mouse follow view the default inside 3D, with a View button / P shortcut for first-person. See ART-CARTOON.md for the latest artwork and verification. Classic remains the default renderer until the full acceptance checklist passes.
 
 - 3D: https://sous-mice.vercel.app/?r=3d
 - Classic: https://sous-mice.vercel.app/?r=2d
