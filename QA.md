@@ -36,3 +36,6 @@ Observed results as of October 5, 2026. These are not a blanket acceptance certi
 | AT-16 public 90-second play | Pass with two isolated browser contexts |
 
 Full human eight-minute matches at 2, 4 and 8 players, real-device testing, a complete accessibility audit and signed native builds remain outstanding. See RELEASE.md for deferred features.
+
+## V3 preview
+See RELEASE-V3.md and evidence/v3 for the current automated, public-browser, network and performance results. The preview is live at https://sous-mice.vercel.app/?r=3d. The 90-second public two-context transit/privacy/reconnect test passed. Phone-size browser emulation does not certify physical-phone performance; the full v2/v3 acceptance bar remains incomplete.

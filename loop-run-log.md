@@ -18,3 +18,5 @@
 
 26, v3 public smoke, Vercel production published via Git preview promotion after clean-validator fix; 90sec desktop/phone private contexts:1406 shared ticks,85 hidden transit snapshots,same refresh identity,no page errors. Physical-phone/full-acceptance gates remain open.
 27, final review, removed visual baseboard trim from elevated door lintels so floor openings match collision; typecheck passed. Merge/persist next.
+
+28, release sync, PR1 merged into main as0f1467d; optional3D public playtest is published and verified. Classic remains default because physical-device and earlier acceptance gaps remain. Final state/evidence saved.
