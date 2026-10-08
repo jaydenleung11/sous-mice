@@ -2,7 +2,7 @@ import {Box3,MathUtils,Ray,Vector3} from 'three';
 
 /** Orbit the mouse's whole body, with a raised default angle and wall clearance. */
 export function mouseFollowPosition(origin:Vector3,yaw:number,pitch:number,colliders:Box3[]){
- const elevation=MathUtils.clamp(.56-pitch*.8,-.18,1.25),radius=.39;
+ const elevation=MathUtils.clamp(.34-pitch*.8,-.18,1.25),radius=.34;
  const desired=origin.clone().add(new Vector3(
   -Math.cos(yaw)*Math.cos(elevation)*radius-Math.sin(yaw)*.055,
   Math.sin(elevation)*radius,

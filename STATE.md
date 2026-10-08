@@ -1,5 +1,7 @@
 # Build state
 
+The busy French kitchen update is ready for publishing. It restores keyboard letters on touch controls, adds six synchronized background cooks, simmering food, detailed copper/brass cooking stations, richer kitchen/pantry props and a lower mouse follow camera. See KITCHEN-ART.md and evidence/kitchen for scope and verification. Room rules and hosting protocol are unchanged.
+
 The 3D preview was published and merged into main through PR #1. The October 8 cartoon art update is published through PR #2 (06b893e) and the final HUD fix (26c6938). It makes whole-mouse follow view the default inside 3D, with a View button / P shortcut for first-person. See ART-CARTOON.md for the latest artwork and verification. Classic remains the default renderer until the full acceptance checklist passes.
 
 - 3D: https://sous-mice.vercel.app/?r=3d

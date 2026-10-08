@@ -1,0 +1,231 @@
+{
+  "errors": [],
+  "first": {
+    "staffVisible": 6,
+    "cookingStaff": 2,
+    "staff": [
+      {
+        "id": "staff-0",
+        "variant": 0,
+        "x": 6.0995426020522014,
+        "y": 22.849222086420028,
+        "z": 0,
+        "angle": 1.8127168954793014,
+        "speed": 0.8,
+        "task": "walk"
+      },
+      {
+        "id": "staff-1",
+        "variant": 1,
+        "x": 13.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-2",
+        "variant": 2,
+        "x": 20.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-3",
+        "variant": 3,
+        "x": 18.2,
+        "y": 16.2,
+        "z": 0,
+        "angle": -1.5707963267948966,
+        "speed": 0,
+        "task": "carry"
+      },
+      {
+        "id": "staff-4",
+        "variant": 4,
+        "x": 4.5,
+        "y": 19.393200000000892,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0.8,
+        "task": "carry"
+      },
+      {
+        "id": "staff-5",
+        "variant": 5,
+        "x": 12.406799999999105,
+        "y": 22.4,
+        "z": 0,
+        "angle": 3.141592653589793,
+        "speed": 0.8,
+        "task": "carry"
+      }
+    ],
+    "simmeringPots": 6
+  },
+  "second": {
+    "staffVisible": 6,
+    "cookingStaff": 2,
+    "staff": [
+      {
+        "id": "staff-0",
+        "variant": 0,
+        "x": 6.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-1",
+        "variant": 1,
+        "x": 13.05,
+        "y": 23.05,
+        "z": 0,
+        "angle": 1.5707963267948966,
+        "speed": 0,
+        "task": "stir"
+      },
+      {
+        "id": "staff-2",
+        "variant": 2,
+        "x": 20.046100316720572,
+        "y": 22.84331678619034,
+        "z": 0,
+        "angle": -1.5896620128165677,
+        "speed": 0.8,
+        "task": "walk"
+      },
+      {
+        "id": "staff-3",
+        "variant": 3,
+        "x": 18.2,
+        "y": 16.2,
+        "z": 0,
+        "angle": -1.5707963267948966,
+        "speed": 0,
+        "task": "carry"
+      },
+      {
+        "id": "staff-4",
+        "variant": 4,
+        "x": 4.5,
+        "y": 21.6,
+        "z": 0,
+        "angle": 3.141592653589793,
+        "speed": 0,
+        "task": "carry"
+      },
+      {
+        "id": "staff-5",
+        "variant": 5,
+        "x": 10,
+        "y": 22.4,
+        "z": 0,
+        "angle": 0,
+        "speed": 0,
+        "task": "carry"
+      }
+    ],
+    "simmeringPots": 6
+  },
+  "moved": true,
+  "metrics": {
+    "renderer": "three",
+    "kitchen": {
+      "staffVisible": 4,
+      "cookingStaff": 1,
+      "staff": [
+        {
+          "id": "staff-0",
+          "variant": 0,
+          "x": 6.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-1",
+          "variant": 1,
+          "x": 13.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-2",
+          "variant": 2,
+          "x": 20.00208852744911,
+          "y": 20.51069195480293,
+          "z": 0,
+          "angle": -1.5896620128165677,
+          "speed": 0.8,
+          "task": "walk"
+        },
+        {
+          "id": "staff-3",
+          "variant": 3,
+          "x": 18.2,
+          "y": 16.7397600000009,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0.8,
+          "task": "walk"
+        },
+        {
+          "id": "staff-4",
+          "variant": 4,
+          "x": 4.5,
+          "y": 21.6,
+          "z": 0,
+          "angle": 3.141592653589793,
+          "speed": 0,
+          "task": "carry"
+        },
+        {
+          "id": "staff-5",
+          "variant": 5,
+          "x": 10,
+          "y": 22.4,
+          "z": 0,
+          "angle": 0,
+          "speed": 0,
+          "task": "carry"
+        }
+      ],
+      "simmeringPots": 6
+    },
+    "quality": "high",
+    "renderScale": 1,
+    "drawCalls": 382,
+    "triangles": 1600274,
+    "tunnelDrawCalls": 0,
+    "tunnelTriangles": 0,
+    "frameMs": 16.78165423523615,
+    "renderMs": 3.8945203032357925,
+    "frames": 437,
+    "textures": 68,
+    "geometries": 488,
+    "contextLost": false,
+    "mouseEye": 0.06999099690214909,
+    "cameraPosition": {
+      "x": 31.19233427680989,
+      "y": 21.8945936153845,
+      "z": 0.183376608230026
+    },
+    "fov": 74.98660983772496,
+    "transit": false,
+    "cameraView": "follow",
+    "selfVisible": true
+  },
+  "note": "Development rendering harness; counter views place the mouse on existing 0.92m worktops."
+}

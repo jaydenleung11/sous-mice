@@ -1,0 +1,78 @@
+{
+  "checks": [
+    {
+      "file": "camera3d.spec.ts",
+      "title": "whole mouse is the default; touch button and P switch views and persist",
+      "status": "passed",
+      "duration": 8682
+    },
+    {
+      "file": "camera3d.spec.ts",
+      "title": "previous first-person default migrates once without erasing other settings",
+      "status": "passed",
+      "duration": 2697
+    },
+    {
+      "file": "comfort3d.spec.ts",
+      "title": "3D layout 844x390",
+      "status": "passed",
+      "duration": 3520
+    },
+    {
+      "file": "comfort3d.spec.ts",
+      "title": "3D layout 932x430",
+      "status": "passed",
+      "duration": 3344
+    },
+    {
+      "file": "comfort3d.spec.ts",
+      "title": "3D layout 1024x768",
+      "status": "passed",
+      "duration": 3551
+    },
+    {
+      "file": "comfort3d.spec.ts",
+      "title": "3D layout 1440x900",
+      "status": "passed",
+      "duration": 3587
+    },
+    {
+      "file": "comfort3d.spec.ts",
+      "title": "3D comfort settings persist and affect the camera",
+      "status": "passed",
+      "duration": 3846
+    },
+    {
+      "file": "three.spec.ts",
+      "title": "3D mouse training through browser controls",
+      "status": "passed",
+      "duration": 20922
+    },
+    {
+      "file": "three.spec.ts",
+      "title": "3D chef training through browser controls",
+      "status": "passed",
+      "duration": 17388
+    },
+    {
+      "file": "three.spec.ts",
+      "title": "3D private desktop and phone join, transit, play90seconds and restore after refresh",
+      "status": "passed",
+      "duration": 103149
+    },
+    {
+      "file": "kitchen3d.spec.ts",
+      "title": "keyboard letters stay visible on touch controls and reflect remapping",
+      "status": "passed",
+      "duration": 6203
+    },
+    {
+      "file": "kitchen3d.spec.ts",
+      "title": "the service kitchen has moving human cooks and six simmering pots",
+      "status": "passed",
+      "duration": 4665
+    }
+  ],
+  "successfulChecks": 12,
+  "note": "Ten successful checks from initial run plus two kitchen checks from corrected run. Initial remap test setup failed on a closed settings disclosure; corrected setup opens the disclosure."
+}
