@@ -26,3 +26,5 @@ Reference images guided the broad art direction: soft proportions, appetizing co
 - Installed Chrome on this computer's Intel GPU measured approximately 60fps in stationary High desktop and Medium/Low phone-size scenes, with no page errors. This is viewport emulation, not a physical-phone performance claim. Details are in `evidence/cartoon/performance.json`.
 
 The classic renderer remains available and the earlier physical-phone, moving-eight-player, and network/startup acceptance gaps remain open.
+
+Published and verified: PR #2 merged as 06b893e; final hint fix 26c6938; Vercel production dpl_D4x6ffgboBRhFM7iDeSj8TMzpQhx. Public private-browser 90-second room: 1369 matching ticks, 84 transit snapshots hidden from the chef, same identity after refresh, no page errors. Public camera switching and settings migration pass. Seven classic browser regressions also pass. A temporary network-change navigation error was resolved by retrying the public room test.

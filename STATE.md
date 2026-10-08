@@ -1,6 +1,6 @@
 # Build state
 
-The 3D preview was published and merged into main through PR #1. The October 8 cartoon art update makes whole-mouse follow view the default inside 3D, with a View button / P shortcut for first-person. See ART-CARTOON.md for the latest artwork and verification. Classic remains the default renderer until the full acceptance checklist passes.
+The 3D preview was published and merged into main through PR #1. The October 8 cartoon art update is published through PR #2 (06b893e) and the final HUD fix (26c6938). It makes whole-mouse follow view the default inside 3D, with a View button / P shortcut for first-person. See ART-CARTOON.md for the latest artwork and verification. Classic remains the default renderer until the full acceptance checklist passes.
 
 - 3D: https://sous-mice.vercel.app/?r=3d
 - Classic: https://sous-mice.vercel.app/?r=2d
@@ -14,3 +14,5 @@ Verified October 8, 2026: 90 unit tests; both graph validators/build/type checks
 Deployment: Cloudflare ee18d21c-9fa4-46a1-b1fb-ecf6f3dcf7f9; verified Vercel production dpl_EBMMErsTAfnK844tfs8EqrJRcpng; main merge 0f1467d. Subsequent source-only documentation updates may cause equivalent automatic frontend rebuilds.
 
 Remaining: physical-phone performance, full GPU/process memory and 4G startup, moving eight-player performance, human balance and earlier v2 targets. Deferred depth features and native/store release are listed in RELEASE-V3.md. No credential blocker remains. Next milestone: close these acceptance gaps before making 3D the default.
+
+Cartoon release verification: Vercel dpl_D4x6ffgboBRhFM7iDeSj8TMzpQhx; 93 unit tests, two 3D tutorials, camera/layout/comfort checks, seven classic browser checks. Public 90-second room: 1369 common ticks, 84 private transit snapshots, same reconnect identity, no page errors. Documentation/evidence-only commits may trigger equivalent rebuilds.

@@ -7,6 +7,8 @@ test('whole mouse is the default; touch button and P switch views and persist',a
  await expect.poll(async()=>(await metric()).selfVisible).toBe(true);
  await expect(page.locator('#camera3d-toggle')).toHaveAccessibleName('Switch to first-person view');
  expect((await metric()).cameraView).toBe('follow');
+ const hint=await page.locator('#look-hint').boundingBox();
+ expect(hint!.y+hint!.height).toBeLessThan(900*.45);
  await page.locator('#camera3d-toggle').click();
  await expect.poll(async()=>(await metric()).selfVisible).toBe(false);expect((await metric()).cameraView).toBe('first-person');
  await expect.poll(async()=>(await metric()).cameraPosition.z).toBeLessThan(.1);

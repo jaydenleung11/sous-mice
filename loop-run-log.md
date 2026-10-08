@@ -23,3 +23,5 @@
 
 29, cartoon camera, latest user request overrides first-person default in 3D. Added collision-aware raised follow view, persistent View/P toggle, local-body visibility in cover, and corrected authoritative held height. Camera unit and browser tests pass after waiting for renderer readiness in the browser checks.
 30, cartoon art, original rounded mouse/food meshes and warm painted kitchen surfaces; visual review found a chili seam, replaced it with a closed curved lathe mesh. Rounded counters and chef eyes refined. 93 unit tests, validators/build, both tutorials, four layouts/comfort recovery and 90sec multiplayer playtest pass. Intel stationary High/Medium/Low approximately60fps; mobile viewport emulation only. Publishing the verified change next.
+
+31, cartoon public release, PR2 merged; final screenshot caught look hint over the mouse and moved it above play. Camera/layout regression passes, seven classic regressions pass. Public camera checks and90sec room passed after a temporary navigation network error: 1369 common ticks,84 private transit snapshots,same refresh identity,no page errors. Vercel dpl_D4x6ffgboBRhFM7iDeSj8TMzpQhx.

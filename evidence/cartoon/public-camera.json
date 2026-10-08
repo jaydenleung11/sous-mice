@@ -1,0 +1,54 @@
+{
+  "url": "https://sous-mice.vercel.app/?r=3d",
+  "follow": {
+    "renderer": "three",
+    "quality": "high",
+    "renderScale": 1,
+    "drawCalls": 146,
+    "triangles": 131708,
+    "tunnelDrawCalls": 0,
+    "tunnelTriangles": 0,
+    "frameMs": 18.408116993764907,
+    "renderMs": 4.138844830665827,
+    "frames": 75,
+    "textures": 27,
+    "geometries": 77,
+    "contextLost": false,
+    "mouseEye": 0.07,
+    "cameraPosition": {
+      "x": 21.66957050670477,
+      "y": 28.555,
+      "z": 0.2771626171891446
+    },
+    "fov": 75.03184372584823,
+    "transit": false,
+    "cameraView": "follow",
+    "selfVisible": true
+  },
+  "firstPerson": {
+    "renderer": "three",
+    "quality": "high",
+    "renderScale": 1,
+    "drawCalls": 119,
+    "triangles": 106896,
+    "tunnelDrawCalls": 0,
+    "tunnelTriangles": 0,
+    "frameMs": 19.264500534466983,
+    "renderMs": 6.842834131303601,
+    "frames": 136,
+    "textures": 30,
+    "geometries": 79,
+    "contextLost": false,
+    "mouseEye": 0.07,
+    "cameraPosition": {
+      "x": 22,
+      "y": 28.5,
+      "z": 0.07
+    },
+    "fov": 75.01170879620793,
+    "transit": false,
+    "cameraView": "first-person",
+    "selfVisible": false
+  },
+  "errors": []
+}
