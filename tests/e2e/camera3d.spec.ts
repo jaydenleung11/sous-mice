@@ -1,0 +1,28 @@
+import {test,expect} from '@playwright/test';
+test('whole mouse is the default; touch button and P switch views and persist',async({page,baseURL})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(baseURL+'?r=3d');await page.locator('#training').click();await page.locator('#learn-mouse').click();
+ await expect(page.locator('canvas[data-engine]')).toBeVisible();
+ const metric=()=>page.evaluate(()=>(window as any).__sous3d.metrics());
+ await expect.poll(async()=>(await metric()).selfVisible).toBe(true);
+ await expect(page.locator('#camera3d-toggle')).toHaveAccessibleName('Switch to first-person view');
+ expect((await metric()).cameraView).toBe('follow');
+ await page.locator('#camera3d-toggle').click();
+ await expect.poll(async()=>(await metric()).selfVisible).toBe(false);expect((await metric()).cameraView).toBe('first-person');
+ await expect.poll(async()=>(await metric()).cameraPosition.z).toBeLessThan(.1);
+ await page.reload();await page.locator('#training').click();await page.locator('#learn-mouse').click();
+ await expect(page.locator('canvas[data-engine]')).toBeVisible();
+ await expect.poll(async()=>(await metric()).cameraView).toBe('first-person');
+ await page.keyboard.press('KeyP');await expect.poll(async()=>(await metric()).selfVisible).toBe(true);
+ await expect(page.locator('#camera3d-toggle')).toHaveAttribute('aria-pressed','true');
+ await page.setViewportSize({width:844,height:390});
+ const bounds=await page.locator('#camera3d-toggle').boundingBox();expect(bounds!.width).toBeGreaterThanOrEqual(56);expect(bounds!.height).toBeGreaterThanOrEqual(56);
+ expect(errors).toEqual([]);
+});
+test('previous first-person default migrates once without erasing other settings',async({page,baseURL})=>{
+ await page.addInitScript(()=>{if(!sessionStorage.getItem('seeded')){localStorage.setItem('sous-settings-3d',JSON.stringify({comfortCamera:false,fov:95,shake:0}));sessionStorage.setItem('seeded','yes');}});
+ await page.goto(baseURL+'?r=3d');await page.locator('#training').click();await page.locator('#learn-mouse').click();
+ await expect(page.locator('canvas[data-engine]')).toBeVisible();
+ await expect.poll(()=>page.evaluate(()=>(window as any).__sous3d.metrics().cameraView)).toBe('follow');
+ expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('sous-settings-3d')!))).toMatchObject({comfortCamera:true,fov:95,shake:0});
+});

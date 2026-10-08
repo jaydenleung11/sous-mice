@@ -20,3 +20,6 @@
 27, final review, removed visual baseboard trim from elevated door lintels so floor openings match collision; typecheck passed. Merge/persist next.
 
 28, release sync, PR1 merged into main as0f1467d; optional3D public playtest is published and verified. Classic remains default because physical-device and earlier acceptance gaps remain. Final state/evidence saved.
+
+29, cartoon camera, latest user request overrides first-person default in 3D. Added collision-aware raised follow view, persistent View/P toggle, local-body visibility in cover, and corrected authoritative held height. Camera unit and browser tests pass after waiting for renderer readiness in the browser checks.
+30, cartoon art, original rounded mouse/food meshes and warm painted kitchen surfaces; visual review found a chili seam, replaced it with a closed curved lathe mesh. Rounded counters and chef eyes refined. 93 unit tests, validators/build, both tutorials, four layouts/comfort recovery and 90sec multiplayer playtest pass. Intel stationary High/Medium/Low approximately60fps; mobile viewport emulation only. Publishing the verified change next.

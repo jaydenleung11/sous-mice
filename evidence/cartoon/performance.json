@@ -1,0 +1,136 @@
+{
+  "environment": "Installed headless Chrome, hardware accelerated, local dev build; mobile is viewport emulation, not a physical phone.",
+  "gpu": "ANGLE (Intel, Intel(R) Graphics (0x0000B090) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "errors": [],
+  "profiles": [
+    {
+      "quality": "high",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fps": 60.04475882187716,
+      "t": 12869.900000000373,
+      "renderer": "three",
+      "renderScale": 1,
+      "drawCalls": 297,
+      "triangles": 394544,
+      "tunnelDrawCalls": 0,
+      "tunnelTriangles": 0,
+      "frameMs": 16.661826234493525,
+      "renderMs": 3.280104826563081,
+      "frames": 707,
+      "textures": 43,
+      "geometries": 199,
+      "contextLost": false,
+      "mouseEye": 0.06999999999999998,
+      "cameraPosition": {
+        "x": 8.635000238765606,
+        "y": 21.055,
+        "z": 0.20738695097728505
+      },
+      "fov": 74.9894444439878,
+      "transit": false,
+      "cameraView": "follow",
+      "selfVisible": true,
+      "heap": 94860929,
+      "frameTarget": 60,
+      "framePass": true
+    },
+    {
+      "quality": "medium",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "fps": 59.9938109546148,
+      "t": 25351.699999999255,
+      "renderer": "three",
+      "renderScale": 0.85,
+      "drawCalls": 123,
+      "triangles": 169076,
+      "tunnelDrawCalls": 0,
+      "tunnelTriangles": 0,
+      "frameMs": 16.661668114288187,
+      "renderMs": 1.83199377469343,
+      "frames": 1454,
+      "textures": 43,
+      "geometries": 199,
+      "contextLost": false,
+      "mouseEye": 0.06999999999999999,
+      "cameraPosition": {
+        "x": 8.635000238765606,
+        "y": 21.055,
+        "z": 0.20738695097728505
+      },
+      "fov": 74.9894444439878,
+      "transit": false,
+      "cameraView": "follow",
+      "selfVisible": true,
+      "heap": 100718798,
+      "frameTarget": 30,
+      "framePass": true
+    },
+    {
+      "quality": "low",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "fps": 59.96581948288805,
+      "t": 37506.5,
+      "renderer": "three",
+      "renderScale": 0.65,
+      "drawCalls": 109,
+      "triangles": 149076,
+      "tunnelDrawCalls": 0,
+      "tunnelTriangles": 0,
+      "frameMs": 16.66403847115987,
+      "renderMs": 1.9438063502975806,
+      "frames": 2183,
+      "textures": 43,
+      "geometries": 199,
+      "contextLost": false,
+      "mouseEye": 0.06999999999999999,
+      "cameraPosition": {
+        "x": 8.635000238765606,
+        "y": 21.055,
+        "z": 0.20738695097728505
+      },
+      "fov": 74.9894444439878,
+      "transit": false,
+      "cameraView": "follow",
+      "selfVisible": true,
+      "heap": 108921462,
+      "frameTarget": 30,
+      "framePass": true
+    }
+  ],
+  "tunnel": {
+    "fps": 60.035761734936905,
+    "t": 48668.40000000037,
+    "renderer": "three",
+    "quality": "low",
+    "renderScale": 0.65,
+    "drawCalls": 6,
+    "triangles": 81216,
+    "tunnelDrawCalls": 6,
+    "tunnelTriangles": 81216,
+    "frameMs": 16.660429352017335,
+    "renderMs": 0.4875659314283677,
+    "frames": 2846,
+    "textures": 44,
+    "geometries": 205,
+    "contextLost": false,
+    "mouseEye": 0.06999999999999999,
+    "cameraPosition": {
+      "x": 8.635000238765606,
+      "y": 21.055,
+      "z": 0.20738695097728505
+    },
+    "fov": 74.9894444439878,
+    "transit": true,
+    "cameraView": "follow",
+    "selfVisible": true
+  }
+}
