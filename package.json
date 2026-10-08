@@ -8,21 +8,24 @@
     "build": "npm run validate && tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --root .",
-    "validate": "tsx scripts/validate.ts",
+    "validate": "tsx scripts/validate.ts && tsx scripts/validate3d.ts",
     "start": "tsx server/index.ts",
     "simulate": "tsx scripts/simulate.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "simulate:3d": "tsx scripts/simulate3d.ts"
   },
   "dependencies": {
     "@fontsource/fredoka": "^5.2.7",
     "@fontsource/nunito": "^5.2.7",
     "pixi.js": "^8.13.0",
+    "three": "^0.186.1",
     "ws": "^8.18.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261006.1",
     "@playwright/test": "^1.55.1",
     "@types/node": "^22.18.6",
+    "@types/three": "^0.186.0",
     "@types/ws": "^8.18.1",
     "concurrently": "^9.2.1",
     "partykit": "latest",

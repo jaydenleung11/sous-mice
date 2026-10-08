@@ -1,0 +1,270 @@
+{
+  "completed": 9,
+  "requested": 9,
+  "failures": [],
+  "timing": {
+    "bots": {
+      "meanMs": 0.2897948701122342,
+      "p99Ms": 4.395700000000943,
+      "maxMs": 166.29330000000118,
+      "samples": 88384
+    },
+    "simulation": {
+      "meanMs": 0.12466433743664282,
+      "p99Ms": 1.2572999999974854,
+      "maxMs": 28.577100000000428,
+      "samples": 88384
+    },
+    "snapshots": {
+      "meanMs": 0.13718886563178723,
+      "p99Ms": 1.5596999999979744,
+      "maxMs": 56.65469999999914,
+      "samples": 88384
+    },
+    "total": {
+      "meanMs": 0.5516480731806642,
+      "p99Ms": 5.774100000000544,
+      "maxMs": 167.16680000000088,
+      "samples": 88384
+    }
+  },
+  "elapsedWallSeconds": 50.310744,
+  "results": [
+    {
+      "players": 2,
+      "split": "1v1",
+      "seed": 1,
+      "classes": [
+        "scout",
+        "head"
+      ],
+      "seconds": 47.066666666666556,
+      "winner": "chef",
+      "reason": "Lockdown: every mouse caught",
+      "heist": 2.1,
+      "rating": 75,
+      "captures": 1,
+      "deliveries": 1,
+      "dishes": 1,
+      "rescues": 0,
+      "transits": 3,
+      "reroutes": 0,
+      "maxArrivalErrorSeconds": 0.02666666666683426,
+      "privacyChecks": 1412,
+      "wallSeconds": 0.12844319999999992
+    },
+    {
+      "players": 2,
+      "split": "1v1",
+      "seed": 2,
+      "classes": [
+        "hauler",
+        "sous"
+      ],
+      "seconds": 8.733333333333313,
+      "winner": "chef",
+      "reason": "Lockdown: every mouse caught",
+      "heist": 0,
+      "rating": 71,
+      "captures": 1,
+      "deliveries": 0,
+      "dishes": 0,
+      "rescues": 0,
+      "transits": 1,
+      "reroutes": 0,
+      "maxArrivalErrorSeconds": 0.026666666666661953,
+      "privacyChecks": 262,
+      "wallSeconds": 0.02162300000000005
+    },
+    {
+      "players": 2,
+      "split": "1v1",
+      "seed": 3,
+      "classes": [
+        "saboteur",
+        "pastry"
+      ],
+      "seconds": 10.333333333333307,
+      "winner": "chef",
+      "reason": "Lockdown: every mouse caught",
+      "heist": 0,
+      "rating": 71,
+      "captures": 1,
+      "deliveries": 0,
+      "dishes": 0,
+      "rescues": 0,
+      "transits": 1,
+      "reroutes": 0,
+      "maxArrivalErrorSeconds": 0.0066666666666614915,
+      "privacyChecks": 310,
+      "wallSeconds": 0.018270200000000045
+    },
+    {
+      "players": 4,
+      "split": "2v2",
+      "seed": 1,
+      "classes": [
+        "scout",
+        "hauler",
+        "head",
+        "sous"
+      ],
+      "seconds": 480.00000000016627,
+      "winner": "chef",
+      "reason": "Dinner service complete",
+      "heist": 49.52500000000001,
+      "rating": 100,
+      "captures": 12,
+      "deliveries": 15,
+      "dishes": 28,
+      "rescues": 0,
+      "transits": 38,
+      "reroutes": 0,
+      "maxArrivalErrorSeconds": 0.026666666671360417,
+      "privacyChecks": 28800,
+      "wallSeconds": 1.5784681
+    },
+    {
+      "players": 4,
+      "split": "2v2",
+      "seed": 2,
+      "classes": [
+        "hauler",
+        "saboteur",
+        "sous",
+        "pastry"
+      ],
+      "seconds": 480.00000000016627,
+      "winner": "chef",
+      "reason": "Dinner service complete",
+      "heist": 48.30000000000001,
+      "rating": 100,
+      "captures": 21,
+      "deliveries": 14,
+      "dishes": 28,
+      "rescues": 0,
+      "transits": 35,
+      "reroutes": 0,
+      "maxArrivalErrorSeconds": 0.026666666669370898,
+      "privacyChecks": 28800,
+      "wallSeconds": 3.2276507
+    },
+    {
+      "players": 4,
+      "split": "2v2",
+      "seed": 3,
+      "classes": [
+        "saboteur",
+        "rescuer",
+        "pastry",
+        "head"
+      ],
+      "seconds": 480.00000000016627,
+      "winner": "chef",
+      "reason": "Dinner service complete",
+      "heist": 8.4,
+      "rating": 100,
+      "captures": 12,
+      "deliveries": 4,
+      "dishes": 28,
+      "rescues": 1,
+      "transits": 12,
+      "reroutes": 0,
+      "maxArrivalErrorSeconds": 0.02666666666647899,
+      "privacyChecks": 28800,
+      "wallSeconds": 6.3614104000000005
+    },
+    {
+      "players": 8,
+      "split": "5v3",
+      "seed": 1,
+      "classes": [
+        "scout",
+        "hauler",
+        "saboteur",
+        "rescuer",
+        "scout",
+        "head",
+        "sous",
+        "pastry"
+      ],
+      "seconds": 480.00000000016627,
+      "winner": "chef",
+      "reason": "Dinner service complete",
+      "heist": 37.625000000000014,
+      "rating": 100,
+      "captures": 67,
+      "deliveries": 32,
+      "dishes": 28,
+      "rescues": 4,
+      "transits": 99,
+      "reroutes": 0,
+      "maxArrivalErrorSeconds": 0.026666666669370898,
+      "privacyChecks": 57600,
+      "wallSeconds": 13.687440099999998
+    },
+    {
+      "players": 8,
+      "split": "5v3",
+      "seed": 2,
+      "classes": [
+        "hauler",
+        "saboteur",
+        "rescuer",
+        "scout",
+        "hauler",
+        "sous",
+        "pastry",
+        "head"
+      ],
+      "seconds": 480.00000000016627,
+      "winner": "chef",
+      "reason": "Dinner service complete",
+      "heist": 58.012499999999996,
+      "rating": 100,
+      "captures": 46,
+      "deliveries": 39,
+      "dishes": 28,
+      "rescues": 5,
+      "transits": 105,
+      "reroutes": 0,
+      "maxArrivalErrorSeconds": 0.026666666671360417,
+      "privacyChecks": 57600,
+      "wallSeconds": 12.995434899999996
+    },
+    {
+      "players": 8,
+      "split": "5v3",
+      "seed": 3,
+      "classes": [
+        "saboteur",
+        "rescuer",
+        "scout",
+        "hauler",
+        "saboteur",
+        "pastry",
+        "head",
+        "sous"
+      ],
+      "seconds": 480.00000000016627,
+      "winner": "chef",
+      "reason": "Dinner service complete",
+      "heist": 64.13749999999999,
+      "rating": 100,
+      "captures": 20,
+      "deliveries": 49,
+      "dishes": 28,
+      "rescues": 6,
+      "transits": 110,
+      "reroutes": 0,
+      "maxArrivalErrorSeconds": 0.026666666669370898,
+      "privacyChecks": 57600,
+      "wallSeconds": 11.928508399999998
+    }
+  ],
+  "limitations": [
+    "Deterministic normal-difficulty bots with three class rotations per player count; not human balance evidence.",
+    "Total timings include bot pathfinding, simulation and 15Hz per-player interest snapshots, but exclude network serialization, sockets and browser rendering.",
+    "Collision/resource/ownership checks run every tick; privacy checks run on every generated per-player snapshot."
+  ]
+}

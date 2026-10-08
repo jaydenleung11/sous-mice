@@ -1,0 +1,33 @@
+{
+  "target": "ws://127.0.0.1:3001/ws",
+  "model": "Ordered WebSocket frame delay with ±15ms jitter; probabilistic loss produces one-RTT retransmission stall. Approximates TCP; not real kernel packet loss.",
+  "results": [
+    {
+      "mode": "3d",
+      "units": "metres",
+      "threshold": 0.1,
+      "rttMs": 120,
+      "packetLossModel": 0,
+      "jitterMs": 30,
+      "durationSeconds": 15,
+      "frames": 1376,
+      "retransmissionStalls": 0,
+      "snapshots": [
+        225,
+        225
+      ],
+      "commonTicks": 225,
+      "desyncTicks": 0,
+      "correctionSamples": 448,
+      "p95CorrectionTiles": 0.0955324609310087,
+      "maxCorrectionTiles": 0.2181955695749931,
+      "correctionsWithinHalfTile": 1,
+      "errors": [],
+      "open": [
+        true,
+        true
+      ],
+      "pass": true
+    }
+  ]
+}
