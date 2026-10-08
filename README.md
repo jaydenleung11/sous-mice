@@ -32,6 +32,8 @@ Original procedural game art and synthesized audio. Title illustration made with
 ## Mouse-eye 3D preview
 Open https://sous-mice.vercel.app/?r=3d to create a3D room. Invite links select the correct room mode. `?r=2d` opens classic Sous Mice. The3D preview is described in RELEASE-V3.md; it remains optional until all acceptance targets pass.
 
+The3D edition starts in whole-mouse follow view; View/P switches to first-person. Keyboard letters stay visible on desktop and touch controls. Six background service cooks walk, prepare food and stir simmering pots in the detailed French kitchen. They are decorative staff; the opposing player chefs remain the capture threat. See KITCHEN-ART.md for the latest artwork and release verification.
+
 In3D: WASD moves relative to your view; click the view to lock the mouse, or drag the right side on touch. E uses, Space jumps, E+move climbs at marked surfaces, C senses, X dodges, Q aims/releases a throw or grabs, V tosses a colander, B peeks, N listens and M toggles the map. At a hole, hold Use, choose an exit or wait for the default, then wait for server arrival. Settings include FOV, follow camera, gentle tunnel transit and graphics quality.
 
 `npm run simulate:3d` runs2/4/8-player3D bot checks. `npx tsx scripts/latency.ts <ws-url> 15 120 0 --3d` measures the3D prediction target. Browser checks use installed Chrome for hardware acceleration; software-rendered results are reported separately.

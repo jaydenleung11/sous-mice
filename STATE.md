@@ -1,6 +1,6 @@
 # Build state
 
-The busy French kitchen update is ready for publishing. It restores keyboard letters on touch controls, adds six synchronized background cooks, simmering food, detailed copper/brass cooking stations, richer kitchen/pantry props and a lower mouse follow camera. See KITCHEN-ART.md and evidence/kitchen for scope and verification. Room rules and hosting protocol are unchanged.
+The busy French kitchen update is published through PR #3, merged as866c90c. It restores keyboard letters on touch controls, adds six synchronized background cooks, simmering food, detailed copper/brass cooking stations, richer kitchen/pantry props and a lower mouse follow camera. See KITCHEN-ART.md and evidence/kitchen for scope and verification. Room rules and hosting protocol are unchanged. Verified production: dpl_2zSacgue3KJi5JeHbq32gzq4j9Pk; five public browser checks pass, including90seconds of multiplayer sync/privacy/reconnect with1384common ticks,84private transit snapshots and no page errors.
 
 The 3D preview was published and merged into main through PR #1. The October 8 cartoon art update is published through PR #2 (06b893e) and the final HUD fix (26c6938). It makes whole-mouse follow view the default inside 3D, with a View button / P shortcut for first-person. See ART-CARTOON.md for the latest artwork and verification. Classic remains the default renderer until the full acceptance checklist passes.
 

@@ -1,0 +1,417 @@
+{
+  "url": "https://sous-mice.vercel.app?r=3d",
+  "burrow": {
+    "renderer": "three",
+    "kitchen": {
+      "staffVisible": 0,
+      "cookingStaff": 0,
+      "staff": [
+        {
+          "id": "staff-0",
+          "variant": 0,
+          "x": 6.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-1",
+          "variant": 1,
+          "x": 13.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-2",
+          "variant": 2,
+          "x": 20.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-3",
+          "variant": 3,
+          "x": 18.2,
+          "y": 16.2,
+          "z": 0,
+          "angle": -1.5707963267948966,
+          "speed": 0,
+          "task": "carry"
+        },
+        {
+          "id": "staff-4",
+          "variant": 4,
+          "x": 4.5,
+          "y": 19.733333333333327,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0.8,
+          "task": "carry"
+        },
+        {
+          "id": "staff-5",
+          "variant": 5,
+          "x": 12.066666666666663,
+          "y": 22.4,
+          "z": 0,
+          "angle": 3.141592653589793,
+          "speed": 0.8,
+          "task": "carry"
+        }
+      ],
+      "simmeringPots": 6
+    },
+    "quality": "high",
+    "renderScale": 1,
+    "drawCalls": 147,
+    "triangles": 131710,
+    "tunnelDrawCalls": 0,
+    "tunnelTriangles": 0,
+    "frameMs": 16.009999999999998,
+    "renderMs": 54.52999999998138,
+    "frames": 1,
+    "textures": 28,
+    "geometries": 77,
+    "contextLost": false,
+    "mouseEye": 0.07,
+    "cameraPosition": {
+      "x": 21.679463413720363,
+      "y": 28.555,
+      "z": 0.1833856113278769
+    },
+    "fov": 84.20811437856806,
+    "transit": false,
+    "cameraView": "follow",
+    "selfVisible": true
+  },
+  "follow": {
+    "renderer": "three",
+    "kitchen": {
+      "staffVisible": 6,
+      "cookingStaff": 3,
+      "staff": [
+        {
+          "id": "staff-0",
+          "variant": 0,
+          "x": 6.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-1",
+          "variant": 1,
+          "x": 13.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-2",
+          "variant": 2,
+          "x": 20.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-3",
+          "variant": 3,
+          "x": 18.2,
+          "y": 16.2,
+          "z": 0,
+          "angle": -1.5707963267948966,
+          "speed": 0,
+          "task": "carry"
+        },
+        {
+          "id": "staff-4",
+          "variant": 4,
+          "x": 4.5,
+          "y": 21.439999999999998,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0.8,
+          "task": "carry"
+        },
+        {
+          "id": "staff-5",
+          "variant": 5,
+          "x": 10.359999999999992,
+          "y": 22.4,
+          "z": 0,
+          "angle": 3.141592653589793,
+          "speed": 0.8,
+          "task": "carry"
+        }
+      ],
+      "simmeringPots": 6
+    },
+    "quality": "high",
+    "renderScale": 1,
+    "drawCalls": 414,
+    "triangles": 1372870,
+    "tunnelDrawCalls": 0,
+    "tunnelTriangles": 0,
+    "frameMs": 25.74642814293466,
+    "renderMs": 10.993128339428038,
+    "frames": 100,
+    "textures": 55,
+    "geometries": 316,
+    "contextLost": false,
+    "mouseEye": 0.06988223808859059,
+    "cameraPosition": {
+      "x": 9.789070555886134,
+      "y": 20.7616683487024,
+      "z": 0.2015325081056898
+    },
+    "fov": 75.01171465206988,
+    "transit": false,
+    "cameraView": "follow",
+    "selfVisible": true
+  },
+  "firstPerson": {
+    "renderer": "three",
+    "kitchen": {
+      "staffVisible": 6,
+      "cookingStaff": 2,
+      "staff": [
+        {
+          "id": "staff-0",
+          "variant": 0,
+          "x": 6.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-1",
+          "variant": 1,
+          "x": 13.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-2",
+          "variant": 2,
+          "x": 20.048993889762794,
+          "y": 22.996676157428084,
+          "z": 0,
+          "angle": -1.5896620128165677,
+          "speed": 0.8,
+          "task": "walk"
+        },
+        {
+          "id": "staff-3",
+          "variant": 3,
+          "x": 18.2,
+          "y": 16.2,
+          "z": 0,
+          "angle": -1.5707963267948966,
+          "speed": 0,
+          "task": "carry"
+        },
+        {
+          "id": "staff-4",
+          "variant": 4,
+          "x": 4.5,
+          "y": 21.6,
+          "z": 0,
+          "angle": 3.141592653589793,
+          "speed": 0,
+          "task": "carry"
+        },
+        {
+          "id": "staff-5",
+          "variant": 5,
+          "x": 10,
+          "y": 22.4,
+          "z": 0,
+          "angle": 0,
+          "speed": 0,
+          "task": "carry"
+        }
+      ],
+      "simmeringPots": 6
+    },
+    "quality": "high",
+    "renderScale": 1,
+    "drawCalls": 404,
+    "triangles": 1359428,
+    "tunnelDrawCalls": 0,
+    "tunnelTriangles": 0,
+    "frameMs": 23.292669260394163,
+    "renderMs": 10.955771436225728,
+    "frames": 138,
+    "textures": 58,
+    "geometries": 316,
+    "contextLost": false,
+    "mouseEye": 0.06999985018215862,
+    "cameraPosition": {
+      "x": 10,
+      "y": 21,
+      "z": 0.06999985018215862
+    },
+    "fov": 75.01171465206988,
+    "transit": false,
+    "cameraView": "first-person",
+    "selfVisible": false
+  },
+  "phone": {
+    "before": {
+      "staffVisible": 6,
+      "cookingStaff": 3,
+      "staff": [
+        {
+          "id": "staff-0",
+          "variant": 0,
+          "x": 6.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-1",
+          "variant": 1,
+          "x": 13.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-2",
+          "variant": 2,
+          "x": 20.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-3",
+          "variant": 3,
+          "x": 18.2,
+          "y": 16.2,
+          "z": 0,
+          "angle": -1.5707963267948966,
+          "speed": 0,
+          "task": "carry"
+        },
+        {
+          "id": "staff-4",
+          "variant": 4,
+          "x": 4.5,
+          "y": 20.08,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0.8,
+          "task": "carry"
+        },
+        {
+          "id": "staff-5",
+          "variant": 5,
+          "x": 11.719999999999999,
+          "y": 22.4,
+          "z": 0,
+          "angle": 3.141592653589793,
+          "speed": 0.8,
+          "task": "carry"
+        }
+      ],
+      "simmeringPots": 6
+    },
+    "after": {
+      "staffVisible": 6,
+      "cookingStaff": 3,
+      "staff": [
+        {
+          "id": "staff-0",
+          "variant": 0,
+          "x": 6.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-1",
+          "variant": 1,
+          "x": 13.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-2",
+          "variant": 2,
+          "x": 20.05,
+          "y": 23.05,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0,
+          "task": "stir"
+        },
+        {
+          "id": "staff-3",
+          "variant": 3,
+          "x": 18.2,
+          "y": 16.2,
+          "z": 0,
+          "angle": -1.5707963267948966,
+          "speed": 0,
+          "task": "carry"
+        },
+        {
+          "id": "staff-4",
+          "variant": 4,
+          "x": 4.5,
+          "y": 21.279999999999998,
+          "z": 0,
+          "angle": 1.5707963267948966,
+          "speed": 0.8,
+          "task": "carry"
+        },
+        {
+          "id": "staff-5",
+          "variant": 5,
+          "x": 10.520000000000003,
+          "y": 22.4,
+          "z": 0,
+          "angle": 3.141592653589793,
+          "speed": 0.8,
+          "task": "carry"
+        }
+      ],
+      "simmeringPots": 6
+    },
+    "lettersVisible": true
+  },
+  "errors": []
+}
