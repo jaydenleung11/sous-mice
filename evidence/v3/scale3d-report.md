@@ -1,0 +1,9 @@
+- PASS M1-3D: 3921 chef navigation nodes; all connected.
+- PASS M2-3D: Chef capsule and nav exclude Burrow.
+- PASS M3-3D: Every public room remains reachable after each individual tunnel-edge deletion.
+- PASS M4-3D: 12 safe, paired exits including HB.
+- PASS M5-3D: Worst cage route 7.01s at captive walking speed.
+- PASS M6-3D: All food placements are capsule-clear, within14m of a hole and graph-reachable.
+- PASS M7-3D: 14 reachable hiding anchors.
+- PASS M8-3D: 0 disconnected mouse nav nodes; obstructed scripted routes: none.
+- PASS AT-17: Chef/mouse-eye ratio 26.43; 8 actual tabletops at.75m; 6 door lintels clear2m.

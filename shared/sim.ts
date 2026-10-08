@@ -1,8 +1,12 @@
 import { BUTTON, DT, TUNABLE } from './constants';
-import { FOODS, MAP, hasLOS, isWalkable } from './content';
+import { FOODS, MAP as MAP2D, hasLOS, isWalkable } from './content';
+import { MAP3D, walkable3D, rayClear3D, coverAt3D, COLLIDERS3D, supportHeight3D } from './content3d';
+import { movePlayer3D } from './controller3d';
+import { startTransit, advanceTransits, transitAvailable } from './transit3d';
+export { chooseTransitExit } from './transit3d';
 import type { World, Player, LobbyPlayer, RoomOptions, InputFrame, Vec, FoodId, Cage, Order } from './protocol';
 
-type PastPlayer = Pick<Player, 'id'|'x'|'y'|'angle'|'layer'|'state'|'invulnerableUntil'>;
+type PastPlayer = Pick<Player, 'id'|'x'|'y'|'z'|'angle'|'layer'|'state'|'invulnerableUntil'>;
 type Internal = { grabs: { id: string; at: number; angle: number }[]; pairs: Record<string, string>; events: string[]; latency: Record<string, number>; history: {time: number; players: PastPlayer[]}[]; difficulty?: RoomOptions['difficulty'] };
 type SimWorld = World & { _sim?: Internal };
 const internal = (w: World) => (w as SimWorld)._sim ??= { grabs: [], pairs: {}, events: [], latency: {}, history: [] };
@@ -11,7 +15,7 @@ export function setPlayerLatency(w: World, id: string, seconds: number) { intern
 export function botReactionTime(w: World) { return internal(w).difficulty === 'easy' ? .6 : internal(w).difficulty === 'hard' ? .2 : .35; }
 function history(w: World) {
   const state = internal(w);
-  state.history.push({ time: w.time, players: w.players.map(p => ({id:p.id,x:p.x,y:p.y,angle:p.angle,layer:p.layer,state:p.state,invulnerableUntil:p.invulnerableUntil})) });
+  state.history.push({ time: w.time, players: w.players.map(p => ({id:p.id,x:p.x,y:p.y,z:p.z,angle:p.angle,layer:p.layer,state:p.state,invulnerableUntil:p.invulnerableUntil})) });
   state.history = state.history.filter(h => w.time - h.time <= .25);
 }
 function rewind(w: World, attacker: Player, target: Player): { past: PastPlayer; time: number } {
@@ -26,7 +30,12 @@ export const distance = (a: Vec, b: Vec) => Math.hypot(a.x - b.x, a.y - b.y);
 const near = (a: Vec, b: Vec, r = 1.55) => distance(a, b) <= r;
 const heavy = (food?: FoodId) => food === 'wheel' || food === 'crate';
 const activeBuff = (p: Player, b: string, t: number) => p.buff === b && p.buffUntil > t;
-const pass = () => MAP.objects.find(o => o.kind === 'pass') ?? { x: 23, y: 20 };
+const mapFor = (w:World) => w.mode==='3d'?MAP3D:MAP2D;
+const pass = (w:World) => mapFor(w).objects.find(o => o.kind === 'pass') ?? { x: 23, y: 20 };
+const eye=(p:Vec,kind:'mouse'|'chef'|'guest'):Vec=>({x:p.x,y:p.y,z:(p.z??0)+(kind==='mouse'?.07:kind==='chef'?1.65:1.15)});
+const clear=(w:World,a:Vec,b:Vec,ak:'mouse'|'chef'|'guest'='mouse',bk:'mouse'|'chef'|'guest'='mouse')=>w.mode==='3d'?rayClear3D(eye(a,ak),eye(b,bk)):hasLOS(a,b);
+const nearHeight=(w:World,a:Vec,b:Vec,r:number)=>near(a,b,r)&&(w.mode!=='3d'||Math.abs((a.z??0)-(b.z??0))<.22);
+const nearPass=(w:World,p:Player)=>w.mode==='3d'?MAP3D.objects.some(o=>o.kind==='pass'&&(p.team==='mouse'?nearHeight(w,p,o,.5):near(p,o,1.4))):near(p,pass(w),3);
 const free = (p: Player) => p.state === 'free';
 const cooldown = (p: Player, k: string, t: number) => (p.cooldowns[k] ?? 0) <= t;
 const lastCall = (w: World) => w.time >= w.duration * .75;
@@ -35,20 +44,27 @@ const inspector = (w: World) => w.time >= 240 && w.time < 300;
 function random(w: World) { w.seed = (Math.imul(w.seed, 1664525) + 1013904223) >>> 0; return w.seed / 4294967296; }
 function emit(w: World, kind: string, text: string, p: Vec, team?: 'mouse' | 'chef', playerId?: string) {
   const actor = 'team' in p && 'id' in p ? String(p.id) : undefined;
-  w.events.push({ id: w.nextId++, kind, text, x: p.x, y: p.y, time: w.time, team, playerId: playerId ?? actor });
+  const radius=w.mode==='3d'&&['noise','soup','pan','flour','alert','panic','colander','splat','fire','slam','hit','miss'].includes(kind)?(kind==='panic'?10:kind==='noise'?8:6):undefined;
+  w.events.push({ id: w.nextId++, kind, text, x: p.x, y: p.y, z:p.z, time: w.time, team, playerId: playerId ?? actor, radius });
 }
 function rating(w: World, amount: number) { w.rating = clamp(w.rating + amount * (amount < 0 && inspector(w) ? 1.5 : 1)); }
 function gain(w: World, n: number) { w.heist = clamp(w.heist + n * clamp(5 / Math.max(1, w.players.filter(p => p.team === 'mouse').length), .8, 2) * TUNABLE.heistScale / 5 * (lastCall(w) ? 1.25 : 1)); }
-function usablePoint(p: Vec, team: Player['team'], layer: Player['layer'] = 'floor'): Vec {
+export function usablePoint(p: Vec, team: Player['team'], layer: Player['layer'] = 'floor', w?:World): Vec {
+  if(w?.mode==='3d'){
+    if(walkable3D(p.x,p.y,p.z??0,team))return{x:p.x,y:p.y,z:p.z??0};
+    for(let r=.05;r<2;r+=.05)for(let a=0;a<Math.PI*2;a+=Math.PI/8){const q={x:p.x+Math.cos(a)*r,y:p.y+Math.sin(a)*r,z:p.z??0};if(walkable3D(q.x,q.y,q.z,team))return q;}
+    const q=MAP3D.spawns[team];return{x:q.x,y:q.y,z:q.z??0};
+  }
   if (isWalkable(p.x, p.y, team, layer, team === 'mouse' ? .28 : .5)) return { x: p.x, y: p.y };
   for (let r = .5; r < 8; r += .5) for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
     const q = { x: p.x + Math.cos(a) * r, y: p.y + Math.sin(a) * r };
     if (isWalkable(q.x, q.y, team, layer, team === 'mouse' ? .28 : .5)) return q;
   }
-  return { ...MAP.spawns[team] };
+  return { ...MAP2D.spawns[team] };
 }
 
 export function createWorld(players: LobbyPlayer[], options: RoomOptions, seed = 1): World {
+  const MAP=options.mode==='3d'?MAP3D:MAP2D;
   const roster = players.filter(p => !p.spectator).map(p => ({ ...p }));
   if (options.bots) for (const [team, count] of [['mouse', 3], ['chef', 2]] as const) {
     while (roster.filter(p => p.team === team).length < count && roster.length < 8) {
@@ -56,15 +72,16 @@ export function createWorld(players: LobbyPlayer[], options: RoomOptions, seed =
       roster.push({ id: `bot-${team}-${i}`, name: `${team === 'mouse' ? ['Pip', 'Biscuit', 'Clove'][i] : ['Bram', 'Odile'][i]} · Bot`, team, classId: team === 'mouse' ? (['scout', 'hauler', 'rescuer'] as const)[i] : (['head', 'sous'] as const)[i], ready: true, connected: true, bot: true });
     }
   }
-  const w: World = { tick: 0, time: 0, duration: options.duration, seed: seed >>> 0, players: [], pickups: MAP.pickups.map(p => ({ ...p, available: true, respawnAt: 0 })), cages: MAP.cages.map(c => ({ ...c, keyUntil: 0 })), traps: [], guests: [], orders: [], events: [], heist: 0, rating: TUNABLE.initialRating, lockdown: 0, nextOrder: 2, nextId: 1, plugs: {}, objectCooldowns: {} };
+  const w: World = { mode:options.mode,tick: 0, time: 0, duration: options.duration, seed: seed >>> 0, players: [], pickups: MAP.pickups.map(p => ({ ...p, available: true, respawnAt: 0 })), cages: MAP.cages.map(c => ({ ...c, keyUntil: 0 })), traps: [], guests: [], orders: [], events: [], heist: 0, rating: TUNABLE.initialRating, lockdown: 0, nextOrder: 2, nextId: 1, plugs: {}, objectCooldowns: {} };
   w.players = roster.map((p, i) => {
     const spawn = MAP.spawns[p.team];
-    return { ...p, ...usablePoint({ x: spawn.x + (i % 3) * .8, y: spawn.y + Math.floor(i / 3) * .8 }, p.team, p.team === 'mouse' ? 'tunnel' : 'floor'), angle: -Math.PI / 2, layer: p.team === 'mouse' ? 'tunnel' as const : 'floor' as const, state: 'free' as const, stamina: 100, composure: 100, buffUntil: 0, buffUses: 0, cooldowns: {}, invulnerableUntil: 0, stateUntil: 0, lastDamage: -10, revealUntil: 0, squirm: 0, ackSeq: 0, lastButtons: 0, stats: { deliveries: 0, captures: 0, rescues: 0, dishes: 0, tampers: 0, scares: 0 }, vx: 0, vy: 0 };
+    const layer=p.team==='mouse'&&w.mode!=='3d'?'tunnel' as const:'floor' as const;
+    return { ...p,mode:options.mode, ...usablePoint({ x: spawn.x + (i % 3) * (w.mode==='3d'?.2:.8), y: spawn.y + Math.floor(i / 3) * (w.mode==='3d'?.2:.8),z:spawn.z }, p.team,layer,w), angle: -Math.PI / 2, layer, state: 'free' as const, stamina: 100, composure: 100, buffUntil: 0, buffUses: 0, cooldowns: {}, invulnerableUntil: 0, stateUntil: 0, lastDamage: -10, revealUntil: 0, squirm: 0, ackSeq: 0, lastButtons: 0, stats: { deliveries: 0, captures: 0, rescues: 0, dishes: 0, tampers: 0, scares: 0 }, vx: 0, vy: 0, vz:0,grounded:true,pitch:0 };
   });
   const tables = MAP.objects.filter(o => o.kind === 'table');
   for (let i = 0; i < 16; i++) {
     const table = tables[Math.floor(i / 2)] ?? { x: 7 + Math.floor(i / 2) % 4 * 10, y: 6 + Math.floor(i / 8) * 8 };
-    const pos = usablePoint({ x: table.x + (i % 2 ? 2 : -2), y: table.y }, 'chef');
+    const pos = usablePoint({ x: table.x + (i % 2 ? 1 : -1)*(w.mode==='3d'?.95:2), y: table.y,z:0 }, 'chef','floor',w);
     w.guests.push({ id: `guest-${i}`, ...pos, angle: i % 2 ? Math.PI : 0, state: 'seated', meter: 0, scares: 0, lastSeen: -20, stateUntil: 0, firstScared: false });
   }
   internal(w).difficulty = options.difficulty; return w;
@@ -72,6 +89,7 @@ export function createWorld(players: LobbyPlayer[], options: RoomOptions, seed =
 
 /** Shared kinematic path: only local movement, stamina and facing are predicted. */
 export function movePlayer(p: Player, input: InputFrame, dt: number, world?: World) {
+  if(p.mode==='3d'||world?.mode==='3d'){movePlayer3D(p,input,dt,world);return;}
   const t = world?.time ?? input.tick * DT;
   p.vx = 0; p.vy = 0;
   if (!free(p) || p.hidden || p.action || p.cooldowns.grabWindup > t) return;
@@ -111,12 +129,32 @@ function inCone(a: Vec & { angle: number }, b: Vec, arc: number) {
   return Math.abs(diff) <= arc * Math.PI / 360;
 }
 function camouflaged(p: Player, t: number) { return activeBuff(p, 'camouflage', t) && (Math.hypot(p.vx, p.vy) < .1 || !!(p.lastButtons & BUTTON.SNEAK)); }
+function grabGeometry3D(chef:Vec,mouse:Vec):boolean {
+  const height=(mouse.z??0)-(chef.z??0);if(height>1.5||height<-.3)return false;
+  if(height>.4)for(const box of COLLIDERS3D){
+    if(Math.abs((box.z+box.h)-(mouse.z??0))>.12||mouse.x<box.x||mouse.x>box.x+box.w||mouse.y<box.y||mouse.y>box.y+box.d)continue;
+    if(Math.min(mouse.x-box.x,box.x+box.w-mouse.x,mouse.y-box.y,box.y+box.d-mouse.y)>.4)return false;
+  }
+  return rayClear3D({x:chef.x,y:chef.y,z:(chef.z??0)+Math.max(.15,Math.min(1.3,height+.15))},eye(mouse,'mouse'));
+}
+export function guestSees(w:World,g:World['guests'][number],p:Player):boolean {
+  if(p.team!=='mouse'||(!free(p)&&p.state!=='stunned')||p.layer==='tunnel'||p.transit||p.hidden||camouflaged(p,w.time))return false;
+  if(w.mode!=='3d')return near(g,p,flicker(w)?5:8)&&inCone(g,p,130)&&hasLOS(g,p);
+  const range=p.lastButtons&BUTTON.SPRINT?5:3;
+  return coverAt3D(p)<1&&near(g,p,range*(flicker(w)?.65:1))&&inCone(g,p,130)&&clear(w,g,p,'guest','mouse');
+}
 export function visibleTo(w: World, viewer: Player, target: Player) {
   if (viewer.team === target.team) return true;
+  if(w.mode==='3d'&&(target.state==='transit'||target.transit||target.layer==='tunnel'||viewer.state==='transit'))return false;
   if (target.revealUntil > w.time) return true;
   if (target.layer === 'tunnel' || target.hidden || camouflaged(target, w.time)) return false;
   if (viewer.layer === 'tunnel' || viewer.state === 'caged' || viewer.state === 'held') return false;
   const d = distance(viewer, target);
+  if(w.mode==='3d'){
+    if(viewer.team==='chef'&&coverAt3D(target)>=1)return false;
+    const range=(flicker(w)?5:8)*(viewer.team==='chef'&&coverAt3D(target)>.1?.6:1);
+    return d<=range&&inCone(viewer,target,viewer.team==='chef'?110:360)&&clear(w,viewer,target,viewer.team,target.team);
+  }
   const noise = Math.hypot(target.vx, target.vy) < .1 ? 0 : target.lastButtons & BUTTON.SNEAK ? 1.5 : target.lastButtons & BUTTON.SPRINT ? 8 : 4;
   return (d <= (flicker(w) ? 5 : 8) && inCone(viewer, target, viewer.team === 'chef' ? 110 : 360) && hasLOS(viewer, target)) || d <= noise * (flicker(w) ? .5 : 1);
 }
@@ -125,7 +163,7 @@ function breakCamouflage(p: Player) { if (p.buff === 'camouflage') { p.buff = un
 function release(w: World, m: Player, pos: Vec) {
   if (m.heldBy) { const chef = w.players.find(p => p.id === m.heldBy); if (chef) chef.holding = undefined; }
   if (m.cageId) { const cage = w.cages.find(c => c.id === m.cageId); if (cage) clearCage(cage); }
-  Object.assign(m, usablePoint(pos, 'mouse'), { state: 'free', heldBy: undefined, cageId: undefined, layer: 'floor', stateUntil: 0, invulnerableUntil: w.time + 2, squirm: 0 });
+  Object.assign(m, usablePoint({...pos,z:w.mode==='3d'?0:pos.z}, 'mouse','floor',w), { state: 'free', heldBy: undefined, cageId: undefined, layer: 'floor', stateUntil: 0, invulnerableUntil: w.time + 2, squirm: 0 });
   emit(w, 'rescue', `${m.name} is free!`, m);
 }
 function clearCage(c: Cage) { c.occupant = undefined; c.keyOwner = undefined; c.keyDropped = undefined; c.keyCarrier = undefined; c.keyUntil = 0; }
@@ -133,7 +171,7 @@ function dropFood(w: World, p: Player) {
   if (!p.carry) return;
   const pair = internal(w).pairs[p.id];
   if (pair) { const other = w.players.find(m => m.id === pair); if (other) other.carry = undefined; delete internal(w).pairs[pair]; delete internal(w).pairs[p.id]; }
-  w.pickups.push({ id: `drop-${w.nextId++}`, x: p.x, y: p.y, food: p.carry, available: true, respawnAt: Infinity });
+  w.pickups.push({ id: `drop-${w.nextId++}`, x: p.x, y: p.y,z:p.z, food: p.carry, available: true, respawnAt: Infinity });
   p.carry = undefined;
 }
 export function damageChef(w: World, p: Player, amount: number) {
@@ -150,19 +188,20 @@ export function damageChef(w: World, p: Player, amount: number) {
   emit(w, 'flustered', `${p.name} is flustered!`, p);
 }
 function capture(w: World, chef: Player, mouse: Player) {
-  if (chef.holding || !free(chef) || mouse.heldBy || mouse.state === 'caged' || mouse.invulnerableUntil > w.time) return;
+  if (chef.holding || !free(chef) || mouse.heldBy || mouse.state === 'caged' || mouse.state==='transit'||mouse.transit||mouse.invulnerableUntil > w.time) return;
   dropFood(w, mouse); mouse.hidden = undefined; mouse.action = undefined; mouse.state = 'held'; mouse.heldBy = chef.id; mouse.layer = 'floor'; mouse.squirm = 0;
   chef.holding = mouse.id; chef.stats.captures++; rating(w, 1); emit(w, 'capture', `${chef.name} caught ${mouse.name}`, chef);
 }
 
 type Context = { label: string; kind: string; target: string; duration: number };
 export function contextAction(w: World, p: Player): Context | undefined {
+  const MAP=mapFor(w);
   const act = (label: string, kind: string, target: string, duration: number) => ({ label, kind, target, duration });
   if (p.state === 'held') return act(`Squirm ${p.squirm}/25`, 'squirm', p.id, 0);
   if (!free(p)) return;
   if (p.team === 'mouse') {
     if (p.hidden) return act('Leave hiding spot', 'unhide', p.hidden, 0);
-    if (p.carry && p.layer === 'tunnel' && near(p, MAP.stash, 2.4)) return act('Deliver to Stash', 'deliver', 'stash', .4);
+    if (p.carry && (w.mode==='3d'?nearHeight(w,p,MAP.stash,.5):p.layer === 'tunnel' && near(p, MAP.stash, 2.4))) return act('Deliver to Stash', 'deliver', 'stash', .4);
     if (p.layer !== 'tunnel') {
       const cage = w.cages.find(c => c.occupant && c.keyCarrier === p.id && near(p, c));
       if (cage) return act('Unlock cage', 'unlock', cage.id, p.classId === 'rescuer' ? .5 : 1);
@@ -171,28 +210,33 @@ export function contextAction(w: World, p: Player): Context | undefined {
       const ally = w.players.find(a => a.team === 'mouse' && a.state === 'stunned' && a.id !== p.id && near(p, a));
       if (ally) return act('Free teammate', 'free', ally.id, p.classId === 'rescuer' ? .5 : 1);
     }
-    const hole = MAP.holes.find(h => near(p, h, 1.5));
+    const hole = MAP.holes.find(h => nearHeight(w,p,h,w.mode==='3d'?.2:1.5));
+    if(hole&&w.mode==='3d'){
+      if(w.plugs[hole.id]>w.time)return act('Chew plug','chew',hole.id,4);
+      if(transitAvailable(w,p,hole.id))return act('Enter tunnel','transit',hole.id,.6);
+      return act(heavy(p.carry)&&!MAP3D.holes.find(h=>h.id===hole.id)?.wide?'Find a wide hole':'Paws are tired','blocked',hole.id,0);
+    }
     if (hole) return act(w.plugs[hole.id] > w.time ? 'Chew plug' : p.layer === 'tunnel' ? 'Leave tunnel' : 'Enter tunnel', w.plugs[hole.id] > w.time ? 'chew' : 'hole', hole.id, w.plugs[hole.id] > w.time ? 4 : .15);
     if (p.layer === 'tunnel') return;
     const ready = w.orders.find(o => o.stage === 'ready' && !o.tamper);
-    if (p.carry && FOODS[p.carry].tamper && ready && near(p, pass(), 3)) return act('Tamper with dish', 'tamper', ready.id, p.classId === 'saboteur' ? 1.25 : 2.5);
-    const object = MAP.objects.find(o => ['soup', 'pan', 'flour'].includes(o.kind) && near(p, o, 2) && (w.objectCooldowns[o.id] ?? 0) <= w.time);
+    if (p.carry && FOODS[p.carry].tamper && ready && nearPass(w,p)) return act('Tamper with dish', 'tamper', ready.id, p.classId === 'saboteur' ? 1.25 : 2.5);
+    const object = MAP.objects.find(o => ['soup', 'pan', 'flour'].includes(o.kind) && nearHeight(w,p, o, w.mode==='3d'?.4:2) && (w.objectCooldowns[o.id] ?? 0) <= w.time);
     if (object) return act(object.kind === 'soup' ? 'Tip soup pot' : object.kind === 'pan' ? 'Drop pan' : 'Drop flour sack', object.kind, object.id, object.kind === 'soup' ? 1.5 : .5);
     if (!p.carry) {
-      const pickup = w.pickups.find(f => f.available && near(p, f, 1.35));
+      const pickup = w.pickups.find(f => f.available && nearHeight(w,p, f, w.mode==='3d'?.25:1.35));
       if (pickup) {
         if (heavy(pickup.food) && p.classId !== 'hauler' && !w.players.some(m => m.id !== p.id && m.team === 'mouse' && free(m) && !m.carry && m.layer === p.layer && near(m, pickup, 2))) return act('Needs two mice', 'blocked', pickup.id, 0);
         return act(`Steal ${FOODS[pickup.food].name}`, 'pickup', pickup.id, heavy(pickup.food) ? 1.2 : .4);
       }
     }
-    const hide = MAP.hides.find(h => near(p, h, 1.1) && w.players.filter(m => m.hidden === h.id).length < h.capacity);
+    const hide = MAP.hides.find(h => nearHeight(w,p, h, w.mode==='3d'?.25:1.1) && w.players.filter(m => m.hidden === h.id).length < h.capacity);
     if (hide) return act('Hide here', 'hide', hide.id, .15);
     if (p.carry) return act('Drop food', 'drop', p.id, .15);
   } else {
     if (p.holding) { const cage = w.cages.find(c => !c.occupant && near(p, c, 2)); if (cage) return act('Lock cage', 'cage', cage.id, 1); return; }
     const ready = w.orders.find(o => o.stage === 'ready');
-    if (ready && near(p, pass(), 3)) return act('Garnish & send', 'send', ready.id, p.classId === 'pastry' ? 1.2 : 2);
-    const spot = MAP.hides.find(h => near(p, h, 1.5));
+    if (ready && nearPass(w,p)) return act('Garnish & send', 'send', ready.id, p.classId === 'pastry' ? 1.2 : 2);
+    const spot = MAP.hides.find(h => near(p, h, w.mode==='3d'?1:2.2));
     if (spot) return act('Search hiding spot', 'search', spot.id, 1.2);
     const hole = MAP.holes.find(h => near(p, h, 1.5) && !(w.plugs[h.id] > w.time));
     if (hole && Object.values(w.plugs).filter(t => t > w.time).length < 3) return act('Plug hole', 'plug', hole.id, 3);
@@ -202,10 +246,19 @@ export function contextAction(w: World, p: Player): Context | undefined {
 }
 
 function complete(w: World, p: Player, a: Context) {
+  const MAP=mapFor(w);
   breakCamouflage(p);
   const cage = w.cages.find(c => c.id === a.target);
   const order = w.orders.find(o => o.id === a.target);
   switch (a.kind) {
+    case 'transit': { const partner=w.players.find(m=>m.id===internal(w).pairs[p.id]);startTransit(w,p,a.target,partner);break; }
+    case 'peek':case 'ear': {
+      const hole=MAP.holes.find(h=>h.id===a.target);if(!hole)break;
+      const travelers=w.players.filter(m=>m.state==='transit'&&m.transit&&(m.transit.entry===hole.id||m.transit.exit===hole.id));
+      const rooms=[...new Set(travelers.map(m=>MAP.holes.find(h=>h.id===m.transit?.exit)?.room).filter(Boolean))];
+      const text=a.kind==='peek'?(travelers.length?'Movement in the tunnel':'The tunnel is quiet'):(travelers.length?`${travelers.length} in transit · ${rooms.join(', ')}`:'No mice in transit');
+      p.cooldowns[a.kind]=w.time+(a.kind==='ear'?15:1.5);w.events.push({id:w.nextId++,kind:a.kind,text,x:p.x,y:p.y,z:p.z,time:w.time,team:'chef',playerId:p.id,radius:1.5});break;
+    }
     case 'pickup': {
       const f = w.pickups.find(f => f.id === a.target);
       if (!f?.available || p.carry) break;
@@ -240,7 +293,7 @@ function complete(w: World, p: Player, a: Context) {
     case 'free': { const m = w.players.find(m => m.id === a.target); if (m?.state === 'stunned') { release(w, m, m); p.stats.rescues++; } break; }
     case 'cage': if (cage && !cage.occupant && p.holding) {
       const m = w.players.find(m => m.id === p.holding); if (!m) break;
-      m.state = 'caged'; m.heldBy = undefined; m.cageId = cage.id; m.stateUntil = w.time + TUNABLE.cageSeconds; Object.assign(m, usablePoint(cage, 'mouse')); cage.occupant = m.id; cage.keyOwner = p.id; p.holding = undefined;
+      m.state = 'caged'; m.heldBy = undefined; m.cageId = cage.id; m.stateUntil = w.time + TUNABLE.cageSeconds; Object.assign(m, usablePoint(cage, 'mouse','floor',w)); cage.occupant = m.id; cage.keyOwner = p.id; p.holding = undefined;
       emit(w, 'cage', `${m.name} is caged for 40 seconds`, cage); break;
     } break;
     case 'tamper': if (order?.stage === 'ready' && !order.tamper && p.carry && FOODS[p.carry].tamper) { order.tamper = p.carry; p.carry = undefined; p.stats.tampers++; emit(w, 'tamper', 'Dish tampered!', p, 'mouse'); } break;
@@ -271,7 +324,7 @@ function complete(w: World, p: Player, a: Context) {
       const limit = mouse ? 3 : p.classId === 'sous' ? 4 : 3;
       if (w.traps.filter(t => mouse ? t.team === 'mouse' : t.owner === p.id).length >= limit) break;
       if (mouse && p.carry !== 'vegetable') break;
-      w.traps.push({ id: `trap-${w.nextId++}`, x: p.x, y: p.y, team: p.team, owner: p.id, armedAt: w.time + 1.5, expires: w.time + 90 });
+      w.traps.push({ id: `trap-${w.nextId++}`, x: p.x, y: p.y,z:p.z, team: p.team, owner: p.id, armedAt: w.time + 1.5, expires: w.time + 90 });
       if (mouse) p.carry = undefined; else p.cooldowns.trap = w.time + 10 * (lastCall(w) ? .8 : 1);
       emit(w, 'trap', mouse ? 'Vegetable trap set' : 'Snap trap set', p, p.team); break;
     }
@@ -284,16 +337,17 @@ function beginAction(p: Player, a: Context) {
 function useAction(w: World, p: Player, input: InputFrame, dt: number) {
   if (!free(p)) { p.action = undefined; return; }
   let a: Context | undefined;
-  if (input.buttons & BUTTON.EAT && p.team === 'mouse' && p.carry && !heavy(p.carry) && p.carry !== 'vegetable' && !p.hidden) a = { label: 'Eat', kind: 'eat', target: p.carry, duration: .8 };
+  if(w.mode==='3d'&&p.team==='chef'&&(input.buttons&(BUTTON.PEEK|BUTTON.EAR))){const hole=MAP3D.holes.find(h=>near(p,h,1.2));const kind=input.buttons&BUTTON.EAR?'ear':'peek';if(hole&&cooldown(p,kind,w.time))a={label:kind==='ear'?'Tunnel Ear':'Peek',kind,target:hole.id,duration:kind==='ear'?1:.8};}
+  else if (input.buttons & BUTTON.EAT && p.team === 'mouse' && p.carry && !heavy(p.carry) && p.carry !== 'vegetable' && !p.hidden) a = { label: 'Eat', kind: 'eat', target: p.carry, duration: .8 };
   else if (input.buttons & BUTTON.TRAP && p.layer === 'floor' && !p.holding && cooldown(p, 'trap', w.time) && (p.team === 'chef' || p.carry === 'vegetable')) a = { label: 'Place trap', kind: 'trap', target: p.id, duration: 1 };
-  else if (input.buttons & BUTTON.INSPECT && p.team === 'chef' && near(p, pass(), 3)) {
+  else if (input.buttons & BUTTON.INSPECT && p.team === 'chef' && nearPass(w,p)) {
     const o = w.orders.find(o => o.stage === 'ready'); if (o) a = { label: 'Inspect dish', kind: 'inspect', target: o.id, duration: 1 };
   } else if (input.buttons & BUTTON.ABILITY && p.classId === 'rescuer' && cooldown(p, 'ability', w.time)) {
     const c = w.cages.find(c => c.occupant && near(p, c, 2)); if (c) a = { label: 'Lockpick cage', kind: 'lockpick', target: c.id, duration: 3.5 };
   } else if (input.buttons & BUTTON.USE && cooldown(p, 'use', w.time) && !p.cooldowns.useLatch) a = contextAction(w, p);
   if (!a || a.kind === 'blocked' || Math.hypot(input.mx, input.my) > .25) { p.action = undefined; return; }
   beginAction(p, a); p.action!.progress += dt;
-  if (a.kind === 'tamper' || a.kind === 'chew' || a.kind === 'lockpick') p.revealUntil = w.time + .3;
+  if ((a.kind === 'tamper' || a.kind === 'chew' || a.kind === 'lockpick')&&w.mode!=='3d') p.revealUntil = w.time + .3;
   if (p.action!.progress + 1e-8 >= a.duration) { p.action = undefined; complete(w, p, a); }
 }
 
@@ -312,7 +366,7 @@ function attacks(w: World, p: Player, input: InputFrame, pressed: number) {
       const fire = activeBuff(p, 'fire', t) || activeBuff(p, 'fire-breath', t);
       if ((tomato || fire) && p.buffUses > 0) {
         const origin = rewind(w, p, p).past;
-        const targets = w.players.filter(c => { const old = rewind(w, p, c); return c.team === 'chef' && c.layer === 'floor' && old.past.invulnerableUntil <= old.time && near(origin, old.past, fire ? 2.2 : 6) && hasLOS(origin, old.past) && inCone({ ...origin, angle: p.angle }, old.past, fire ? 75 : 25); });
+        const targets = w.players.filter(c => { const old = rewind(w, p, c); return c.team === 'chef' && c.layer === 'floor' && old.past.invulnerableUntil <= old.time && near(origin, old.past, fire ? 2.2 : 6) && clear(w,origin, old.past,'mouse','chef') && inCone({ ...origin, angle: p.angle }, old.past, fire ? 75 : 25); });
         for (const c of fire ? targets : targets.sort((a, b) => distance(p, a) - distance(p, b)).slice(0, 1)) { damageChef(w, c, fire ? 18 : 10); if (tomato) c.cooldowns.blind = t + 2.5; }
         p.buffUses--; p.cooldowns.attack = t + (fire ? 1.5 : .5); emit(w, fire ? 'fire' : 'splat', fire ? 'Fire breath!' : 'Tomato splat!', p);
       } else if (p.carry && !heavy(p.carry)) { dropFood(w, p); p.cooldowns.attack = t + .6; emit(w, 'noise', 'A distraction clatters', aim, 'chef'); }
@@ -322,16 +376,23 @@ function attacks(w: World, p: Player, input: InputFrame, pressed: number) {
     p.cooldowns.colander = t + (p.classId === 'sous' ? 10.5 : 14) * cdScale;
     const d = distance(p, aim), target = { x: p.x + (aim.x - p.x) * Math.min(1, 6 / Math.max(.01, d)), y: p.y + (aim.y - p.y) * Math.min(1, 6 / Math.max(.01, d)) };
     // Landing is delayed by flight time and resolved by the authoritative simulation.
-    p.cooldowns.colanderAt = t + distance(p, target) / 9; p.cooldowns.colanderX = target.x; p.cooldowns.colanderY = target.y; emit(w, 'colander', 'Colander toss!', target);
+    p.cooldowns.colanderAt = t + distance(p, target) / 9; p.cooldowns.colanderX = target.x; p.cooldowns.colanderY = target.y;
+    if(w.mode==='3d'){
+      const upper=(p.pitch??0)>.15?2.9:1.1;
+      p.cooldowns.colanderZ=Math.max(0,supportHeight3D(target.x,target.y,upper,'mouse'));
+      let last:Vec={x:p.x,y:p.y,z:(p.z??0)+1.2};p.cooldowns.colanderBlocked=0;
+      for(let i=1;i<=24;i++){const f=i/24,next={x:p.x+(target.x-p.x)*f,y:p.y+(target.y-p.y)*f,z:((p.z??0)+1.2)*(1-f)+(p.cooldowns.colanderZ+.03)*f+4*(.7+distance(p,target)*.1)*f*(1-f)};if(!rayClear3D(last,next)){p.cooldowns.colanderBlocked=1;break;}last=next;}
+    }
+    emit(w, 'colander', 'Colander toss!', {...target,z:w.mode==='3d'?p.cooldowns.colanderZ:undefined});
   }
   if (pressed & BUTTON.ABILITY && cooldown(p, 'ability', t)) {
     breakCamouflage(p);
     const chefs = w.players.filter(c => c.team === 'chef' && near(p, c, 2.4));
     switch (p.classId) {
       case 'scout': p.cooldowns.ability = t + 20; { const d = distance(p, aim); const q = { x: p.x + (aim.x - p.x) * Math.min(1, 8 / Math.max(.01, d)), y: p.y + (aim.y - p.y) * Math.min(1, 8 / Math.max(.01, d)) }; emit(w, 'noise', 'A squeak behind you!', q, 'chef'); for (const g of w.guests) if (near(q, g, 10)) g.angle = Math.atan2(q.y - g.y, q.x - g.x); } break;
-      case 'hauler': p.cooldowns.ability = t + 25; for (const c of chefs) { const d = Math.max(.1, distance(p, c)); const q = { x: c.x + (c.x - p.x) / d * 2, y: c.y + (c.y - p.y) / d * 2 }; if (isWalkable(q.x, q.y, 'chef', 'floor', .5) && hasLOS(c, q)) Object.assign(c, q); } emit(w, 'barge', 'Shoulder barge!', p); break;
+      case 'hauler': p.cooldowns.ability = t + 25; for (const c of chefs) { const d = Math.max(.1, distance(p, c)); const q = { x: c.x + (c.x - p.x) / d * 2, y: c.y + (c.y - p.y) / d * 2 }; if ((w.mode==='3d'?walkable3D(q.x,q.y,c.z??0,'chef'):isWalkable(q.x, q.y, 'chef', 'floor', .5)) && clear(w,c,q,'chef','chef')) Object.assign(c, q); } emit(w, 'barge', 'Shoulder barge!', p); break;
       case 'saboteur': p.cooldowns.ability = t + 40; p.cooldowns.doubleTip = t + 20; emit(w, 'ability', 'Double Tip ready', p, 'mouse'); break;
-      case 'head': p.cooldowns.ability = t + 18 * cdScale; for (const m of w.players) if (m.team === 'mouse' && free(m) && m.layer === 'floor' && near(p, m, 1.8) && hasLOS(p, m) && m.invulnerableUntil <= t) { m.state = 'stunned'; m.stateUntil = t + 1.2; m.action = undefined; } emit(w, 'slam', 'Rolling pin slam!', p); break;
+      case 'head': p.cooldowns.ability = t + 18 * cdScale; for (const m of w.players) if (m.team === 'mouse' && free(m) && m.layer === 'floor' && nearHeight(w,p, m, 1.8) && clear(w,p,m,'chef','mouse') && m.invulnerableUntil <= t) { m.state = 'stunned'; m.stateUntil = t + 1.2; m.action = undefined; } emit(w, 'slam', 'Rolling pin slam!', p); break;
       case 'sous': p.cooldowns.ability = t + 30 * cdScale; for (const m of w.players) if (m.team === 'mouse' && near(p, m, 12)) m.revealUntil = t + 3; emit(w, 'radar', 'Rat Radar', p, 'chef'); break;
       case 'pastry': p.cooldowns.ability = t + 20 * cdScale; p.cooldowns.sugar = t + 3; emit(w, 'ability', 'Sugar Rush!', p, 'chef'); break;
     }
@@ -345,21 +406,24 @@ function advanceCombat(w: World) {
     const origin = rewind(w, chef, chef).past;
     const mouse = w.players.filter(p => {
       const old = rewind(w, chef, p);
-      return p.team === 'mouse' && (free(p) || p.state === 'stunned') && p.layer === 'floor' && old.past.layer === 'floor' && !p.hidden && p.invulnerableUntil <= w.time && old.past.invulnerableUntil <= old.time && near(origin, old.past, TUNABLE.grabRange * (chef.classId === 'head' ? 1.15 : 1)) && hasLOS(origin, old.past) && (p.state === 'stunned' || inCone({ ...origin, angle: grab.angle }, old.past, 100));
+      const floor=w.mode==='3d'?p.layer!=='tunnel'&&old.past.layer!=='tunnel':p.layer==='floor'&&old.past.layer==='floor';
+      const geometry=w.mode==='3d'?grabGeometry3D(origin,old.past):hasLOS(origin,old.past);
+      return p.team === 'mouse' && (free(p) || p.state === 'stunned') && floor && !p.hidden && p.invulnerableUntil <= w.time && old.past.invulnerableUntil <= old.time && near(origin, old.past, TUNABLE.grabRange * (chef.classId === 'head' ? 1.15 : 1)) && geometry && (p.state === 'stunned' || inCone({ ...origin, angle: grab.angle }, old.past, 100));
     }).sort((a, b) => distance(chef, a) - distance(chef, b))[0];
     if (mouse) capture(w, chef, mouse); else emit(w, 'miss', 'Missed!', chef, 'chef');
   }
   state.grabs = state.grabs.filter(g => g.at > w.time);
   for (const c of w.players.filter(p => p.team === 'chef')) if (c.cooldowns.colanderAt && c.cooldowns.colanderAt <= w.time) {
-    const q = { x: c.cooldowns.colanderX, y: c.cooldowns.colanderY };
+    const q = { x: c.cooldowns.colanderX, y: c.cooldowns.colanderY,z:w.mode==='3d'?c.cooldowns.colanderZ:undefined };
     for (const m of w.players) {
       const old = rewind(w, c, m);
-      if (m.team === 'mouse' && free(m) && m.layer !== 'tunnel' && old.past.layer !== 'tunnel' && !m.hidden && near(old.past, q, .85) && old.past.invulnerableUntil <= old.time && m.invulnerableUntil <= w.time && hasLOS(rewind(w, c, c).past, old.past)) { m.state = 'stunned'; m.stateUntil = w.time + 3; m.action = undefined; emit(w, 'trapped', 'Caught under a colander!', m); }
+      const landing=w.mode==='3d'?!c.cooldowns.colanderBlocked&&Math.hypot(old.past.x-q.x,old.past.y-q.y,(old.past.z??0)-(q.z??0))<=.6:near(old.past,q,.85)&&hasLOS(rewind(w,c,c).past,old.past);
+      if (m.team === 'mouse' && free(m) && m.layer !== 'tunnel' && old.past.layer !== 'tunnel' && !m.hidden && landing && old.past.invulnerableUntil <= old.time && m.invulnerableUntil <= w.time) { m.state = 'stunned'; m.stateUntil = w.time + 3; m.action = undefined; emit(w, 'trapped', 'Caught under a colander!', m); }
     }
     c.cooldowns.colanderAt = 0;
   }
   for (const trap of w.traps) if (trap.armedAt <= w.time && trap.expires > w.time) {
-    const victim = w.players.find(p => p.team !== trap.team && free(p) && p.layer === 'floor' && p.invulnerableUntil <= w.time && near(p, trap, .65));
+    const victim = w.players.find(p => p.team !== trap.team && free(p) && p.layer === 'floor' && p.invulnerableUntil <= w.time && nearHeight(w,p, trap, w.mode==='3d'?.2:.65));
     if (!victim) continue;
     trap.expires = w.time;
     if (victim.team === 'chef') {
@@ -374,9 +438,9 @@ function advanceCombat(w: World) {
 
 function advanceGuests(w: World, dt: number) {
   for (const g of w.guests) {
-    if (g.state === 'fleeing') { const q = { x: g.x + dt * 3, y: g.y }; if (isWalkable(q.x, q.y, 'chef', 'floor', .5)) g.x = q.x; if (w.time >= g.stateUntil) { g.state = 'seated'; g.scares = 0; g.firstScared = false; g.meter = 0; } continue; }
+    if (g.state === 'fleeing') { const q = { x: g.x + dt * 3, y: g.y }; if (w.mode==='3d'?walkable3D(q.x,q.y,g.z??0,'chef'):isWalkable(q.x, q.y, 'chef', 'floor', .5)) g.x = q.x; if (w.time >= g.stateUntil) { g.state = 'seated'; g.scares = 0; g.firstScared = false; g.meter = 0; } continue; }
     if (['startled', 'panicked', 'reaction'].includes(g.state) && w.time >= g.stateUntil) { g.state = 'seated'; g.reaction = undefined; }
-    const seen = w.players.find(p => p.team === 'mouse' && (free(p) || p.state === 'stunned') && p.layer !== 'tunnel' && !p.hidden && !camouflaged(p, w.time) && near(g, p, flicker(w) ? 5 : 8) && inCone(g, p, 130) && hasLOS(g, p));
+    const seen = w.players.find(p=>guestSees(w,g,p));
     if (seen) { g.lastSeen = w.time; g.meter = clamp(g.meter + (seen.lastButtons & BUTTON.SNEAK ? 20 : 50) * dt); }
     else if (w.time - g.lastSeen > 3) g.meter = clamp(g.meter - 10 * dt);
     if (g.meter < 100 || !seen || g.state === 'startled' || g.state === 'panicked') continue;
@@ -394,16 +458,16 @@ function newOrder(w: World, vip = false) {
   if (!guests.length) return;
   const g = guests[Math.floor(random(w) * guests.length)];
   w.orders.push({ id: `order-${w.nextId++}`, tableId: g.id, stage: 'prep', elapsed: 0, age: 0, readyAt: 0, cold: false, vip });
-  emit(w, 'order', vip ? 'VIP table: 60 second service!' : 'New order in the kitchen', pass(), 'chef');
+  emit(w, 'order', vip ? 'VIP table: 60 second service!' : 'New order in the kitchen', pass(w), 'chef');
 }
 function advanceOrders(w: World, dt: number) {
   if (w.time >= w.nextOrder) { newOrder(w); w.nextOrder = w.time + (w.time < w.duration / 4 ? 25 : lastCall(w) ? 18 : 14); }
   for (const o of w.orders) {
     o.age += dt; o.elapsed += dt;
-    if (o.age >= (o.vip ? 60 : 90) && ['prep', 'cook', 'ready'].includes(o.stage)) { rating(w, o.vip ? -12 : -5); o.stage = 'paid'; o.elapsed = 20; emit(w, 'timeout', 'An order timed out', pass()); continue; }
+    if (o.age >= (o.vip ? 60 : 90) && ['prep', 'cook', 'ready'].includes(o.stage)) { rating(w, o.vip ? -12 : -5); o.stage = 'paid'; o.elapsed = 20; emit(w, 'timeout', 'An order timed out', pass(w)); continue; }
     if (o.stage === 'prep' && o.elapsed >= 12) { o.stage = 'cook'; o.elapsed = 0; }
-    else if (o.stage === 'cook' && o.elapsed >= 15) { o.stage = 'ready'; o.elapsed = 0; o.readyAt = w.time; emit(w, 'ready', 'Dish ready at the Pass!', pass(), 'chef'); }
-    else if (o.stage === 'ready' && !o.cold && o.elapsed >= 20) { o.cold = true; rating(w, -3); emit(w, 'cold', 'A dish went cold', pass()); }
+    else if (o.stage === 'cook' && o.elapsed >= 15) { o.stage = 'ready'; o.elapsed = 0; o.readyAt = w.time; emit(w, 'ready', 'Dish ready at the Pass!', pass(w), 'chef'); }
+    else if (o.stage === 'ready' && !o.cold && o.elapsed >= 20) { o.cold = true; rating(w, -3); emit(w, 'cold', 'A dish went cold', pass(w)); }
     else if (o.stage === 'delivery' && o.elapsed >= 9) {
       o.stage = 'eating'; o.elapsed = 0;
       if (o.tamper) {
@@ -417,10 +481,10 @@ function advanceOrders(w: World, dt: number) {
 function advanceEvents(w: World) {
   const fired = internal(w).events;
   for (const [id, time, text] of [['lights', 180, 'Lights Flicker · 20 seconds'], ['inspector', 240, 'Health Inspector · rating losses ×1.5'], ['vip', 330, 'VIP Table has arrived']] as const) if (w.time >= time && !fired.includes(id)) {
-    fired.push(id); if (id === 'vip') newOrder(w, true); emit(w, id, text, { x: 35, y: 10 });
+    fired.push(id); if (id === 'vip') newOrder(w, true); emit(w, id, text, w.mode==='3d'?{x:10,y:7,z:0}:{ x: 35, y: 10 });
   }
   if (inspector(w) && !fired.includes('inspector-scare')) {
-    const m = w.players.find(p => p.team === 'mouse' && p.layer === 'floor' && !p.hidden && !camouflaged(p, w.time) && p.y < 20 && near(p, { x: 35, y: 10 }, 8));
+    const m = w.players.find(p => p.team === 'mouse' && p.layer === 'floor' && !p.hidden && !camouflaged(p, w.time) && p.y < (w.mode==='3d'?14:20) && near(p, w.mode==='3d'?{x:10,y:7}:{ x: 35, y: 10 }, 8));
     if (m) { fired.push('inspector-scare'); rating(w, -8); emit(w, 'alert', 'The inspector saw a mouse!', m, 'chef'); }
   }
 }
@@ -428,9 +492,18 @@ export function stepWorld(w: World, inputs: Map<string, InputFrame>, dt = DT) {
   if (w.result) return;
   history(w);
   w.time += dt; w.tick++;
+  if(w.mode==='3d')advanceTransits(w);
   for (const p of w.players) {
-    const input = inputs.get(p.id) ?? { seq: p.ackSeq, tick: w.tick, mx: 0, my: 0, buttons: 0, ax: p.x + Math.cos(p.angle), ay: p.y + Math.sin(p.angle) };
+    let input = inputs.get(p.id) ?? { seq: p.ackSeq, tick: w.tick, mx: 0, my: 0, buttons: 0, ax: p.x + Math.cos(p.angle), ay: p.y + Math.sin(p.angle) };
+    if(w.mode==='3d'){
+      if(Number.isFinite(input.yaw))p.angle=input.yaw!;else if(Number.isFinite(input.yawDelta))p.angle+=input.yawDelta!;
+      if(Number.isFinite(input.pitch))p.pitch=input.pitch!;else if(Number.isFinite(input.pitchDelta))p.pitch=(p.pitch??0)+input.pitchDelta!;
+      p.pitch=clamp(p.pitch??0,-(p.team==='mouse'?80:60)*Math.PI/180,(p.team==='mouse'?85:40)*Math.PI/180);
+      input={...input,yaw:p.angle,pitch:p.pitch};
+    }
     const pressed = input.buttons & ~p.lastButtons;
+    if(w.mode==='3d'&&p.team==='mouse'&&free(p)&&(pressed&BUTTON.SENSE)&&cooldown(p,'sense',w.time)){p.cooldowns.sense=w.time+12;p.cooldowns.senseUntil=w.time+3;}
+    if(w.mode==='3d'&&!(input.buttons&BUTTON.SENSE))p.cooldowns.senseUntil=0;
     if ((pressed & BUTTON.PING) && cooldown(p, 'ping', w.time)) {
       p.cooldowns.ping = w.time + 2;
       emit(w, 'ping', `${p.name}: ${p.state === 'held' || p.state === 'caged' ? 'Help here!' : 'Over here!'}`, p, p.team);
@@ -449,13 +522,21 @@ export function stepWorld(w: World, inputs: Map<string, InputFrame>, dt = DT) {
     useAction(w, p, input, dt); attacks(w, p, input, pressed); movePlayer(p, input, dt, w); p.lastButtons = input.buttons;
   }
   for (const p of w.players) {
-    if (p.state === 'held') { const holder = w.players.find(c => c.id === p.heldBy); if (holder) { p.x = holder.x; p.y = holder.y; } else release(w, p, p); }
+    if (p.state === 'held') { const holder = w.players.find(c => c.id === p.heldBy); if (holder) { p.x = holder.x; p.y = holder.y;if(w.mode==='3d')p.z=(holder.z??0)+1.2; } else release(w, p, p); }
     if (activeBuff(p, 'stink', w.time) || activeBuff(p, 'stink-cloud', w.time)) for (const c of w.players) if (c.team === 'chef' && p.layer !== 'tunnel' && near(p, c, 2.5)) c.cooldowns.stink = w.time + .1;
-    const partner = internal(w).pairs[p.id]; if (partner) { const other = w.players.find(m => m.id === partner); if (!other || !free(p) || !free(other) || p.layer !== other.layer || !p.connected || distance(p, other) > 3) dropFood(w, p); }
+    const partner = internal(w).pairs[p.id]; if (partner) { const other = w.players.find(m => m.id === partner); const bothTransit=w.mode==='3d'&&p.state==='transit'&&other?.state==='transit';if (!bothTransit&&(!other || !free(p) || !free(other) || p.layer !== other.layer || !p.connected || distance(p, other) > 3)) dropFood(w, p); }
+    if(w.mode==='3d'){
+      p.exposure=p.hidden||p.state==='transit'?0:clamp(1-coverAt3D(p),0,1);
+      const moving=Math.hypot(p.vx,p.vy)>.15,quiet=!!(p.lastButtons&BUTTON.SNEAK),working=p.action&&['tamper','chew','lockpick'].includes(p.action.kind);
+      if(free(p)&&!p.hidden&&(moving&&!quiet||working)&&cooldown(p,'noise',w.time)){
+        const radius=p.team==='chef'?12:working?6:p.lastButtons&BUTTON.SPRINT?8:4;
+        w.events.push({id:w.nextId++,kind:p.team==='chef'?'tremor':'ripple',text:p.team==='chef'?'Heavy footsteps':'A small scurry',x:p.x,y:p.y,z:p.z,time:w.time,radius:radius*(flicker(w)&&p.team==='mouse'?.5:1)});p.cooldowns.noise=w.time+(moving?.45:1);
+      }
+    }
   }
   for (const c of w.cages) if (c.occupant && (c.keyDropped || c.keyCarrier)) {
     const carrier = w.players.find(p => p.id === c.keyCarrier);
-    if (carrier && !free(carrier)) { c.keyDropped = { x: carrier.x, y: carrier.y }; c.keyCarrier = undefined; c.keyUntil = w.time + 12; }
+    if (carrier && !free(carrier)&&carrier.state!=='transit') { c.keyDropped = { x: carrier.x, y: carrier.y,z:carrier.z }; c.keyCarrier = undefined; c.keyUntil = w.time + 12; }
     if (c.keyUntil <= w.time) { c.keyDropped = undefined; c.keyCarrier = undefined; }
   }
   advanceCombat(w); advanceGuests(w, dt); advanceOrders(w, dt); advanceEvents(w);

@@ -1,0 +1,38 @@
+import {BUTTON} from '../shared/constants';
+import type {InputFrame,Team,Vec} from '../shared/protocol';
+import {settings} from './settings';
+import {settings3d} from './settings3d';
+
+export const keys3d:Record<string,string>={forward:'KeyW',back:'KeyS',left:'KeyA',right:'KeyD',use:'KeyE',eat:'KeyF',attack:'KeyQ',jump:'Space',dodge:'KeyX',ability:'KeyR',trap:'KeyT',colander:'KeyV',inspect:'KeyI',sense:'KeyC',peek:'KeyB',ear:'KeyN',ping:'Tab',map:'KeyM',sprint:'ShiftLeft',sneak:'ControlLeft'};
+export function key3d(action:string){return settings.keys['3d-'+action]||keys3d[action];}
+const bits:Record<string,number>={use:BUTTON.USE,eat:BUTTON.EAT,jump:BUTTON.JUMP,dodge:BUTTON.DODGE,ability:BUTTON.ABILITY,trap:BUTTON.TRAP,colander:BUTTON.COLANDER,inspect:BUTTON.INSPECT,sense:BUTTON.SENSE,peek:BUTTON.PEEK,ear:BUTTON.EAR,ping:BUTTON.PING};
+export class Controls3D{
+ enabled=false;team:Team='mouse';seq=0;keys=new Set<string>();stick={x:0,y:0};yaw=0;pitch=0;aiming=false;mapOpen=false;
+ private buttons=0;private pulses=0;private toggled=0;private disposers:(()=>void)[]=[];private lastYaw=0;private lastPitch=0;private orientation?:{alpha:number;beta:number};
+ constructor(){
+  window.addEventListener('keydown',e=>{if(!this.enabled||e.target instanceof HTMLInputElement||e.target instanceof HTMLSelectElement||e.repeat)return;if(Object.keys(keys3d).some(k=>key3d(k)===e.code)||['Space','Tab','AltLeft','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();this.keys.add(e.code);if(e.code===key3d('attack'))this.aiming=true;if(e.code===key3d('map'))this.mapOpen=!this.mapOpen;if(e.code===key3d('sense')&&settings3d.toggleSense)this.toggled^=BUTTON.SENSE;if(e.code===key3d('use')&&settings3d.toggleUse)this.toggled^=BUTTON.USE;});
+  window.addEventListener('keyup',e=>{this.keys.delete(e.code);if(e.code===key3d('attack')&&this.aiming){this.pulses|=BUTTON.ATTACK;this.aiming=false;}});
+  window.addEventListener('blur',()=>this.clear());document.addEventListener('visibilitychange',()=>this.clear());
+  window.addEventListener('deviceorientation',e=>{if(!this.enabled||!settings3d.gyro||e.alpha===null||e.beta===null){this.orientation=undefined;return;}if(this.orientation){const dx=((e.alpha-this.orientation.alpha+540)%360)-180,dy=e.beta-this.orientation.beta;if(Math.abs(dx)<20&&Math.abs(dy)<20)this.look(-dx*2,-dy*2);}this.orientation={alpha:e.alpha,beta:e.beta};});
+ }
+ setLook(yaw:number,pitch=0){this.yaw=yaw;this.pitch=pitch;this.lastYaw=yaw;this.lastPitch=pitch;}
+ clear(){this.keys.clear();this.buttons=0;this.pulses=0;this.toggled=0;this.stick={x:0,y:0};this.aiming=false;}
+ look(dx:number,dy:number){const s=.0024*settings3d.sensitivity;this.yaw=((this.yaw+dx*s+Math.PI*3)%(Math.PI*2))-Math.PI;const min=this.team==='mouse'?-80:-60,max=this.team==='mouse'?85:40;this.pitch=Math.max(min*Math.PI/180,Math.min(max*Math.PI/180,this.pitch-dy*s*(settings3d.invertY?-1:1)));}
+ bind(root:HTMLElement,_screenToWorld:(x:number,y:number)=>Vec,_self:()=>Vec|undefined){
+  this.disposers.forEach(f=>f());this.disposers=[];
+  const on=(target:EventTarget,name:string,fn:EventListener)=>{target.addEventListener(name,fn);this.disposers.push(()=>target.removeEventListener(name,fn));};
+  root.querySelectorAll<HTMLElement>('[data-control]').forEach(button=>{const bit=Number(button.dataset.control);on(button,'pointerdown',((e:PointerEvent)=>{if(!this.enabled)return;e.preventDefault();e.stopPropagation();button.setPointerCapture(e.pointerId);if(bit===BUTTON.SENSE&&settings3d.toggleSense)this.toggled^=bit;else if(bit===BUTTON.USE&&settings3d.toggleUse)this.toggled^=bit;else if(bit===BUTTON.ATTACK&&this.team==='mouse')this.aiming=true;else this.buttons|=bit;button.classList.add('pressed');}) as EventListener);const up=()=>{if(bit===BUTTON.ATTACK&&this.aiming){this.pulses|=bit;this.aiming=false;}this.buttons&=~bit;button.classList.remove('pressed');};on(button,'pointerup',up);on(button,'pointercancel',()=>{this.buttons&=~bit;this.aiming=false;});on(button,'lostpointercapture',()=>this.buttons&=~bit);});
+  const stick=root.querySelector<HTMLElement>('#joystick');if(stick){const dot=stick.querySelector<HTMLElement>('i')!;let held=false;const update=(e:PointerEvent)=>{const r=stick.getBoundingClientRect(),radius=r.width*.4,x=(e.clientX-r.left-r.width/2)/radius,y=(e.clientY-r.top-r.height/2)/radius,d=Math.max(1,Math.hypot(x,y));this.stick={x:x/d,y:y/d};dot.style.transform=`translate(${x/d*radius*.75}px,${y/d*radius*.75}px)`;};on(stick,'pointerdown',((e:PointerEvent)=>{if(!this.enabled)return;e.preventDefault();held=true;stick.setPointerCapture(e.pointerId);update(e);}) as EventListener);on(stick,'pointermove',((e:PointerEvent)=>{if(held)update(e);}) as EventListener);const up=()=>{held=false;this.stick={x:0,y:0};dot.style.transform='';};on(stick,'pointerup',up);on(stick,'pointercancel',up);}
+  const canvas=root.querySelector('canvas');if(!canvas)return;let finger:{id:number;x:number;y:number}|undefined;
+  on(canvas,'pointerdown',((e:PointerEvent)=>{if(!this.enabled)return;if(e.pointerType==='mouse'){if(document.pointerLockElement!==canvas){void canvas.requestPointerLock()?.catch(()=>{});return;}if(e.button===0)this.pulses|=BUTTON.ATTACK;if(e.button===2)this.aiming=true;}else if((settings.left?e.clientX<innerWidth*.58:e.clientX>innerWidth*.42)){finger={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);}}) as EventListener);
+  on(window,'pointermove',((e:PointerEvent)=>{if(!this.enabled)return;if(e.pointerType==='mouse'&&document.pointerLockElement===canvas)this.look(e.movementX,e.movementY);else if(finger?.id===e.pointerId){this.look((e.clientX-finger.x)*1.3,(e.clientY-finger.y)*1.3);finger={id:e.pointerId,x:e.clientX,y:e.clientY};}}) as EventListener);
+  on(window,'pointerup',((e:PointerEvent)=>{if(finger?.id===e.pointerId)finger=undefined;if(e.button===2&&this.aiming){this.pulses|=this.team==='chef'?BUTTON.COLANDER:BUTTON.ATTACK;this.aiming=false;}}) as EventListener);on(canvas,'pointercancel',()=>finger=undefined);on(canvas,'contextmenu',e=>e.preventDefault());
+ }
+ frame(tick:number):InputFrame{
+  const has=(action:string)=>this.keys.has(key3d(action));let side=this.stick.x,forward=-this.stick.y,buttons=this.buttons|this.pulses|this.toggled;this.pulses=0;
+  if(this.enabled){side+=(has('right')||this.keys.has('ArrowRight')?1:0)-(has('left')||this.keys.has('ArrowLeft')?1:0);forward+=(has('forward')||this.keys.has('ArrowUp')?1:0)-(has('back')||this.keys.has('ArrowDown')?1:0);for(const [action,bit]of Object.entries(bits)){if(action==='sense'&&settings3d.toggleSense||action==='use'&&settings3d.toggleUse)continue;if(has(action))buttons|=bit;}const d=Math.hypot(this.stick.x,this.stick.y);if(has('sprint')||this.keys.has('ShiftRight')||settings3d.autoSprint&&d>.92)buttons|=BUTTON.SPRINT;if(has('sneak')||this.keys.has('ControlRight')||d>settings3d.deadzone&&d<.5)buttons|=BUTTON.SNEAK;if(this.keys.has('AltLeft'))buttons|=BUTTON.PING;}else{side=0;forward=0;buttons=0;}
+  if(Math.hypot(side,forward)<settings3d.deadzone){side=0;forward=0;}const d=Math.max(1,Math.hypot(side,forward));side/=d;forward/=d;const mx=Math.cos(this.yaw)*forward-Math.sin(this.yaw)*side,my=Math.sin(this.yaw)*forward+Math.cos(this.yaw)*side;
+  const yawDelta=Math.atan2(Math.sin(this.yaw-this.lastYaw),Math.cos(this.yaw-this.lastYaw)),pitchDelta=this.pitch-this.lastPitch;this.lastYaw=this.yaw;this.lastPitch=this.pitch;
+  return {seq:++this.seq,tick,mx,my,moveX:side,moveY:forward,buttons,ax:Math.cos(this.yaw),ay:Math.sin(this.yaw),aimX:Math.cos(this.yaw),aimY:Math.sin(this.yaw),yaw:this.yaw,pitch:this.pitch,yawDelta,pitchDelta};
+ }
+}

@@ -6,6 +6,7 @@ import {Predictor} from '../client/predict';
 import type {ClientMessage,ServerMessage,Snapshot} from '../shared/protocol';
 
 const target=process.argv[2]??'ws://127.0.0.1:3001/ws';
+const mode=process.argv.includes('--3d')?'3d':undefined;
 const duration=Number(process.argv[3]??15);
 const roundTrips=process.argv[4]?process.argv[4].split(',').map(Number):[40,120,200];
 const losses=process.argv[5]?process.argv[5].split(',').map(Number):[0,.02,.05];
@@ -40,7 +41,7 @@ async function scenario(rtt:number,loss:number){
   const a=new Client(),b=new Client();let inputTimer:ReturnType<typeof setInterval>|undefined;
   try{
     await until(()=>a.ws.readyState===WebSocket.OPEN&&b.ws.readyState===WebSocket.OPEN,'proxy connection');
-    a.send({type:'create',name:'Latency Mouse',team:'mouse'});await until(()=>!!a.joined,'create');b.send({type:'join',code:a.joined!.code,name:'Latency Chef'});await until(()=>!!b.joined,'join');a.send({type:'host',options:{bots:false}});b.send({type:'setTeam',team:'chef'});a.send({type:'ready',value:true});b.send({type:'ready',value:true});await until(()=>a.messages.some(m=>m.type==='lobby'&&m.players.length===2&&m.players.every(p=>p.ready)),'ready');a.send({type:'start'});await until(()=>a.messages.some(m=>m.type==='briefing')&&b.messages.some(m=>m.type==='briefing'),'briefing');a.send({type:'skip'});b.send({type:'skip'});await until(()=>!!a.snap&&!!b.snap,'first snapshot');
+    a.send({type:'create',name:'Latency Mouse',team:'mouse',mode});await until(()=>!!a.joined,'create');b.send({type:'join',code:a.joined!.code,name:'Latency Chef'});await until(()=>!!b.joined,'join');a.send({type:'host',options:{bots:false}});b.send({type:'setTeam',team:'chef'});a.send({type:'ready',value:true});b.send({type:'ready',value:true});await until(()=>a.messages.some(m=>m.type==='lobby'&&m.players.length===2&&m.players.every(p=>p.ready)),'ready');a.send({type:'start'});await until(()=>a.messages.some(m=>m.type==='briefing')&&b.messages.some(m=>m.type==='briefing'),'briefing');a.send({type:'skip'});b.send({type:'skip'});await until(()=>!!a.snap&&!!b.snap,'first snapshot');
     const start=Date.now();a.measuring=true;b.measuring=true;
     const outgoing=new Map<Client,Extract<ClientMessage,{type:'input'}>>();
     const inputClock=new FixedClock(()=>{const seconds=(Date.now()-start)/1000;for(const [i,c]of [a,b].entries()){const p=c.predictor.player;if(!p||!c.snap)continue;c.predictor.visual(1/30);const directions=[[1,0],[0,1],[-1,0],[0,-1]], [mx,my]=directions[(Math.floor(seconds/2)+i)%4];const f={seq:++c.seq,tick:c.snap.tick,mx,my,buttons:0,ax:p.x+mx*2,ay:p.y+my*2};c.predictor.input(f);outgoing.set(c,{type:'input',frame:f});}});
@@ -48,10 +49,10 @@ async function scenario(rtt:number,loss:number){
     await pause(duration*1000);clearInterval(inputTimer);inputTimer=undefined;
     const common=[...a.snaps.keys()].filter(t=>b.snaps.has(t));const desync=common.filter(t=>{const x=a.snaps.get(t)!,y=b.snaps.get(t)!;return x.time!==y.time||x.heist!==y.heist||x.rating!==y.rating;}).length;
     const corrections=[...a.corrections,...b.corrections].sort((x,y)=>x-y),p95=corrections[Math.min(corrections.length-1,Math.floor(corrections.length*.95))]??Infinity;
-    const report={rttMs:rtt,packetLossModel:loss,jitterMs:30,durationSeconds:duration,frames,retransmissionStalls:retransmits,snapshots:[a.snaps.size,b.snaps.size],commonTicks:common.length,desyncTicks:desync,correctionSamples:corrections.length,p95CorrectionTiles:p95,maxCorrectionTiles:corrections.at(-1)??Infinity,correctionsWithinHalfTile:corrections.filter(n=>n<=.5).length/Math.max(1,corrections.length),errors:[...a.errors,...b.errors],open:[a.ws.readyState===WebSocket.OPEN,b.ws.readyState===WebSocket.OPEN],pass:desync===0&&common.length>duration*8&&p95<=.5&&!a.errors.length&&!b.errors.length&&a.ws.readyState===WebSocket.OPEN&&b.ws.readyState===WebSocket.OPEN};
+    const report={mode:mode??'2d',units:mode?'metres':'tiles',threshold:mode ? .1 : .5,rttMs:rtt,packetLossModel:loss,jitterMs:30,durationSeconds:duration,frames,retransmissionStalls:retransmits,snapshots:[a.snaps.size,b.snaps.size],commonTicks:common.length,desyncTicks:desync,correctionSamples:corrections.length,p95CorrectionTiles:p95,...(mode?{p95CorrectionMetres:p95}:{}),maxCorrectionTiles:corrections.at(-1)??Infinity,correctionsWithinHalfTile:corrections.filter(n=>n<=.5).length/Math.max(1,corrections.length),errors:[...a.errors,...b.errors],open:[a.ws.readyState===WebSocket.OPEN,b.ws.readyState===WebSocket.OPEN],pass:desync===0&&common.length>duration*8&&p95<=(mode? .1:.5)&&!a.errors.length&&!b.errors.length&&a.ws.readyState===WebSocket.OPEN&&b.ws.readyState===WebSocket.OPEN};
     console.log(JSON.stringify(report));return report;
   }finally{if(inputTimer)clearInterval(inputTimer);a.ws.terminate();b.ws.terminate();for(const timer of timers)clearTimeout(timer);for(const stream of streams)stream.terminate();await new Promise<void>(r=>proxy.close(()=>r()));}
 }
 const results=[];for(const rtt of roundTrips)for(const loss of losses)results.push(await scenario(rtt,loss));
-const report={target,model:'Ordered WebSocket frame delay with ±15ms jitter; probabilistic loss produces one-RTT retransmission stall. Approximates TCP; not real kernel packet loss.',results};writeFileSync('work/latency-latest.json',JSON.stringify(report,null,2));
+const report={target,model:'Ordered WebSocket frame delay with ±15ms jitter; probabilistic loss produces one-RTT retransmission stall. Approximates TCP; not real kernel packet loss.',results};writeFileSync(mode?'work/latency-3d-latest.json':'work/latency-latest.json',JSON.stringify(report,null,2));
 if(results.some(r=>!r.pass))process.exitCode=1;

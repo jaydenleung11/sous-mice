@@ -3,6 +3,8 @@ import type { ClientMessage, InputFrame, Lobby, LobbyPlayer, RoomOptions, Server
 import { createWorld, stepWorld, setPlayerLatency } from '../shared/sim';
 import { WireEncoder } from '../shared/wire';
 import { botInput } from '../bots/index';
+import { botInput3D } from '../bots/three';
+import { chooseTransitExit } from '../shared/transit3d';
 import { snapshotFor } from './interest';
 export interface Peer {id:string;send(data:string):void;close?():void}
 type Member={player:LobbyPlayer;token:string;peer?:Peer;disconnectedAt?:number};
@@ -35,7 +37,7 @@ export class Rooms {
         if(this.fixedCode&&this.rooms.has(this.fixedCode))return this.error(peer,'This room code is already in use. Please create another room.');
         if(this.rooms.size>=100)return this.error(peer,'The bistro is full. Try again shortly.');
         let code=this.fixedCode??'';if(!code)do{code=Array.from(crypto.getRandomValues(new Uint8Array(4)),n=>ALPHABET[n%ALPHABET.length]).join('');}while(this.rooms.has(code));
-        const room:Room={code,hostId:'',members:[],options:{...DEFAULT_OPTIONS},phase:'lobby',inputs:new Map(),briefUntil:0,lastActive:this.now(),resultSent:false};
+        const room:Room={code,hostId:'',members:[],options:{...DEFAULT_OPTIONS,...(m.mode==='3d'?{mode:'3d' as const}:{})},phase:'lobby',inputs:new Map(),briefUntil:0,lastActive:this.now(),resultSent:false};
         this.rooms.set(code,room);this.join(peer,room,m.name,undefined,m.team);return;
       }
       const room=this.rooms.get(String(m.code).toUpperCase());if(!room)return this.error(peer,'That room is not open. Check the four-letter code and try again.');
@@ -52,11 +54,12 @@ export class Rooms {
       case 'host':if(room.phase==='lobby'&&room.hostId===member.player.id&&m.options&&typeof m.options==='object'){if([360,480,600].includes(m.options.duration!))room.options.duration=m.options.duration!;if(typeof m.options.bots==='boolean')room.options.bots=m.options.bots;if(['easy','normal','hard'].includes(m.options.difficulty!))room.options.difficulty=m.options.difficulty!;this.update(room);}break;
       case 'start':if(room.phase==='lobby'&&room.hostId===member.player.id)this.start(peer,room);break;
       case 'skip':if(room.phase==='briefing'){member.player.ready=true;if(room.members.filter(v=>v.peer).every(v=>v.player.ready))room.briefUntil=this.now();}break;
-      case 'input':if(room.phase==='match'&&!member.player.spectator&&this.validInput(m.frame)&&m.frame.seq>link.lastSeq){link.lastSeq=m.frame.seq;link.inputAt=this.now();room.inputs.set(member.player.id,m.frame);}break;
+      case 'input':if(room.phase==='match'&&!member.player.spectator&&this.validInput(m.frame,room.options.mode)&&m.frame.seq>link.lastSeq){link.lastSeq=m.frame.seq;link.inputAt=this.now();room.inputs.set(member.player.id,m.frame);}break;
+      case 'transitExit':if(room.phase==='match'&&room.world?.mode==='3d'&&!member.player.spectator&&typeof m.exit==='string'&&m.exit.length<=12){const p=room.world.players.find(p=>p.id===member.player.id);if(p)chooseTransitExit(room.world,p,m.exit);}break;
       case 'rematch':if(room.phase==='results'&&room.hostId===member.player.id){room.world=undefined;room.phase='lobby';room.members=room.members.filter(v=>v.peer);room.members.forEach(v=>{v.player.ready=false;v.player.spectator=false;});room.inputs.clear();this.update(room);}break;
     }
   }
-  validInput(f:InputFrame){return f&&[f.seq,f.tick,f.mx,f.my,f.buttons,f.ax,f.ay].every(Number.isFinite)&&Number.isSafeInteger(f.seq)&&f.seq>=0&&Math.abs(f.mx)<=1&&Math.abs(f.my)<=1&&Number.isInteger(f.buttons)&&f.buttons>=0&&f.buttons<2048&&Math.abs(f.ax)<=100&&Math.abs(f.ay)<=100;}
+  validInput(f:InputFrame,mode?:'3d'){return f&&[f.seq,f.tick,f.mx,f.my,f.buttons,f.ax,f.ay].every(Number.isFinite)&&Number.isSafeInteger(f.seq)&&f.seq>=0&&Math.abs(f.mx)<=1&&Math.abs(f.my)<=1&&Number.isInteger(f.buttons)&&f.buttons>=0&&f.buttons<(mode==='3d'?32768:2048)&&Math.abs(f.ax)<=100&&Math.abs(f.ay)<=100&&[f.yaw,f.pitch,f.moveX,f.moveY,f.yawDelta,f.pitchDelta,f.aimX,f.aimY].every(v=>v===undefined||Number.isFinite(v))&&(f.yaw===undefined||Math.abs(f.yaw)<=Math.PI*2)&&(f.pitch===undefined||Math.abs(f.pitch)<=Math.PI/2);}
   join(peer:Peer,room:Room,name:string,token?:string,team?:Team){
     let member:Member|undefined=token?room.members.find(v=>v.token===token&&(v.peer||this.now()-(v.disconnectedAt??0)<=60000)):undefined;
     if(member){if(member.peer){this.peers.delete(member.peer.id);this.encoders.delete(member.peer.id);member.peer.close?.();}member.peer=peer;member.player.connected=true;member.disconnectedAt=undefined;const restoredId=member.player.id;const p=room.world?.players.find(p=>p.id===restoredId);if(p){p.connected=true;p.bot=false;}}
@@ -93,7 +96,7 @@ export class Rooms {
       if(room.phase!=='match'||!room.world)continue;
       const w=room.world;
       for(const m of room.members){const p=w.players.find(p=>p.id===m.player.id);if(p&&!m.peer&&now-(m.disconnectedAt??now)>5000)p.bot=true;}
-      for(const p of w.players)if(p.bot)room.inputs.set(p.id,botInput(w,p));
+      for(const p of w.players)if(p.bot)room.inputs.set(p.id,w.mode==='3d'?botInput3D(w,p):botInput(w,p));
       stepWorld(w,room.inputs,DT);
       if(w.tick%2===0)for(const m of room.members)if(m.peer){const p=w.players.find(p=>p.id===m.player.id)??w.players.find(p=>p.team===m.player.team);if(p)this.send(m.peer,snapshotFor(w,p));}
       if(w.result&&!room.resultSent){room.phase='results';room.resultSent=true;this.broadcast(room,{type:'result',result:w.result});this.update(room);}
