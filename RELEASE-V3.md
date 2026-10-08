@@ -1,6 +1,6 @@
 # First-person 3D preview
 
-The mouse-eye edition is available behind `?r=3d`. Classic remains the default while the complete acceptance checklist is unfinished.
+The mouse-eye edition is live at https://sous-mice.vercel.app/?r=3d. Classic remains the default while the complete acceptance checklist is unfinished.
 
 ## Implemented
 True 7cm mouse camera, giant chefs, shoulder camera, textured original rooms/furniture/characters, shared capsule collision, jumping and marked climbing, mouse-look and touch drag-look, sensory cues, comfort settings, server-timed tunnel travel, private transit, reconnect, capture/cage/key/rescue, service/orders and existing win conditions. Eleven mouse lessons and eight chef lessons run through actual game actions.
@@ -17,9 +17,11 @@ True 7cm mouse camera, giant chefs, shoulder camera, textured original rooms/fur
 - Installed headless Chrome on Intel D3D11: desktop High60.02fps/300draws/209182triangles/59.3MB JS heap; phone-size Medium59.97fps/136draws/95122triangles/70.8MB heap; Low60.01fps/122draws/85426triangles; Low tunnel60.04fps/6draws/43680triangles. These are10-second stationary scene tests; mobile uses a laptop GPU with an emulated viewport. Software SwiftShader tests were substantially slower and failed frame targets.
 
 ## Acceptance limits
-AT17/19/21/22 have automated coverage; AT18 has shared-controller and modeled-network evidence. AT20/23/24 have browser evidence but remain partial: physical2019phone, full process/GPU memory,4G startup, all biome/comfort combinations and moving eight-player performance are not certified. AT25 is partial because earlier v2 balance/strict network targets remain open. AT26 requires the post-deployment public smoke and physical-device confirmation. No claim that AT01–26 all pass.
+AT17/19/21/22 have automated coverage; AT18 has shared-controller and modeled-network evidence. AT20/23/24 have browser evidence but remain partial: physical2019phone, full process/GPU memory,4G startup, all biome/comfort combinations and moving eight-player performance are not certified. AT25 is partial because earlier v2 balance/strict network targets remain open. AT26 public private-browser desktop/phone-size smoke passed; physical-device confirmation remains unverified. No claim that AT01–26 all pass.
 
 ## Deferred and changed
 Native signing/store submission, gamepad/replays, volumetric effects/SSAO/depth of field, expanded cinematic briefing, separate Cold Room/Cheese Cave geometry, Colony Orders/Feast/Soup Surprise are deferred. Guest lighting visibility is approximated by sight range/geometry. Peek/Ear emit anonymous local cues; silhouettes are omitted for privacy. Reduced transit fades never advance the server arrival. Human balance remains unverified.
 
 Evidence is saved in `evidence/v3` and the local `work` folder. The default switches only after the remaining acceptance gates pass.
+
+Vercel production: dpl_EBMMErsTAfnK844tfs8EqrJRcpng (8c732c1). Cloudflare room server: ee18d21c-9fa4-46a1-b1fb-ecf6f3dcf7f9. Public 90-second private-browser smoke passed: 1406 shared ticks, 85 transit snapshots hidden from the chef, same identity after refresh, no page errors.

@@ -1,0 +1,56 @@
+{
+  "url": "https://sous-mice.vercel.app",
+  "code": "QS3K",
+  "commonTicks": 1406,
+  "transitSnapshots": 85,
+  "reconnectSameIdentity": true,
+  "errors": [],
+  "tapTargets": [
+    {
+      "label": "Use",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Grab",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Toss",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Inspect",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Trap",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Ability",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Peek",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Listen",
+      "width": 56,
+      "height": 59
+    },
+    {
+      "label": "Ping",
+      "width": 52,
+      "height": 52
+    }
+  ],
+  "lastTime": 93.8666666666639
+}

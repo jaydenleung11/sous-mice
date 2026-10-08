@@ -15,3 +15,6 @@
 23, v3 tutorials and rooms,90 unit tests +both browser tutorials pass. Hardware Chrome90sec local room:1404common ticks,85private transit snapshots,reconnect same identity,no errors.
 24, v3 graphics, changed benchmark approach from SwiftShader to actual IntelD3D11; High60.02fps and Medium/Low~60fps in stationary10sec samples; physical-phone gate remains open. Four layouts and comfort/context recovery pass; six classic browser regressions pass.
 25, v3 hosting, backward-compatible Cloudflare rooms deployed as ee18d21c-9fa4-46a1-b1fb-ecf6f3dcf7f9; frontend publishing and public smoke next.
+
+26, v3 public smoke, Vercel production published via Git preview promotion after clean-validator fix; 90sec desktop/phone private contexts:1406 shared ticks,85 hidden transit snapshots,same refresh identity,no page errors. Physical-phone/full-acceptance gates remain open.
+27, final review, removed visual baseboard trim from elevated door lintels so floor openings match collision; typecheck passed. Merge/persist next.
