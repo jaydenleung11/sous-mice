@@ -8,7 +8,7 @@ import {settings,saveSettings} from './settings';
 import './style3d.css';
 
 const keyAction:Record<string,string>={aim:'attack',grab:'attack',toss:'colander',listen:'ear'};
-const keyLabel=(action:string)=>key3d(action).replace('Key','').replace('Left','').replace('Control','Ctrl');
+const keyLabel=(action:string)=>key3d(action).replace(/^Key/,'').replace(/^Digit/,'').replace(/^(Control|Shift|Alt|Meta)(Left|Right)$/,'$1').replace('Control','Ctrl');
 const action=(name:string,bit:number,ico:string,_key:string,primary=false)=>{const action=name.toLowerCase(),binding=keyAction[action]||action;return `<button class="action-button ${primary?'main-action':''}" data-control="${bit}" aria-label="${name}" data-action="${action}" data-key-action="${binding}">${icon(ico)}<span>${name}</span><kbd>${esc(keyLabel(binding))}</kbd><i class="cooldown"></i></button>`;};
 export function install3dHud(root:HTMLElement,team:Team,choose:(exit:string)=>void,controls:Controls3D){
  root.querySelector('.game-screen')?.classList.add('game3d');
