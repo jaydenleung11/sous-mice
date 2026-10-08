@@ -22,6 +22,7 @@ Reference images guided the broad art direction: soft proportions, appetizing co
 - Two browser camera tests cover the default, View button, P shortcut, reload persistence, old-setting migration, and a 56px touch target.
 - Both complete 3D tutorials and the 90-second two-context desktop/phone-size room test pass, including private transit and reconnect.
 - Four screen layouts and comfort settings/context restoration pass.
+- Public screenshot review moved the initial look hint above the play area so it cannot obscure the whole-mouse view.
 - Installed Chrome on this computer's Intel GPU measured approximately 60fps in stationary High desktop and Medium/Low phone-size scenes, with no page errors. This is viewport emulation, not a physical-phone performance claim. Details are in `evidence/cartoon/performance.json`.
 
 The classic renderer remains available and the earlier physical-phone, moving-eight-player, and network/startup acceptance gaps remain open.
