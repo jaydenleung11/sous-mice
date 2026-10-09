@@ -1,0 +1,896 @@
+{
+  "date": "2026-10-09",
+  "baselineDate": "2026-10-08",
+  "iterations": 6,
+  "screenAudit": {
+    "stage": "after",
+    "base": "http://127.0.0.1:5173",
+    "shots": [
+      "home-desktop",
+      "create-dialog",
+      "lobby-mice",
+      "role-chefs",
+      "lobby-1024",
+      "lobby-844",
+      "lobby-390",
+      "role-training",
+      "mouse-hud-desktop",
+      "mouse-hud-1024",
+      "mouse-hud-844",
+      "mouse-hud-932",
+      "pause",
+      "settings",
+      "settings-keys",
+      "kitchen-floor-hud",
+      "carrying",
+      "eating-end",
+      "training-complete",
+      "chef-hud-desktop",
+      "chef-hud-phone",
+      "chef-capture",
+      "chef-training-complete",
+      "results-desktop",
+      "results-phone"
+    ],
+    "errors": [],
+    "bounds": {
+      "viewport": [
+        844,
+        390
+      ],
+      "document": [
+        844,
+        553
+      ]
+    },
+    "results": "Real renderer with deterministic result-message fixture, not a completed match.",
+    "video": "gameplay-and-ui.webm"
+  },
+  "performance": {
+    "environment": "Installed headless Chrome, hardware accelerated, local dev build; mobile is viewport emulation, not a physical phone.",
+    "gpu": "ANGLE (Intel, Intel(R) Graphics (0x0000B090) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "errors": [],
+    "profiles": [
+      {
+        "quality": "high",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "fps": 60.018974384580815,
+        "t": 14536.89999999851,
+        "renderer": "three",
+        "kitchen": {
+          "staffVisible": 6,
+          "cookingStaff": 1,
+          "staff": [
+            {
+              "id": "staff-0",
+              "variant": 0,
+              "x": 6.05,
+              "y": 23.05,
+              "z": 0,
+              "angle": 1.5707963267948966,
+              "speed": 0,
+              "task": "stir"
+            },
+            {
+              "id": "staff-1",
+              "variant": 1,
+              "x": 13.761965311698635,
+              "y": 20.914104064904098,
+              "z": 0,
+              "angle": -1.2490457723982549,
+              "speed": 0.8,
+              "task": "walk"
+            },
+            {
+              "id": "staff-2",
+              "variant": 2,
+              "x": 20,
+              "y": 20.4,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-3",
+              "variant": 3,
+              "x": 18.198938763087,
+              "y": 19.19983797909725,
+              "z": 0,
+              "angle": -2.990090771621519,
+              "speed": 0.8,
+              "task": "walk"
+            },
+            {
+              "id": "staff-4",
+              "variant": 4,
+              "x": 4.5,
+              "y": 20.5485680000006,
+              "z": 0,
+              "angle": -1.5707963267948966,
+              "speed": 0.8,
+              "task": "carry"
+            },
+            {
+              "id": "staff-5",
+              "variant": 5,
+              "x": 10.051431999999409,
+              "y": 22.4,
+              "z": 0,
+              "angle": 0,
+              "speed": 0.8,
+              "task": "carry"
+            }
+          ],
+          "simmeringPots": 6
+        },
+        "renderScale": 1,
+        "drawCalls": 620,
+        "triangles": 1709086,
+        "tunnelDrawCalls": 0,
+        "tunnelTriangles": 0,
+        "frameMs": 16.67568277910429,
+        "renderMs": 5.964453407398084,
+        "frames": 658,
+        "textures": 54,
+        "geometries": 374,
+        "contextLost": false,
+        "mouseEye": 0.06999999999999998,
+        "cameraPosition": {
+          "x": 8.663326561287704,
+          "y": 21.055,
+          "z": 0.11744465897904037
+        },
+        "fov": 74.98659017872485,
+        "transit": false,
+        "cameraView": "follow",
+        "selfVisible": true,
+        "heap": 203001249,
+        "frameTarget": 60,
+        "frameTolerance": 2,
+        "framePass": true
+      },
+      {
+        "quality": "medium",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "fps": 60.00459269761973,
+        "t": 26992.199999999255,
+        "renderer": "three",
+        "kitchen": {
+          "staffVisible": 6,
+          "cookingStaff": 4,
+          "staff": [
+            {
+              "id": "staff-0",
+              "variant": 0,
+              "x": 7.58,
+              "y": 18.8,
+              "z": 0,
+              "angle": -1.5707963267948966,
+              "speed": 0,
+              "task": "chop"
+            },
+            {
+              "id": "staff-1",
+              "variant": 1,
+              "x": 13.05,
+              "y": 23.05,
+              "z": 0,
+              "angle": 1.5707963267948966,
+              "speed": 0,
+              "task": "stir"
+            },
+            {
+              "id": "staff-2",
+              "variant": 2,
+              "x": 20.05,
+              "y": 23.05,
+              "z": 0,
+              "angle": 1.5707963267948966,
+              "speed": 0,
+              "task": "stir"
+            },
+            {
+              "id": "staff-3",
+              "variant": 3,
+              "x": 15.58,
+              "y": 18.8,
+              "z": 0,
+              "angle": -1.5707963267948966,
+              "speed": 0,
+              "task": "chop"
+            },
+            {
+              "id": "staff-4",
+              "variant": 4,
+              "x": 4.5,
+              "y": 16.2,
+              "z": 0,
+              "angle": 0,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-5",
+              "variant": 5,
+              "x": 17.5,
+              "y": 22.4,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0,
+              "task": "carry"
+            }
+          ],
+          "simmeringPots": 6
+        },
+        "renderScale": 0.85,
+        "drawCalls": 265,
+        "triangles": 796558,
+        "tunnelDrawCalls": 0,
+        "tunnelTriangles": 0,
+        "frameMs": 16.67074990796959,
+        "renderMs": 4.411397816580474,
+        "frames": 1400,
+        "textures": 54,
+        "geometries": 376,
+        "contextLost": false,
+        "mouseEye": 0.06999999999999999,
+        "cameraPosition": {
+          "x": 8.663326561287704,
+          "y": 21.055,
+          "z": 0.1174446589790404
+        },
+        "fov": 74.98659017872485,
+        "transit": false,
+        "cameraView": "follow",
+        "selfVisible": true,
+        "heap": 214426600,
+        "frameTarget": 30,
+        "frameTolerance": 0,
+        "framePass": true
+      },
+      {
+        "quality": "low",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "fps": 59.941856399297144,
+        "t": 39178.39999999851,
+        "renderer": "three",
+        "kitchen": {
+          "staffVisible": 6,
+          "cookingStaff": 1,
+          "staff": [
+            {
+              "id": "staff-0",
+              "variant": 0,
+              "x": 6.05,
+              "y": 23.05,
+              "z": 0,
+              "angle": 1.5707963267948966,
+              "speed": 0,
+              "task": "stir"
+            },
+            {
+              "id": "staff-1",
+              "variant": 1,
+              "x": 13.530003531884208,
+              "y": 21.609989404347374,
+              "z": 0,
+              "angle": -1.2490457723982549,
+              "speed": 0.8,
+              "task": "walk"
+            },
+            {
+              "id": "staff-2",
+              "variant": 2,
+              "x": 20,
+              "y": 20.4,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-3",
+              "variant": 3,
+              "x": 18.2,
+              "y": 16.2,
+              "z": 0,
+              "angle": -1.5707963267948966,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-4",
+              "variant": 4,
+              "x": 4.5,
+              "y": 21.6,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-5",
+              "variant": 5,
+              "x": 10.873768000000723,
+              "y": 22.4,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0.8,
+              "task": "carry"
+            }
+          ],
+          "simmeringPots": 6
+        },
+        "renderScale": 0.65,
+        "drawCalls": 256,
+        "triangles": 760966,
+        "tunnelDrawCalls": 0,
+        "tunnelTriangles": 0,
+        "frameMs": 16.66568284344276,
+        "renderMs": 4.134511274372077,
+        "frames": 2131,
+        "textures": 54,
+        "geometries": 376,
+        "contextLost": false,
+        "mouseEye": 0.06999999999999999,
+        "cameraPosition": {
+          "x": 8.663326561287704,
+          "y": 21.055,
+          "z": 0.1174446589790404
+        },
+        "fov": 74.98659017872485,
+        "transit": false,
+        "cameraView": "follow",
+        "selfVisible": true,
+        "heap": 207331320,
+        "frameTarget": 30,
+        "frameTolerance": 0,
+        "framePass": true
+      }
+    ],
+    "tunnel": {
+      "fps": 59.932875179803084,
+      "t": 50360.599999997765,
+      "renderer": "three",
+      "kitchen": {
+        "staffVisible": 0,
+        "cookingStaff": 0,
+        "staff": [
+          {
+            "id": "staff-0",
+            "variant": 0,
+            "x": 6.05,
+            "y": 23.05,
+            "z": 0,
+            "angle": 1.5707963267948966,
+            "speed": 0,
+            "task": "stir"
+          },
+          {
+            "id": "staff-1",
+            "variant": 1,
+            "x": 13.572150368538935,
+            "y": 21.483548894383198,
+            "z": 0,
+            "angle": -1.2490457723982549,
+            "speed": 0.8,
+            "task": "walk"
+          },
+          {
+            "id": "staff-2",
+            "variant": 2,
+            "x": 20,
+            "y": 20.4,
+            "z": 0,
+            "angle": 3.141592653589793,
+            "speed": 0,
+            "task": "carry"
+          },
+          {
+            "id": "staff-3",
+            "variant": 3,
+            "x": 18.2,
+            "y": 16.2,
+            "z": 0,
+            "angle": -1.5707963267948966,
+            "speed": 0,
+            "task": "carry"
+          },
+          {
+            "id": "staff-4",
+            "variant": 4,
+            "x": 4.5,
+            "y": 21.6,
+            "z": 0,
+            "angle": 3.141592653589793,
+            "speed": 0,
+            "task": "carry"
+          },
+          {
+            "id": "staff-5",
+            "variant": 5,
+            "x": 10.74048800000071,
+            "y": 22.4,
+            "z": 0,
+            "angle": 3.141592653589793,
+            "speed": 0.8,
+            "task": "carry"
+          }
+        ],
+        "simmeringPots": 6
+      },
+      "quality": "low",
+      "renderScale": 0.65,
+      "drawCalls": 6,
+      "triangles": 81216,
+      "tunnelDrawCalls": 6,
+      "tunnelTriangles": 81216,
+      "frameMs": 16.66658388009775,
+      "renderMs": 0.39167576287454353,
+      "frames": 2790,
+      "textures": 55,
+      "geometries": 382,
+      "contextLost": false,
+      "mouseEye": 0.06999999999999999,
+      "cameraPosition": {
+        "x": 8.663326561287704,
+        "y": 21.055,
+        "z": 0.1174446589790404
+      },
+      "fov": 74.98659017872485,
+      "transit": true,
+      "cameraView": "follow",
+      "selfVisible": true
+    }
+  },
+  "baselinePerformance": {
+    "environment": "Installed headless Chrome, hardware accelerated, local dev build; mobile is viewport emulation, not a physical phone.",
+    "gpu": "ANGLE (Intel, Intel(R) Graphics (0x0000B090) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "errors": [],
+    "profiles": [
+      {
+        "quality": "high",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "fps": 59.81147901105918,
+        "t": 16164.5,
+        "renderer": "three",
+        "kitchen": {
+          "staffVisible": 6,
+          "cookingStaff": 1,
+          "staff": [
+            {
+              "id": "staff-0",
+              "variant": 0,
+              "x": 6.05,
+              "y": 23.05,
+              "z": 0,
+              "angle": 1.5707963267948966,
+              "speed": 0,
+              "task": "stir"
+            },
+            {
+              "id": "staff-1",
+              "variant": 1,
+              "x": 13.436800696031954,
+              "y": 21.88959791190414,
+              "z": 0,
+              "angle": -1.2490457723982549,
+              "speed": 0.8,
+              "task": "walk"
+            },
+            {
+              "id": "staff-2",
+              "variant": 2,
+              "x": 20,
+              "y": 20.4,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-3",
+              "variant": 3,
+              "x": 18.2,
+              "y": 18.623171199999422,
+              "z": 0,
+              "angle": 1.5707963267948966,
+              "speed": 0.8,
+              "task": "walk"
+            },
+            {
+              "id": "staff-4",
+              "variant": 4,
+              "x": 4.5,
+              "y": 21.576828800000584,
+              "z": 0,
+              "angle": -1.5707963267948966,
+              "speed": 0.8,
+              "task": "carry"
+            },
+            {
+              "id": "staff-5",
+              "variant": 5,
+              "x": 10,
+              "y": 22.4,
+              "z": 0,
+              "angle": 0,
+              "speed": 0,
+              "task": "carry"
+            }
+          ],
+          "simmeringPots": 6
+        },
+        "renderScale": 1,
+        "drawCalls": 622,
+        "triangles": 1642046,
+        "tunnelDrawCalls": 0,
+        "tunnelTriangles": 0,
+        "frameMs": 16.665495419232382,
+        "renderMs": 6.326274585450795,
+        "frames": 645,
+        "textures": 54,
+        "geometries": 376,
+        "contextLost": false,
+        "mouseEye": 0.06999999999999999,
+        "cameraPosition": {
+          "x": 8.663326561287704,
+          "y": 21.055,
+          "z": 0.11744465897904041
+        },
+        "fov": 74.98653395736314,
+        "transit": false,
+        "cameraView": "follow",
+        "selfVisible": true,
+        "heap": 200863132,
+        "frameTarget": 60,
+        "framePass": false
+      },
+      {
+        "quality": "medium",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "fps": 59.71699337920069,
+        "t": 28579.099999999627,
+        "renderer": "three",
+        "kitchen": {
+          "staffVisible": 6,
+          "cookingStaff": 4,
+          "staff": [
+            {
+              "id": "staff-0",
+              "variant": 0,
+              "x": 7,
+              "y": 19.2,
+              "z": 0,
+              "angle": -1.5707963267948966,
+              "speed": 0,
+              "task": "chop"
+            },
+            {
+              "id": "staff-1",
+              "variant": 1,
+              "x": 13.05,
+              "y": 23.05,
+              "z": 0,
+              "angle": 1.5707963267948966,
+              "speed": 0,
+              "task": "stir"
+            },
+            {
+              "id": "staff-2",
+              "variant": 2,
+              "x": 20.05,
+              "y": 23.05,
+              "z": 0,
+              "angle": 1.5707963267948966,
+              "speed": 0,
+              "task": "stir"
+            },
+            {
+              "id": "staff-3",
+              "variant": 3,
+              "x": 16,
+              "y": 19.2,
+              "z": 0,
+              "angle": -1.5707963267948966,
+              "speed": 0,
+              "task": "chop"
+            },
+            {
+              "id": "staff-4",
+              "variant": 4,
+              "x": 4.5,
+              "y": 16.2,
+              "z": 0,
+              "angle": 0,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-5",
+              "variant": 5,
+              "x": 17.5,
+              "y": 22.4,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0,
+              "task": "carry"
+            }
+          ],
+          "simmeringPots": 6
+        },
+        "renderScale": 0.85,
+        "drawCalls": 265,
+        "triangles": 768494,
+        "tunnelDrawCalls": 0,
+        "tunnelTriangles": 0,
+        "frameMs": 16.67212143612201,
+        "renderMs": 4.356241646018808,
+        "frames": 1382,
+        "textures": 54,
+        "geometries": 378,
+        "contextLost": false,
+        "mouseEye": 0.07,
+        "cameraPosition": {
+          "x": 8.663326561287704,
+          "y": 21.055,
+          "z": 0.11744465897904041
+        },
+        "fov": 74.98653395736314,
+        "transit": false,
+        "cameraView": "follow",
+        "selfVisible": true,
+        "heap": 199034139,
+        "frameTarget": 30,
+        "framePass": true
+      },
+      {
+        "quality": "low",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "fps": 59.846138475372165,
+        "t": 40745.59999999963,
+        "renderer": "three",
+        "kitchen": {
+          "staffVisible": 6,
+          "cookingStaff": 1,
+          "staff": [
+            {
+              "id": "staff-0",
+              "variant": 0,
+              "x": 6.05,
+              "y": 23.05,
+              "z": 0,
+              "angle": 1.5707963267948966,
+              "speed": 0,
+              "task": "stir"
+            },
+            {
+              "id": "staff-1",
+              "variant": 1,
+              "x": 13.192240402019376,
+              "y": 22.62327879394187,
+              "z": 0,
+              "angle": -1.2490457723982549,
+              "speed": 0.8,
+              "task": "walk"
+            },
+            {
+              "id": "staff-2",
+              "variant": 2,
+              "x": 20,
+              "y": 20.4,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-3",
+              "variant": 3,
+              "x": 18.2,
+              "y": 16.2,
+              "z": 0,
+              "angle": -1.5707963267948966,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-4",
+              "variant": 4,
+              "x": 4.5,
+              "y": 21.6,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0,
+              "task": "carry"
+            },
+            {
+              "id": "staff-5",
+              "variant": 5,
+              "x": 11.941868800000833,
+              "y": 22.4,
+              "z": 0,
+              "angle": 3.141592653589793,
+              "speed": 0.8,
+              "task": "carry"
+            }
+          ],
+          "simmeringPots": 6
+        },
+        "renderScale": 0.65,
+        "drawCalls": 263,
+        "triangles": 744366,
+        "tunnelDrawCalls": 0,
+        "tunnelTriangles": 0,
+        "frameMs": 16.67801484893549,
+        "renderMs": 3.7185930748632963,
+        "frames": 2110,
+        "textures": 54,
+        "geometries": 378,
+        "contextLost": false,
+        "mouseEye": 0.07,
+        "cameraPosition": {
+          "x": 8.663326561287704,
+          "y": 21.055,
+          "z": 0.11744465897904041
+        },
+        "fov": 74.98653395736314,
+        "transit": false,
+        "cameraView": "follow",
+        "selfVisible": true,
+        "heap": 206546775,
+        "frameTarget": 30,
+        "framePass": true
+      }
+    ],
+    "tunnel": {
+      "fps": 59.994409838686146,
+      "t": 51902.5,
+      "renderer": "three",
+      "kitchen": {
+        "staffVisible": 6,
+        "cookingStaff": 1,
+        "staff": [
+          {
+            "id": "staff-0",
+            "variant": 0,
+            "x": 6.05,
+            "y": 23.05,
+            "z": 0,
+            "angle": 1.5707963267948966,
+            "speed": 0,
+            "task": "stir"
+          },
+          {
+            "id": "staff-1",
+            "variant": 1,
+            "x": 13.22586173810229,
+            "y": 22.522414785693133,
+            "z": 0,
+            "angle": -1.2490457723982549,
+            "speed": 0.8,
+            "task": "walk"
+          },
+          {
+            "id": "staff-2",
+            "variant": 2,
+            "x": 20,
+            "y": 20.4,
+            "z": 0,
+            "angle": 3.141592653589793,
+            "speed": 0,
+            "task": "carry"
+          },
+          {
+            "id": "staff-3",
+            "variant": 3,
+            "x": 18.2,
+            "y": 16.2,
+            "z": 0,
+            "angle": -1.5707963267948966,
+            "speed": 0,
+            "task": "carry"
+          },
+          {
+            "id": "staff-4",
+            "variant": 4,
+            "x": 4.5,
+            "y": 21.6,
+            "z": 0,
+            "angle": 3.141592653589793,
+            "speed": 0,
+            "task": "carry"
+          },
+          {
+            "id": "staff-5",
+            "variant": 5,
+            "x": 11.835548800000822,
+            "y": 22.4,
+            "z": 0,
+            "angle": 3.141592653589793,
+            "speed": 0.8,
+            "task": "carry"
+          }
+        ],
+        "simmeringPots": 6
+      },
+      "quality": "low",
+      "renderScale": 0.65,
+      "drawCalls": 6,
+      "triangles": 81216,
+      "tunnelDrawCalls": 6,
+      "tunnelTriangles": 81216,
+      "frameMs": 16.666989509579157,
+      "renderMs": 0.5906906327916113,
+      "frames": 2767,
+      "textures": 55,
+      "geometries": 384,
+      "contextLost": false,
+      "mouseEye": 0.07,
+      "cameraPosition": {
+        "x": 8.663326561287704,
+        "y": 21.055,
+        "z": 0.11744465897904041
+      },
+      "fov": 74.98653395736314,
+      "transit": true,
+      "cameraView": "follow",
+      "selfVisible": true
+    }
+  },
+  "contrast": {
+    "body": 13.19,
+    "muted modal text": 6.29,
+    "primary action": 8.37,
+    "disabled action": 5.66,
+    "objective binding": 12.59,
+    "focus outline": 7.51
+  },
+  "checks": {
+    "unitTestsPassed": 103,
+    "uniqueBrowserChecksPassed": 29,
+    "validation": "25 checks passed in the broad production-build run; all three failed checks passed on the 11-check targeted rerun, which also added the combined-status check. This is aggregate validation, not a claim of one uninterrupted 29-check run.",
+    "broadRun": {
+      "passed": 25,
+      "failed": 3,
+      "source": "Browser runner output in this task; the JSON report was overwritten by the targeted rerun."
+    },
+    "refinementRerun": {
+      "passed": 11,
+      "failed": 0
+    },
+    "build": "passed",
+    "date": "2026-10-09"
+  },
+  "animation": {
+    "frames": 2092,
+    "errors": [],
+    "maxFlipRadians": 6.283185307179586,
+    "review": "Sequential frames extracted from recorded video; jump samples 55 ms apart, sprint/landing 120 ms. Clip players expose normal and slow playback. Capture, cage and rescue lab segments are labeled state fixtures; tutorial capture uses working controls."
+  },
+  "limitations": [
+    "Touch layouts are desktop Chrome emulation, not physical phone performance.",
+    "Eight simultaneously active human devices have not been tested.",
+    "Silent browser recordings do not verify audible sound quality.",
+    "The results screen audit uses a deterministic result-message fixture, not a finished match."
+  ]
+}
