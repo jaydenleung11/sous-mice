@@ -179,3 +179,19 @@ The targeted rerun passed all 11 selected checks, including those three and one
 new combined-status check. Aggregate coverage is 29 distinct passing browser
 checks, including separate 90-second classic/3D rooms with reconnect and shared
 snapshot comparisons. This is not presented as a single uninterrupted run.
+
+
+## Published release verification - October 9
+
+PR #4 merged as b4af3f2. Vercel production deployment
+`dpl_eGKADMuSLHnmduUmU6q2HQoDJeCX` is Ready at
+https://sous-mice.vercel.app/?r=3d. The comparison gallery is live at
+https://sous-mice.vercel.app/presentation/.
+
+Fresh private Chrome contexts completed both tutorials on the public site.
+A desktop and touch-phone context joined the same room, played for 90 seconds,
+matched 1,377 shared snapshots, exercised 85 transit snapshots and restored the
+same player after refresh, with no browser errors. Public gallery media URLs,
+chapter playback and speed controls passed at 1440, 844 and 390 pixel widths.
+This records browser emulation, not a physical-phone performance claim.
+The machine-readable release receipt is `evidence/presentation/summary.json`.

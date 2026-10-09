@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-09",
+  "game": "https://sous-mice.vercel.app/?r=3d",
+  "gallery": {
+    "errors": [],
+    "sizes": [
+      {
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "width": 844,
+        "height": 390
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "speedControl": true,
+    "chapterPlayback": true
+  },
+  "githubPR": "https://github.com/jaydenleung11/sous-mice/pull/4",
+  "verifiedGameCommit": "b4af3f2237ec8633eb595c02fefc888a5c7e180e",
+  "verifiedDeployment": "dpl_eGKADMuSLHnmduUmU6q2HQoDJeCX",
+  "publicTests": {
+    "tutorials": 2,
+    "roomDurationSeconds": 90,
+    "commonTicks": 1377,
+    "transitSnapshots": 85,
+    "reconnectSameIdentity": true,
+    "errors": []
+  },
+  "localChecks": {
+    "unitTestsPassed": 103,
+    "uniqueBrowserChecksPassed": 29,
+    "validation": "25 checks passed in the broad production-build run; all three failed checks passed on the 11-check targeted rerun, which also added the combined-status check. This is aggregate validation, not a claim of one uninterrupted 29-check run.",
+    "broadRun": {
+      "passed": 25,
+      "failed": 3,
+      "source": "Browser runner output in this task; the JSON report was overwritten by the targeted rerun."
+    },
+    "refinementRerun": {
+      "passed": 11,
+      "failed": 0
+    },
+    "build": "passed",
+    "date": "2026-10-09"
+  },
+  "limits": [
+    "Physical phone performance",
+    "Eight active human devices",
+    "Audible sound quality"
+  ]
+}
