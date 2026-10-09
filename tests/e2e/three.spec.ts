@@ -11,7 +11,7 @@ for(const team of ['mouse','chef'])test(`3D ${team} training through browser con
   await page.locator('canvas[data-engine]').click({position:{x:720,y:450}});await page.mouse.move(950,420);await page.keyboard.down('ControlLeft');await key('KeyW',1);await page.keyboard.up('ControlLeft');
   await key('Space',2);await page.keyboard.down('KeyE');await key('KeyW',3);await page.keyboard.up('KeyE');await key('KeyC',4);await key('KeyE',5);await key('KeyF',6);await key('KeyE',7);await key('KeyE',8);await key('KeyE',9);await key('KeyE',10);await key('KeyE',11);
  }else{await key('KeyE',1);await key('KeyI',2);await page.keyboard.press('KeyQ');await expect.poll(step).toBe(3);await key('KeyE',4);await key('KeyT',5);await key('KeyE',6);await key('KeyB',7);await key('KeyN',8);}
- await expect(page.locator('#training-card')).toContainText('TRAINING COMPLETE');expect(errors).toEqual([]);mkdirSync('work/browser3d',{recursive:true});await page.screenshot({path:`work/browser3d/${team}-complete.png`});writeFileSync(`work/browser3d/${team}.json`,JSON.stringify({errors,metrics:await page.evaluate(()=>(window as any).__sous3d.metrics())},null,2));
+ await expect(page.locator('#training-card')).toContainText('TRAINING COMPLETE');await expect.poll(()=>page.evaluate(()=>!!document.pointerLockElement)).toBe(false);await expect(page.locator('#finish-training')).toBeVisible();expect(errors).toEqual([]);mkdirSync('work/browser3d',{recursive:true});await page.screenshot({path:`work/browser3d/${team}-complete.png`});writeFileSync(`work/browser3d/${team}.json`,JSON.stringify({errors,metrics:await page.evaluate(()=>(window as any).__sous3d.metrics())},null,2));
 });
 
 
@@ -38,4 +38,3 @@ test('3D private desktop and phone join, transit, play90seconds and restore afte
  const transitSnaps=[...snaps[0].values()].filter(s=>s.entities.some(e=>e.id===s.selfId&&e.state==='transit'));expect(transitSnaps.length).toBeGreaterThan(10);for(const s of transitSnaps){const chef=snaps[1].get(s.tick);if(chef)expect(chef.entities.some(e=>e.id===s.selfId)).toBe(false);}
  expect(errors).toEqual([]);writeFileSync('work/browser3d/room90.json',JSON.stringify({url:baseURL,code,commonTicks:common.length,transitSnapshots:transitSnaps.length,reconnectSameIdentity:ids[0][0]===ids[0].at(-1),errors,tapTargets:targets,lastTime:[...snaps[0].values()].at(-1)?.time},null,2));await ca.close();await cb.close();
 });
-

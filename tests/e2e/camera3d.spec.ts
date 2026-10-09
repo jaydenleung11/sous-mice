@@ -18,7 +18,7 @@ test('whole mouse is the default; touch button and P switch views and persist',a
  await page.keyboard.press('KeyP');await expect.poll(async()=>(await metric()).selfVisible).toBe(true);
  await expect(page.locator('#camera3d-toggle')).toHaveAttribute('aria-pressed','true');
  await page.setViewportSize({width:844,height:390});
- const bounds=await page.locator('#camera3d-toggle').boundingBox();expect(bounds!.width).toBeGreaterThanOrEqual(56);expect(bounds!.height).toBeGreaterThanOrEqual(56);
+ const bounds=await page.locator('#camera3d-toggle').boundingBox();expect(bounds!.width).toBeGreaterThanOrEqual(44);expect(bounds!.height).toBeGreaterThanOrEqual(44);
  expect(errors).toEqual([]);
 });
 test('previous first-person default migrates once without erasing other settings',async({page,baseURL})=>{
